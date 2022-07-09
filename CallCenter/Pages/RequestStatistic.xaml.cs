@@ -33,11 +33,12 @@ namespace CallCenter.Pages
         private double[][] valueBySeries1;
         private double[][] valueBySeries2;
         private double[][] errorBySeries;
-        int _currentPage = 0;
-        int _totalPages = 0;
+        private int _currentPage = 1;
+        private int _totalPages = 2;
         public RequestStatistic()
         {
             InitializeComponent();
+            
             PickingValues1 = new double[] { 256, 322, 567, 222, 444, 555, 823, 312, 321, 328, 432, 875 };
             DestinationValues1 = new double[] { 321, 124, 525, 312, 666, 888, 555, 111, 999, 333, 111, 777 };
 
@@ -62,7 +63,14 @@ namespace CallCenter.Pages
             if (_currentPage < _totalPages)
             {
                 _currentPage++;
+                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+                WpfPlot1.Plot.Clear();
                 WpfPlot1.Plot.AddBarGroups(labels2, seriesNames, valueBySeries2, errorBySeries);
+            // add a legend to display each labeled bar plot
+                WpfPlot1.Plot.Legend(location: Alignment.UpperRight);
+                WpfPlot1.Refresh();
+                // adjust axis limits so there is no padding below the bar graph
+                WpfPlot1.Plot.SetAxisLimits(yMin: 0, yMax: 1100);
             }
         }
 
@@ -71,7 +79,14 @@ namespace CallCenter.Pages
             if (_currentPage > 1)
             {
                 _currentPage--;
+                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+                WpfPlot1.Plot.Clear();
                 WpfPlot1.Plot.AddBarGroups(labels1, seriesNames, valueBySeries1, errorBySeries);
+                // add a legend to display each labeled bar plot
+                WpfPlot1.Plot.Legend(location: Alignment.UpperRight);
+                WpfPlot1.Refresh();
+                // adjust axis limits so there is no padding below the bar graph
+                WpfPlot1.Plot.SetAxisLimits(yMin: 0, yMax: 1100);
             }
         }
     }

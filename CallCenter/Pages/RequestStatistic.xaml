@@ -18,7 +18,7 @@
     <Page.Resources>
         <!--<CollectionViewSource x:Key="UserViewSource"/>-->
     </Page.Resources>
-    <Canvas Margin="0,10,-547,-348" Background="White">
+    <Canvas Margin="0,10,-547,-348" Background="White" Name="thisCanvas">
         <Label Content="Request statistic" FontSize="32" Foreground="Black" Canvas.Left="550" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         <WpfPlot Name="WpfPlot1" Canvas.Left="144" Canvas.Top="61" Height="648" Width="1058" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="551" Canvas.Top="714">

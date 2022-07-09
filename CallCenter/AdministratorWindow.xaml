@@ -5,8 +5,91 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CallCenter"
         mc:Ignorable="d"
-        Title="AdministratorWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+    Title="AdministratorWindow" WindowState="Maximized">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="44.496"/>
+            <ColumnDefinition Width="155.504"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Column="2" Grid.Row="1" Background="#FFFFFF">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="439*"/>
+                <ColumnDefinition Width="161*"/>
+            </Grid.ColumnDefinitions>
+            <Frame NavigationUIVisibility="Hidden" Panel.ZIndex="1" Name="Main" Source="" Grid.ColumnSpan="2" Margin="0,-29,0,0" Content="">
+            </Frame>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="LightGray" Offset="1"/>
+                    <GradientStop Color="#FFE6E6E6"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="20" Color="#FFFFFF" RenderingBias="Quality" ShadowDepth="1"/>
+            </Grid.Effect>
+
+            <Grid Background="#FFA46FE4" Margin="0,-21,0,21">
+                <TextBlock Text="ADMINISTRATOR" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="WS Simple Gallifreyan" Foreground="White" FontSize="16"/>
+            </Grid>
+
+            <StackPanel Grid.Row="1">
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToInComeAndTripReport">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="Cash" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Text="INCOME AND TRIP" FontFamily="Champagne &amp; Limousines" Margin="21,0,0,0"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToRequestStatistic">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="ChartBoxOutline" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Text="REQUEST STATISTICS" FontFamily="Champagne &amp; Limousines" Margin="16,0,0,0"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToDriverStatistic">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="ChartPie" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Text="DRIVER STATISTICS" FontFamily="Champagne &amp; Limousines" Margin="21,0,0,0"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="CellphonePlay" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="REQUEST" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5">
+                    <Grid Width="150">
+                        <materialDesign:PackIcon Kind="Settings" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="CONFIGURATION" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

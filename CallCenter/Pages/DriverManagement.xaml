@@ -18,8 +18,39 @@
     <Page.Resources>
         <CollectionViewSource x:Key="DriverViewSource"/>
     </Page.Resources>
-    <Canvas Margin="0,0,-547,-348" Background="Green">
-        <Grid Margin="0,0,-531,0" Background="White">
+        <Canvas Margin="0,10,-547,-348" Background="White">
+        <Label Content="Driver Management" FontSize="32" Foreground="Black" Canvas.Left="538" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+        <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Canvas.Left="918" Canvas.Top="37" Height="157" Width="419" VerticalAlignment="Top">
+            <TextBox
+                x:Name="SearchField"
+                Margin="13, 13, 13, 13"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                AcceptsReturn="True"
+                Width="300"
+                FontSize="10"
+                TextWrapping="Wrap"
+                MaxWidth="400"
+                materialDesign:HintAssist.Hint="Please insert exacly driver name"
+                IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
+            <Button
+                Click="BtnSearch_Click"
+                Style="{StaticResource MaterialDesignIconButton}"
+                ToolTip="MaterialDesignIconButton"
+                Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Height="40" Width="40">
+                <materialDesign:PackIcon Kind="Search" Foreground="Black" />
+            </Button>
+            <Button
+                DockPanel.Dock="Right"
+                Click="BtnReload_Click"
+                Style="{StaticResource MaterialDesignIconButton}"
+                ToolTip="MaterialDesignIconButton"
+                Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Height="37" Width="40">
+                <materialDesign:PackIcon Kind="Reload" Foreground="Black"/>
+            </Button>
+        </DockPanel>
+        <Grid Background="White" Canvas.Top="149" Canvas.Left="-1">
             <ListView 
         ItemsSource="{Binding Source={StaticResource DriverViewSource}}" Margin="0,0,0,204" >
                 <ListView.Resources>
@@ -61,7 +92,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding driverName}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding fullname}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -91,7 +122,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding phoneNumber}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding phone}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -121,7 +152,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding driverAddress}" TextAlignment="Center" IsReadOnly="True" Width="300" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding address}" TextAlignment="Center" IsReadOnly="True" Width="300" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

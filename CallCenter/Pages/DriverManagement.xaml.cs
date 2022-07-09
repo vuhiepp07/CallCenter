@@ -86,5 +86,30 @@ namespace CallCenter.Pages
             }
         }
 
+        private void BtnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var fullname = SearchField.Text.Trim().ToLower();
+            SearchField.Text = "";
+            DriverViewSource.Source = from driver in drivers
+                                    where driver.fullname.ToLower() == fullname.ToLower()
+                                    select
+                                    new
+                                    {
+                                        id = driver.driverId,
+                                        fullName = driver.fullname,
+                                        status = driver.status,
+                                        username = driver.username,
+                                        phone = driver.phone,
+                                        email = driver.email,
+                                        address = driver.address,
+                                        gender = driver.gender,
+                                        currentLocation = driver.currentLocation
+                                    };
+        }
+
+        private void BtnReload_Click(object sender, RoutedEventArgs e)
+        {
+            getAndBindingDriverData();
+        }
     }
 }

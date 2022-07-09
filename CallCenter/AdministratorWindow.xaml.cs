@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CallCenter.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,24 @@ namespace CallCenter
         public AdministratorWindow()
         {
             InitializeComponent();
+        }
+
+        private void NavigateToRequestStatistic(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new RequestStatistic();
+            Main.NavigationService.RemoveBackEntry();
+        }
+
+        private void NavigateToDriverStatistic(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new DriverStatistic();
+            Main.NavigationService.RemoveBackEntry();
+        }
+
+        private void NavigateToInComeAndTripReport(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new IncomeAndNumOfTripReport();
+            Main.NavigationService.RemoveBackEntry();
         }
     }
 }

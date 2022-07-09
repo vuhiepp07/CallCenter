@@ -9,12 +9,13 @@ namespace CallCenter.Models
     internal class Driver
     {
         public string driverId { get; set; }
-        public string driverName { get; set; }
-        public string phoneNumber { get; set; }
+        public string username { get; set; }
+        public string fullname { get; set; }
+        public string phone { get; set; }
         public string email { get; set; }
         //public string userName { get; set; }
-        public string driverAddress { get; set; }
-        public string citizenId { get; set; }
+        public string address { get; set; }
+        public string driverCitizenId { get; set; }
         public string driverLisenseId { get; set; }
         public string gender { get; set; }
         public string status { get; set; }
