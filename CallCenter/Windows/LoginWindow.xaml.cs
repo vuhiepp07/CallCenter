@@ -46,11 +46,11 @@ namespace CallCenter.Windows
             //Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseContent);
             //MessageBox.Show(values["status"]);
 
-            //CallCenterWindow callCenterWindow = new CallCenterWindow();
-            //callCenterWindow.Show();
+            CallCenterWindow callCenterWindow = new CallCenterWindow();
+            callCenterWindow.Show();
 
-            AdministratorWindow administratorWindow = new AdministratorWindow();
-            administratorWindow.Show();
+            //AdministratorWindow administratorWindow = new AdministratorWindow();
+            //administratorWindow.Show();
             this.Close();
 
         }

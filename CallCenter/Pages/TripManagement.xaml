@@ -1,4 +1,4 @@
-﻿<Page x:Class="CallCenter.Pages.RequestManagement"
+﻿<Page x:Class="CallCenter.Pages.TripManagement"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:CallCenter.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -14,12 +14,12 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-      Title="RequestManagement">
-<Page.Resources>
-        <CollectionViewSource x:Key="RequestViewSource"/>
+      Title="TripManagement">
+    <Page.Resources>
+        <CollectionViewSource x:Key="TripViewSource"/>
     </Page.Resources>
-        <Canvas Margin="0,10,-547,-348" Background="White">
-        <Label Content="Driver Management" FontSize="32" Foreground="Black" Canvas.Left="538" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+    <Canvas Margin="0,10,-547,-348" Background="White">
+        <Label Content="Trip Management" FontSize="32" Foreground="Black" Canvas.Left="538" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Canvas.Left="918" Canvas.Top="37" Height="157" Width="419" VerticalAlignment="Top">
             <TextBox
                 x:Name="SearchField"
@@ -30,7 +30,7 @@
                 FontSize="10"
                 TextWrapping="Wrap"
                 MaxWidth="400"
-                materialDesign:HintAssist.Hint="Please insert exactly RequestID"
+                materialDesign:HintAssist.Hint="Please insert exacly trip ID"
                 IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
             <Button
                 Click="BtnSearch_Click"
@@ -52,22 +52,23 @@
         </DockPanel>
         <Grid Background="White" Canvas.Top="149" Canvas.Left="-1">
             <ListView 
-        ItemsSource="{Binding Source={StaticResource RequestViewSource}}" Margin="0,0,0,204" >
+        ItemsSource="{Binding Source={StaticResource TripViewSource}}" Margin="0,0,0,204" >
                 <ListView.Resources>
-                    <ContextMenu x:Key="RequestContextMenu">
-                        <!--<MenuItem Header="View 5 latest trips" Name="btnLatestTrips" Click="btnLatestTrips_Click" FontSize ="13" />-->
+                    <ContextMenu x:Key="TripContextMenu">
+                        <!--<MenuItem Header="View 5 latest trips" Name="btnLatestTrips" Click="btnLatestTrips_Click" FontSize ="13" />
+                        <MenuItem Header="Most frequented destinations" Name="btnFrequentDes" Click="btnFrequentDes_Click"  FontSize ="13"/>-->
                     </ContextMenu>
                 </ListView.Resources>
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" >
-                        <Setter Property="ContextMenu" Value="{StaticResource RequestContextMenu}" />
+                        <Setter Property="ContextMenu" Value="{StaticResource TripContextMenu}" />
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
 
-                        <GridViewColumn Header="ID" Width="50">
+                        <GridViewColumn Header="Trip ID" Width="50">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -77,12 +78,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding driverId}" TextAlignment="Center" FontSize="14" Width="50" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding id}" TextAlignment="Center" FontSize="14" Width="50" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Name" Width="150">
+                        <GridViewColumn Header="Driver name" Width="150">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -92,12 +93,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding fullname}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding fulldriverName}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Status" Width="150">
+                        <GridViewColumn Header="Customer name" Width="150">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -107,12 +108,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding status}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding customerusername}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Phone" Width="150">
+                        <GridViewColumn Header="Start point" Width="150">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -122,12 +123,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding phone}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding startpoint}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Email" Width="350">
+                        <GridViewColumn Header="End point" Width="350">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -137,12 +138,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding email}" TextAlignment="Center" FontSize="14" Width="350" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding Endpoint}" TextAlignment="Center" FontSize="14" Width="350" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Home" Width="300">
+                        <GridViewColumn Header="Price" Width="300">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -152,12 +153,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding address}" TextAlignment="Center" IsReadOnly="True" Width="300" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding price}" TextAlignment="Center" IsReadOnly="True" Width="300" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn  Header="Current location" Width="180" >
+                        <GridViewColumn  Header="Current Location" Width="180" >
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -167,7 +168,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding currentLocation}" TextAlignment="Center" FontSize="14" Width="180" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding current Location}" TextAlignment="Center" FontSize="14" Width="180" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -177,7 +178,7 @@
         </Grid>
         <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="603" Canvas.Top="714">
             <Button
-                    Name="PrevRequestPageBtn" Click="PrevRequestPageBtn_Click"
+                    Name="PrevTripPageBtn" Click="PrevTripPageBtn_Click"
                     Margin="10,10,10,10"
                     Style="{StaticResource MaterialDesignPaperLightButton}"
                     Width="80"
@@ -185,7 +186,7 @@
                     Content="Prev"/>
             <TextBlock x:Name="PagesTextBlock" Margin="10,20,10,10"><Run Text="1 / 5"/></TextBlock>
             <Button
-                  Name ="NextRequestPageBtn" Click="NextRequestPageBtn_Click"
+                  Name ="NextTripPageBtn" Click="NextTripPageBtn_Click"
                   Margin="10,10,10,10"
                   Style="{StaticResource MaterialDesignPaperLightButton}"
                   Width="80"

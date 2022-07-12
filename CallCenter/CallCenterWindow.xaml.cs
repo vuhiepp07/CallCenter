@@ -39,7 +39,8 @@ namespace CallCenter
 
         private void NavigateToRequest(object sender, RoutedEventArgs e)
         {
-            Main.Content = new RequestManagement();
+            Main.Content = new CreateRequest();
+            //Main.Content = new RequestManagement();
             Main.NavigationService.RemoveBackEntry();
         }
 
