@@ -22,7 +22,7 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class TripManagement : Page
     {
-        private const string GetAllTripsUrl = "https://ubercloneserver.herokuapp.com/staff/getAllUser";
+        private const string GetAllTripUrl = "https://ubercloneserver.herokuapp.com/staff/getAllUser";
 
         IList<Trip> trips = new List<Trip>();
         List<Trip> TripsListToView = new List<Trip> { };
@@ -37,7 +37,7 @@ namespace CallCenter.Pages
         public void getAndBindingUserData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetUserDriverAsync(GetAllTripsUrl);
+            var content = httpRequest.GetDataFromUrlAsync(GetAllTripUrl);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
@@ -61,19 +61,20 @@ namespace CallCenter.Pages
         {
             var tripID = SearchField.Text.Trim().ToLower();
             SearchField.Text = "";
-            //TripViewSource.Source = from trip in trips
-            //                        where trip.tripID.ToLower() == tripID.ToLower()
-            //                        select
-            //                        new
-            //                        {
-            //                            id = trip.id,
-            //                            fullName = trip.fullName,
-            //                            username = trip.username,
-            //                            phoneNumber = trip.phoneNumber,
-            //                            email = trip.email,
-            //                            homeAddress = trip.homeAddress,
-            //                            gender = trip.gender
-            //                        };
+            TripViewSource.Source = from trip in trips
+                                    where trip.tripID.ToLower() == tripID.ToLower()
+                                    select
+                                    new
+                                    {
+                                        tripID = trip.tripID,
+                                        customerName = trip.customerName,
+                                        driverName = trip.driverName,
+                                        pickingAddress = trip.pickingAddress,
+                                        arrivingAddress = trip.arrivingAddress,
+                                        discountID = trip.discountID,
+                                        totalPrice = trip.totalPrice,
+                                        status = trip.status
+                                    };
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

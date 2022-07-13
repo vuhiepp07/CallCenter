@@ -32,7 +32,7 @@ namespace CallCenter.Models
             }
         }
 
-        public string GetUserDriverAsync(string url)
+        public string GetDataFromUrlAsync(string url)
         {
             // Thiết lập các Header nếu cần
             //httpClient.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml+json");

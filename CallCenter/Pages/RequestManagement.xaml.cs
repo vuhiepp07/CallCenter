@@ -25,7 +25,7 @@ namespace CallCenter.Pages
         public void getAndBindingRequestData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetUserDriverAsync(GetAllDriverUrl);
+            var content = httpRequest.GetDataFromUrlAsync(GetAllRequestUrl);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
@@ -45,7 +45,7 @@ namespace CallCenter.Pages
             getAndBindingRequestData();
         }
 
-        private const string GetAllDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getAllDriver";
+        private const string GetAllRequestUrl = "https://ubercloneserver.herokuapp.com/staff/getAllDriver";
 
         IList<Request> requests = new List<Request>();
         List<Request> RequestsListToView = new List<Request> { };
@@ -61,21 +61,19 @@ namespace CallCenter.Pages
         {
             var requestID = SearchField.Text.Trim().ToLower();
             SearchField.Text = "";
-            //RequestViewSource.Source = from request in requests
-            //                        where request.ID.ToLower() == requestID.ToLower()
-            //                        select
-            //                        new
-            //                        {
-            //                            id = request.driverId,
-            //                            fullName = request.fullname,
-            //                            status = request.status,
-            //                            username = request.username,
-            //                            phone = request.phone,
-            //                            email = request.email,
-            //                            address = request.address,
-            //                            gender = request.gender,
-            //                            currentLocation = request.currentLocation
-            //                        };
+            RequestViewSource.Source = from request in requests
+                                       where request.requestID.ToLower() == requestID.ToLower()
+                                       select
+                                       new
+                                       {
+                                           requestID = request.requestID,
+                                           userName = request.userName,
+                                           pickingAddress = request.pickingAddress,
+                                           status = request.status,
+                                           createdTime = request.createdTime,
+                                           typeOfVehicle = request.typeOfVehicle,
+                                           arrivingAddress = request.arrivingAddress,
+                                       };
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

@@ -19,7 +19,7 @@
         <CollectionViewSource x:Key="RequestViewSource"/>
     </Page.Resources>
         <Canvas Margin="0,10,-547,-348" Background="White">
-        <Label Content="Driver Management" FontSize="32" Foreground="Black" Canvas.Left="538" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+        <Label Content="Request Management" FontSize="32" Foreground="Black" Canvas.Left="538" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Canvas.Left="918" Canvas.Top="37" Height="157" Width="419" VerticalAlignment="Top">
             <TextBox
                 x:Name="SearchField"

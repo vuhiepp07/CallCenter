@@ -25,7 +25,7 @@ namespace CallCenter.Pages
         public void getAndBindingDriverData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetUserDriverAsync(GetAllDriverUrl);
+            var content = httpRequest.GetDataFromUrlAsync(GetAllDriverUrl);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];

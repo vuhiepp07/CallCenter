@@ -16,8 +16,8 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
       Title="CreateRequest">
     <Canvas Margin="0,10,-547,-348" Background="White" Name="thisCanvas">
-        <Label Content="Trip booking" FontSize="32" Foreground="Black" Canvas.Left="581" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-        <WebBrowser Name="Ggmap" Canvas.Left="40" Canvas.Top="64" Height="662" Width="897"></WebBrowser>
+        <Label Content="Trip booking" FontSize="32" Foreground="Black" Canvas.Left="1022" Canvas.Top="30" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+        <WebBrowser Name="Ggmap" Canvas.Left="25" Canvas.Top="-10" Height="788" Width="912" HorizontalAlignment="Center" VerticalAlignment="Top"></WebBrowser>
         <Label Content="User phone number:" Canvas.Left="969" Canvas.Top="191"></Label>
         <TextBox Width="218"
         x:Name="PhoneTextBox"
@@ -40,23 +40,25 @@
             <materialDesign:PackIcon Kind="Search" Foreground="Black" />
         </Button>
 
+        <Label Content="Booking address:" Canvas.Left="966" Canvas.Top="279" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+        <Label Content="Arriving address:" Canvas.Left="966" Canvas.Top="418" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
         <ComboBox IsEditable="True" Name="StartCBox" SelectionChanged="StartCBox_SelectionChanged"
   materialDesign:HintAssist.Hint="Start" Canvas.Left="969" Canvas.Top="306" Height="40" Width="290" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <ComboBox IsEditable="True" x:Name="DestinationCBox" SelectionChanged="DestinationCBox_SelectionChanged"
   materialDesign:HintAssist.Hint="Destination" Canvas.Left="969" Canvas.Top="445" Height="40" Width="290" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-        <Button Name="viewRouteBtn"
+        <!--<Button Name="viewRouteBtn"
         Click="viewRouteBtn_Click"
         Style="{StaticResource MaterialDesignRaisedButton}"
         ToolTip="Resource name: MaterialDesignRaisedButton"
         Content="View route"
-        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="977" Canvas.Top="584" />
+        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="977" Canvas.Top="584" />-->
 
         <Button Name="sendRequestBtn"
         Click="sendRequestBtn_Click"
         Style="{StaticResource MaterialDesignRaisedButton}"
         ToolTip="Resource name: MaterialDesignRaisedButton"
         Content="Send request"
-        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="1151" Canvas.Top="584" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="1057" Canvas.Top="584" HorizontalAlignment="Left" VerticalAlignment="Center" />
     </Canvas>
 </Page>

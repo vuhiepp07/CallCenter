@@ -22,8 +22,9 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class CreateRequest : Page
     {
+        private string mapViewPlaceUrl = "https://www.google.com/maps/search/";
         private string Map4DApiUrl = "https://api.map4d.vn/sdk/place/text-search?key=49504631a3ee3700ee08bdca573b00c5&text=";
-        private string mapurl = "https://www.google.com/maps/dir/";
+        private string mapRouteUrl = "https://www.google.com/maps/dir/";
         private string Start, End;
 
         IList<Address> startPoints = new List<Address>();
@@ -31,6 +32,8 @@ namespace CallCenter.Pages
 
         public CreateRequest()
         {
+            Start = "";
+            End = "";
             InitializeComponent();
         }
 
@@ -38,6 +41,20 @@ namespace CallCenter.Pages
         private void StartCBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Start = StartCBox.SelectedItem.ToString();
+            if (End != "")
+            {
+                string tempStart = Start.Replace(" ", "+");
+                string tempEnd = End.Replace(" ", "+");
+                mapRouteUrl += tempStart;
+                mapRouteUrl += @"/";
+                mapRouteUrl += tempEnd;
+                Ggmap.Source = new Uri(mapRouteUrl);
+            }
+            else
+            {
+                string temp = Start.Replace(" ", "+");
+                Ggmap.Source = new Uri(mapViewPlaceUrl + temp);
+            }
         }
 
         private void EndAddrbtn_Click(object sender, RoutedEventArgs e)
@@ -45,7 +62,7 @@ namespace CallCenter.Pages
             string endaddress = DestinationCBox.Text;
             string temp = Map4DApiUrl + endaddress;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetUserDriverAsync(temp);
+            var content = httpRequest.GetDataFromUrlAsync(temp);
             //MessageBox.Show(content);
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["result"];
@@ -59,7 +76,7 @@ namespace CallCenter.Pages
             string startaddress = StartCBox.Text;
             string temp = Map4DApiUrl + startaddress;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetUserDriverAsync(temp);
+            var content = httpRequest.GetDataFromUrlAsync(temp);
             //MessageBox.Show(content);
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["result"];
@@ -73,20 +90,35 @@ namespace CallCenter.Pages
 
         }
 
-        private void viewRouteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Start = Start.Replace(" ", "+");
-            End = End.Replace(" ", "+");
-            mapurl += Start;
-            mapurl += @"/";
-            mapurl += End;
-            Ggmap.Source = new Uri(mapurl);
+        //private void viewRouteBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Start = Start.Replace(" ", "+");
+        //    End = End.Replace(" ", "+");
+        //    mapurl += Start;
+        //    mapurl += @"/";
+        //    mapurl += End;
+        //    Ggmap.Source = new Uri(mapurl);
             
-        }
+        //}
 
         private void DestinationCBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             End = DestinationCBox.SelectedItem.ToString();
+
+            if (Start !="")
+            {
+                string tempStart = Start.Replace(" ", "+");
+                string tempEnd = End.Replace(" ", "+");
+                mapRouteUrl += tempStart;
+                mapRouteUrl += @"/";
+                mapRouteUrl += tempEnd;
+                Ggmap.Source = new Uri(mapRouteUrl);
+            }
+            else
+            {
+                string temp = End.Replace(" ", "+");
+                Ggmap.Source = new Uri(mapViewPlaceUrl + temp);
+            }
         }
     }
 }
