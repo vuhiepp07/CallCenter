@@ -22,6 +22,16 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class DriverManagement : Page
     {
+        private void refreshViewSource(IList<Driver> drivers)
+        {
+            DriversListToView = (List<Driver>)drivers;
+            SelectedDrivers = DriversListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
+            DriverViewSource.Source = SelectedDrivers;
+            _currentPage = 1;
+            _totalItems = drivers.Count;
+            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
+            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+        }
         public void getAndBindingDriverData()
         {
             HttpRequest httpRequest = new HttpRequest();
@@ -30,13 +40,7 @@ namespace CallCenter.Pages
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             drivers = arr.ToObject<List<Driver>>();
-            DriversListToView = (List<Driver>)drivers;
-            SelectedDrivers = DriversListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            DriverViewSource.Source = SelectedDrivers;
-            _currentPage = 1;
-            _totalItems = drivers.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            refreshViewSource(drivers);
         }
         public DriverManagement()
         {
@@ -91,20 +95,9 @@ namespace CallCenter.Pages
             var fullname = SearchField.Text.Trim().ToLower();
             SearchField.Text = "";
             DriverViewSource.Source = from driver in drivers
-                                    where driver.fullname.ToLower() == fullname.ToLower()
-                                    select
-                                    new
-                                    {
-                                        id = driver.driverId,
-                                        fullName = driver.fullname,
-                                        status = driver.status,
-                                        username = driver.username,
-                                        phone = driver.phone,
-                                        email = driver.email,
-                                        address = driver.address,
-                                        gender = driver.gender,
-                                        currentLocation = driver.currentLocation
-                                    };
+                                      where driver.fullname.ToLower() == fullname.ToLower()
+                                      select driver;
+            refreshViewSource((IList<Driver>)DriverViewSource.Source);
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

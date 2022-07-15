@@ -51,5 +51,25 @@ namespace CallCenter.Models
                 throw ex;
             }
         }
+
+        public string DeleteDataByUrl(string url)
+        {
+            // Thiết lập các Header nếu cần
+            //httpClient.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml+json");
+            try
+            {
+                var msg = new HttpRequestMessage(HttpMethod.Delete, url);
+                //msg.Headers.Add("User-Agent", "C# Program");
+                var res = httpClient.Send(msg);
+
+                var content = res.Content.ReadAsStringAsync();
+                return content.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw ex;
+            }
+        }
     }
 }

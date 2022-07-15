@@ -20,8 +20,15 @@ namespace CallCenter
     /// </summary>
     public partial class CallCenterWindow : Window
     {
+        private string accessToken;
         public CallCenterWindow()
         {
+            InitializeComponent();
+        }
+
+        public CallCenterWindow(string token)
+        {
+            accessToken = token;
             InitializeComponent();
         }
 
@@ -47,6 +54,12 @@ namespace CallCenter
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void NavigateToDiscount(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new DiscountManagement();
+            Main.NavigationService.RemoveBackEntry();
         }
     }
 }

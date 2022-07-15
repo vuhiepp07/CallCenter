@@ -23,6 +23,9 @@ namespace CallCenter.Windows
     /// </summary>
     public partial class LoginWindow : Window
     {
+        string role, accessToken;
+        private string loginURL = "https://ubercloneserver.herokuapp.com/staff/login";
+
         public LoginWindow()
         {
             InitializeComponent();
@@ -30,6 +33,9 @@ namespace CallCenter.Windows
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
+            CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken);
+            callCenterWindow.Show();
+
             //string username = userNameTextBox.Text;
             //string password = passwordBox.Password.ToString();
             //Dictionary<string, string> map = new Dictionary<string, string>();
@@ -38,21 +44,52 @@ namespace CallCenter.Windows
             //string json = JsonConvert.SerializeObject(map);
 
             //HttpRequest httpRequest = new HttpRequest();
-            //string responseContent = httpRequest.PostAsyncJson("https://ubercloneserver.herokuapp.com/staff/login", json);
-            ////MessageBox.Show(responseContent);
+            //string responseContent = httpRequest.PostAsyncJson(loginURL, json);
+            //MessageBox.Show(responseContent);
+            //JObject objTemp = JObject.Parse(responseContent);
+            //string status = (string)objTemp["status"];
+            //string message = (string)objTemp["message"];
+            ////MessageBox.Show(status);
+            //if (status.Equals("True") && message.Equals("Login successfully"))
+            //{
+            //    role = (string)objTemp["data"]["role"];
+            //    accessToken = (string)objTemp["data"]["token"];
+            //    if (role == "ADMIN")
+            //    {
+            //        AdministratorWindow administratorWindow = new AdministratorWindow(accessToken);
+            //        administratorWindow.Show();
+            //    }
+            //    else if (role == "CALLSTAFF")
+            //    {
+            //        CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken);
+            //        callCenterWindow.Show();
+            //    }
+            //    else if(role == "TRIPSTAFF")
+            //    {
+            //        TripTrackingWindow tripTrackingWindow = new TripTrackingWindow(accessToken);
+            //        tripTrackingWindow.Show();
+            //    }
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Invalid account, please login again");
+            //    userNameTextBox.Clear();
+            //    passwordBox.Clear();
+            //}
+
+
+            ////MessageBox.Show(content.ToString());
+            ////JObject o = JObject.Parse(content);
+            ////JArray arr = (JArray)o["data"];
+            ////users = arr.ToObject<List<User>>();
+            ////UsersListToView = (List<User>)users;
+            ////SelectedUsers = UsersListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
 
             ////responseContent.Wait();
-            ////string a = responseContent.Result;
-            //Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseContent);
-            //MessageBox.Show(values["status"]);
-
-            CallCenterWindow callCenterWindow = new CallCenterWindow();
-            callCenterWindow.Show();
-
-            //AdministratorWindow administratorWindow = new AdministratorWindow();
-            //administratorWindow.Show();
-            this.Close();
-
+            //// string a = responseContent.Result;
+            ////Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseContent);
+            ////MessageBox.Show(values(["data"]["role"]));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

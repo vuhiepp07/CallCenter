@@ -34,14 +34,8 @@ namespace CallCenter.Pages
 
         private CollectionViewSource TripViewSource;
 
-        public void getAndBindingUserData()
+        private void refreshViewSource(IList<Trip> trips)
         {
-            HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllTripUrl);
-            MessageBox.Show(content.ToString());
-            JObject o = JObject.Parse(content);
-            JArray arr = (JArray)o["data"];
-            trips = arr.ToObject<List<Trip>>();
             TripsListToView = (List<Trip>)trips;
             SelectedTrips = TripsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
             TripViewSource.Source = SelectedTrips;
@@ -50,11 +44,22 @@ namespace CallCenter.Pages
             _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
             PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
         }
+
+        public void getAndBindingTripData()
+        {
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.GetDataFromUrlAsync(GetAllTripUrl);
+            MessageBox.Show(content.ToString());
+            JObject o = JObject.Parse(content);
+            JArray arr = (JArray)o["data"];
+            trips = arr.ToObject<List<Trip>>();
+            refreshViewSource(trips);
+        }
         public TripManagement()
         {
             InitializeComponent();
             TripViewSource = (CollectionViewSource)FindResource(nameof(TripViewSource));
-            getAndBindingUserData();
+            getAndBindingTripData();
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -63,23 +68,13 @@ namespace CallCenter.Pages
             SearchField.Text = "";
             TripViewSource.Source = from trip in trips
                                     where trip.tripID.ToLower() == tripID.ToLower()
-                                    select
-                                    new
-                                    {
-                                        tripID = trip.tripID,
-                                        customerName = trip.customerName,
-                                        driverName = trip.driverName,
-                                        pickingAddress = trip.pickingAddress,
-                                        arrivingAddress = trip.arrivingAddress,
-                                        discountID = trip.discountID,
-                                        totalPrice = trip.totalPrice,
-                                        status = trip.status
-                                    };
+                                    select trip;
+            refreshViewSource((IList<Trip>)TripViewSource.Source);
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
         {
-            getAndBindingUserData();
+            getAndBindingTripData();
         }
 
         private void NextTripPageBtn_Click(object sender, RoutedEventArgs e)

@@ -19,8 +19,15 @@ namespace CallCenter
     /// </summary>
     public partial class TripTrackingWindow : Window
     {
+        private string accessToken;
         public TripTrackingWindow()
+        { 
+            InitializeComponent();
+        }
+
+        public TripTrackingWindow(string token)
         {
+            accessToken = token;
             InitializeComponent();
         }
     }

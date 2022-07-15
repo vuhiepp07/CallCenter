@@ -30,7 +30,7 @@
                 FontSize="10"
                 TextWrapping="Wrap"
                 MaxWidth="400"
-                materialDesign:HintAssist.Hint="Please insert exacly Username"
+                materialDesign:HintAssist.Hint="Please insert exacly discountID"
                 IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
             <Button
                 Click="BtnSearch_Click"
@@ -51,12 +51,13 @@
             </Button>
         </DockPanel>
         <Grid Background="White" Canvas.Top="149" Canvas.Left="-1">
-            <ListView 
+            <ListView Name="discountListView"
         ItemsSource="{Binding Source={StaticResource DiscountViewSource}}" Margin="0,0,0,204" >
                 <ListView.Resources>
                     <ContextMenu x:Key="DiscountContextMenu">
                         <!--<MenuItem Header="View 5 latest trips" Name="btnLatestTrips" Click="btnLatestTrips_Click" FontSize ="13" />
                         <MenuItem Header="Most frequented destinations" Name="btnFrequentDes" Click="btnFrequentDes_Click"  FontSize ="13"/>-->
+                        <MenuItem Header="Delete" Name="deleteDiscountBtn" FontSize="13" Click="deleteDiscountBtn_Click"></MenuItem>
                     </ContextMenu>
                 </ListView.Resources>
 
@@ -68,7 +69,7 @@
                 <ListView.View>
                     <GridView>
 
-                        <GridViewColumn Header="ID" Width="50">
+                        <GridViewColumn Header="ID" Width="100">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -78,12 +79,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding discountID}" TextAlignment="Center" FontSize="14" Width="50" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding discountId}" TextAlignment="Center" FontSize="14" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Name" Width="150">
+                        <GridViewColumn Header="Name" Width="200">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -93,12 +94,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding name}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding discountName}" TextAlignment="Center" FontSize="14" Width="200" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Discount percentage" Width="150">
+                        <GridViewColumn Header="Discount percentage" Width="230">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -108,12 +109,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding discountPercentage}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding discountPercent}" TextAlignment="Center" FontSize="14" Width="230" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Start date" Width="150">
+                        <GridViewColumn Header="Start date" Width="250">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -123,12 +124,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding startDate}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding startDate}" TextAlignment="Center" FontSize="14" Width="250" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="End date" Width="350">
+                        <GridViewColumn Header="End date" Width="250">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -138,7 +139,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding endDate}" TextAlignment="Center" FontSize="14" Width="350" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding endDate}" TextAlignment="Center" FontSize="14" Width="250" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -187,5 +188,16 @@
                 </Button.RenderTransform>
             </Button>
         </DockPanel>
+        <Button
+            Name="addDiscountBtn"
+            Click="addDiscountBtn_Click"
+            Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+            ToolTip="MaterialDesignFloatingActionLightButton"
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="1198" Canvas.Top="682" Height="58" Width="66">
+            <materialDesign:PackIcon
+            Kind="PlusCircleOutline"
+            Height="55"
+            Width="55" />
+        </Button>
     </Canvas>
 </Page>

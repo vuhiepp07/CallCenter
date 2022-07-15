@@ -34,14 +34,8 @@ namespace CallCenter.Pages
 
         private CollectionViewSource UserViewSource;
 
-        public void getAndBindingUserData()
+        private void refreshViewSource(IList<User> users)
         {
-            HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetUserDriverAsync(GetAllUserUrl);
-            MessageBox.Show(content.ToString());
-            JObject o = JObject.Parse(content);
-            JArray arr = (JArray)o["data"];
-            users = arr.ToObject<List<User>>();
             UsersListToView = (List<User>)users;
             SelectedUsers = UsersListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
             UserViewSource.Source = SelectedUsers;
@@ -49,6 +43,16 @@ namespace CallCenter.Pages
             _totalItems = users.Count;
             _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
             PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+        }
+        public void getAndBindingUserData()
+        {
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.GetDataFromUrlAsync(GetAllUserUrl);
+            MessageBox.Show(content.ToString());
+            JObject o = JObject.Parse(content);
+            JArray arr = (JArray)o["data"];
+            users = arr.ToObject<List<User>>();
+            refreshViewSource(users);
         }
         public UserManagement()
         {
@@ -96,17 +100,8 @@ namespace CallCenter.Pages
             SearchField.Text = "";
             UserViewSource.Source = from user in users
                                     where user.username.ToLower() == userName.ToLower()
-                                    select
-                                    new
-                                    {
-                                        id = user.id,
-                                        fullName = user.fullName,
-                                        username = user.username,
-                                        phoneNumber = user.phoneNumber,
-                                        email = user.email,
-                                        homeAddress = user.homeAddress,
-                                        gender = user.gender
-                                    };
+                                    select user;
+            refreshViewSource((IList<User>)UserViewSource.Source);
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

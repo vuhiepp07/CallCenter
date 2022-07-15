@@ -1,0 +1,44 @@
+﻿<Window x:Class="CallCenter.Windows.AddDiscount"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CallCenter.Windows"
+        mc:Ignorable="d"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Light"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="AddDiscount" Height="500" Width="448">
+    <Border Margin="10" Padding="10" CornerRadius="10" BorderThickness="1" BorderBrush="LightGray" Background="#039BE5">
+        <StackPanel DockPanel.Dock="Right" Background="#039BE5">
+            <Label Content="Add Discount" FontSize="20" Foreground="White" FontWeight="DemiBold" Height="49" Width="139"/>
+            <Label Content="Discount name" FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <TextBox Height="25" x:Name="discountName"/>
+            <Label Content="Discount percentage" FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <TextBox Height="25" x:Name="discountPercent"/>
+            <Label Content="Start date " FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <DatePicker
+                  x:Name="startDatePicker"
+                  Width="405"
+                  materialDesign:HintAssist.Hint="Pick Date"
+                  Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+            <Label Content="End date " FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <DatePicker
+                  x:Name="endDatePicker"
+                  Width="405"
+                  materialDesign:HintAssist.Hint="Pick Date"
+                  Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+            <Label Content="Quantity " FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <TextBox Height="25" x:Name="discountQuantity"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="84">
+                <Button Margin="5" Width="90" x:Name="addDiscountBtn" Click="addDiscountBtn_Click" Content="Add"/>
+                <Button Margin="5" Width="90" x:Name="cancelBtn" Click="cancelBtn_Click" Content="Cancel" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

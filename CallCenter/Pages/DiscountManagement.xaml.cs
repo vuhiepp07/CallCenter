@@ -1,4 +1,5 @@
 ﻿using CallCenter.Models;
+using CallCenter.Windows;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace CallCenter.Pages
     public partial class DiscountManagement : Page
     {
         private const string GetAllDiscountUrl = "https://ubercloneserver.herokuapp.com/staff/getAllDiscount";
+        private const string deleteDiscountUrl = "https://ubercloneserver.herokuapp.com/staff/deleteDiscount/";
 
         IList<Discount> discounts = new List<Discount>();
         List<Discount> DiscountsListToView = new List<Discount> { };
@@ -42,13 +44,7 @@ namespace CallCenter.Pages
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             discounts = arr.ToObject<List<Discount>>();
-            DiscountsListToView = (List<Discount>)discounts;
-            SelectedDiscounts = DiscountsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            DiscountViewSource.Source = SelectedDiscounts;
-            _currentPage = 1;
-            _totalItems = discounts.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            refreshViewSource(discounts);
         }
         public DiscountManagement()
         {
@@ -59,20 +55,12 @@ namespace CallCenter.Pages
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            var discountID = SearchField.Text.Trim().ToLower();
+            var discountID = SearchField.Text;
             SearchField.Text = "";
             DiscountViewSource.Source = from discount in discounts
-                                    where discount.discountID.ToLower() == discountID.ToLower()
-                                    select
-                                    new
-                                    {
-                                        discountID = discount.discountID,
-                                        name = discount.name,
-                                        discountPercentage = discount.discountPercentage,
-                                        startDate = discount.startDate,
-                                        endDate = discount.endDate,
-                                        quantity = discount.quantity,
-                                    };
+                                        where discount.discountId == discountID
+                                        select discount;
+            refreshViewSource((IList<Discount>)DiscountViewSource.Source);
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
@@ -99,6 +87,45 @@ namespace CallCenter.Pages
                 PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
                 SelectedDiscounts = DiscountsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
                 DiscountViewSource.Source = SelectedDiscounts;
+            }
+        }
+
+        private void addDiscountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var addDiscountWindow = new AddDiscount();
+            addDiscountWindow.ShowDialog();
+        }
+
+        private void refreshViewSource(IList<Discount> discounts)
+        {
+            DiscountsListToView = (List<Discount>)discounts;
+            SelectedDiscounts = DiscountsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
+            DiscountViewSource.Source = SelectedDiscounts;
+            _currentPage = 1;
+            _totalItems = discounts.Count;
+            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
+            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+        }
+
+        private void deleteDiscountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Discount temp = (Discount)discountListView.SelectedItem;
+            string tempUrl = deleteDiscountUrl + temp.discountId;
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.DeleteDataByUrl(tempUrl);
+            //MessageBox.Show(content);
+            JObject objTemp = JObject.Parse(content);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            if(status.Equals("True") && message.Equals("Delete discount successfully")){
+                MessageBox.Show("Delete discount successfully");
+                int index = discounts.IndexOf(temp);
+                discounts.RemoveAt(index);
+                refreshViewSource(discounts);
+            }
+            else
+            {
+                MessageBox.Show("Some error occured when delete this discount");
             }
         }
     }

@@ -22,6 +22,16 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class RequestManagement : Page
     {
+        private void refreshViewSource(IList<Request> requests)
+        {
+            RequestsListToView = (List<Request>)requests;
+            SelectedRequests = RequestsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
+            RequestViewSource.Source = SelectedRequests;
+            _currentPage = 1;
+            _totalItems = requests.Count;
+            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
+            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+        }
         public void getAndBindingRequestData()
         {
             HttpRequest httpRequest = new HttpRequest();
@@ -30,13 +40,7 @@ namespace CallCenter.Pages
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             requests = arr.ToObject<List<Request>>();
-            RequestsListToView = (List<Request>)requests;
-            SelectedRequests = RequestsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            RequestViewSource.Source = SelectedRequests;
-            _currentPage = 1;
-            _totalItems = requests.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            refreshViewSource(requests);
         }
         public RequestManagement()
         {
@@ -63,17 +67,8 @@ namespace CallCenter.Pages
             SearchField.Text = "";
             RequestViewSource.Source = from request in requests
                                        where request.requestID.ToLower() == requestID.ToLower()
-                                       select
-                                       new
-                                       {
-                                           requestID = request.requestID,
-                                           userName = request.userName,
-                                           pickingAddress = request.pickingAddress,
-                                           status = request.status,
-                                           createdTime = request.createdTime,
-                                           typeOfVehicle = request.typeOfVehicle,
-                                           arrivingAddress = request.arrivingAddress,
-                                       };
+                                       select request;
+            refreshViewSource((IList<Request>)RequestViewSource.Source);
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

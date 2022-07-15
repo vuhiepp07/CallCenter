@@ -69,6 +69,7 @@ namespace CallCenter.Pages
             endPoints = arr.ToObject<List<Address>>();
             //MessageBox.Show(startPoints.ToString());
             DestinationCBox.ItemsSource = endPoints;
+            DestinationCBox.IsDropDownOpen = true;
         }
 
         private void StartAddrbtn_Click(object sender, RoutedEventArgs e)
@@ -83,6 +84,7 @@ namespace CallCenter.Pages
             startPoints = arr.ToObject<List<Address>>();
             //MessageBox.Show(startPoints.ToString());
             StartCBox.ItemsSource = startPoints;
+            StartCBox.IsDropDownOpen = true;
         }
 
         private void sendRequestBtn_Click(object sender, RoutedEventArgs e)

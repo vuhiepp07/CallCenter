@@ -20,8 +20,15 @@ namespace CallCenter
     /// </summary>
     public partial class AdministratorWindow : Window
     {
+        private string accessToken;
         public AdministratorWindow()
         {
+            InitializeComponent();
+        }
+
+        public AdministratorWindow(string token)
+        {
+            accessToken = token;
             InitializeComponent();
         }
 
