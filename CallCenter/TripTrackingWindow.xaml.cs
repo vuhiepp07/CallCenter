@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CallCenter.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,17 @@ namespace CallCenter
         {
             accessToken = token;
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NavigateToTrip(object sender, RoutedEventArgs e)
+        {
+            //Main.Content = new TripManagement();
+            //Main.NavigationService.RemoveBackEntry();
         }
     }
 }

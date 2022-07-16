@@ -18,17 +18,16 @@
     <Canvas Margin="0,10,-547,-348" Background="White" Name="thisCanvas">
         <Label Content="Trip booking" FontSize="32" Foreground="Black" Canvas.Left="1022" Canvas.Top="30" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         <WebBrowser Name="Ggmap" Canvas.Left="25" Canvas.Top="-10" Height="788" Width="912" HorizontalAlignment="Center" VerticalAlignment="Top"></WebBrowser>
-        <Label Content="User phone number:" Canvas.Left="969" Canvas.Top="191"></Label>
+        <Label Content="User phone number:" Canvas.Left="969" Canvas.Top="115" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
         <TextBox Width="218"
         x:Name="PhoneTextBox"
-        MaxLength="12"
-        materialDesign:TransitionAssist.DisableTransitions="True" Canvas.Left="1099" Canvas.Top="179" Height="34" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        materialDesign:TransitionAssist.DisableTransitions="True" Canvas.Left="1099" Canvas.Top="103" Height="34" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <Button Name="StartAddbtn"
                 Click="StartAddrbtn_Click"
                 Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip="MaterialDesignIconButton"
                 Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Height="40" Width="40" Canvas.Left="1281" Canvas.Top="306" HorizontalAlignment="Center" VerticalAlignment="Top">
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Height="40" Width="40" Canvas.Left="1281" Canvas.Top="230" HorizontalAlignment="Center" VerticalAlignment="Top">
             <materialDesign:PackIcon Kind="Search" Foreground="Black" VerticalAlignment="Center" />
         </Button>
         <Button Name="EndAddbtn"
@@ -36,17 +35,20 @@
                 Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip="MaterialDesignIconButton"
                 Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Height="40" Width="40" Canvas.Left="1281" Canvas.Top="445" HorizontalAlignment="Center" VerticalAlignment="Top">
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Height="40" Width="40" Canvas.Left="1281" Canvas.Top="369" HorizontalAlignment="Center" VerticalAlignment="Top">
             <materialDesign:PackIcon Kind="Search" Foreground="Black" />
         </Button>
 
-        <Label Content="Booking address:" Canvas.Left="966" Canvas.Top="279" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-        <Label Content="Arriving address:" Canvas.Left="966" Canvas.Top="418" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+        <Label Content="Booking address:" Canvas.Left="966" Canvas.Top="203" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <Label Content="Arriving address:" Canvas.Left="966" Canvas.Top="342" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
         <ComboBox IsEditable="True" Name="StartCBox" SelectionChanged="StartCBox_SelectionChanged"
-  materialDesign:HintAssist.Hint="Start" Canvas.Left="969" Canvas.Top="306" Height="40" Width="290" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+  materialDesign:HintAssist.Hint="Start" Canvas.Left="969" Canvas.Top="230" Height="40" Width="290" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <ComboBox IsEditable="True" x:Name="DestinationCBox" SelectionChanged="DestinationCBox_SelectionChanged"
-  materialDesign:HintAssist.Hint="Destination" Canvas.Left="969" Canvas.Top="445" Height="40" Width="290" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
+  materialDesign:HintAssist.Hint="Destination" Canvas.Left="969" Canvas.Top="369" Height="40" Width="290" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="User note:" Canvas.Left="969" Canvas.Top="488" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <TextBox Width="280"
+          x:Name="userNoteTextBox"
+          materialDesign:TransitionAssist.DisableTransitions="True" Canvas.Left="1037" Canvas.Top="487" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <!--<Button Name="viewRouteBtn"
         Click="viewRouteBtn_Click"
         Style="{StaticResource MaterialDesignRaisedButton}"

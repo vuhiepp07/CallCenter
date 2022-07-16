@@ -65,9 +65,9 @@ namespace CallCenter.Pages
         {
             var requestID = SearchField.Text.Trim().ToLower();
             SearchField.Text = "";
-            RequestViewSource.Source = from request in requests
-                                       where request.requestID.ToLower() == requestID.ToLower()
-                                       select request;
+            //RequestViewSource.Source = from request in requests
+            //                           where request.requestedID.ToLower() == requestID.ToLower()
+            //                           select request;
             refreshViewSource((IList<Request>)RequestViewSource.Source);
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class Discount
+    public class Discount
     {
         public string discountId { get; set; }
         public string discountName { get; set; }
@@ -14,5 +14,30 @@ namespace CallCenter.Models
         public string startDate { get; set; }
         public string endDate { get; set; }
         public string quantity { get; set; }
+
+        public Discount(Discount temp)
+        {
+            discountId = temp.discountId;
+            discountName = temp.discountName;
+            discountPercent = temp.discountPercent;
+            startDate = temp.startDate;
+            endDate = temp.endDate;
+            quantity = temp.quantity;
+        }
+
+        public Discount()
+        {
+
+        }
+
+        public Discount(string discountId, string discountName, double discountPercent, string startDate, string endDate, string quantity)
+        {
+            this.discountId = discountId;
+            this.discountName = discountName;
+            this.discountPercent = discountPercent;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.quantity = quantity;
+        }
     }
 }

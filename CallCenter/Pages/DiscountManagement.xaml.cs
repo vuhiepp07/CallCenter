@@ -1,5 +1,6 @@
 ﻿using CallCenter.Models;
 using CallCenter.Windows;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ using System.Windows.Shapes;
 
 namespace CallCenter.Pages
 {
+    public delegate void DataTransferDelegate(Discount data);
     /// <summary>
     /// Interaction logic for DiscountManagement.xaml
     /// </summary>
@@ -25,6 +27,12 @@ namespace CallCenter.Pages
     {
         private const string GetAllDiscountUrl = "https://ubercloneserver.herokuapp.com/staff/getAllDiscount";
         private const string deleteDiscountUrl = "https://ubercloneserver.herokuapp.com/staff/deleteDiscount/";
+        private const string editDiscountUrl = "https://ubercloneserver.herokuapp.com/staff/editDiscount";
+        private string addDiscountURL = "https://ubercloneserver.herokuapp.com/staff/addDiscount";
+        private Discount unEdited;
+
+        public DataTransferDelegate del;
+        Boolean addDiscountflag, editDiscountflag;
 
         IList<Discount> discounts = new List<Discount>();
         List<Discount> DiscountsListToView = new List<Discount> { };
@@ -40,7 +48,7 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlAsync(GetAllDiscountUrl);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             discounts = arr.ToObject<List<Discount>>();
@@ -48,6 +56,8 @@ namespace CallCenter.Pages
         }
         public DiscountManagement()
         {
+            addDiscountflag = false;
+            editDiscountflag = false;
             InitializeComponent();
             DiscountViewSource = (CollectionViewSource)FindResource(nameof(DiscountViewSource));
             getAndBindingDiscountData();
@@ -90,12 +100,6 @@ namespace CallCenter.Pages
             }
         }
 
-        private void addDiscountBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var addDiscountWindow = new AddDiscount();
-            addDiscountWindow.ShowDialog();
-        }
-
         private void refreshViewSource(IList<Discount> discounts)
         {
             DiscountsListToView = (List<Discount>)discounts;
@@ -127,6 +131,74 @@ namespace CallCenter.Pages
             {
                 MessageBox.Show("Some error occured when delete this discount");
             }
+        }
+
+        private void editDiscountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            unEdited = (Discount)discountListView.SelectedItem;
+            editDiscountflag = true;
+            del += new DataTransferDelegate(passData);
+            DiscountInputWindow discountInputWindow = new DiscountInputWindow(del, new Discount((Discount)discountListView.SelectedItem));
+            discountInputWindow.Show();
+        }
+
+        private void addDiscountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            addDiscountflag = true;
+            del += new DataTransferDelegate(passData);
+            DiscountInputWindow discountInputWindow = new DiscountInputWindow(del);
+            discountInputWindow.Show();
+        }
+
+        public void passData(Discount data)
+        {
+            Discount temp = new Discount(data);
+            if(data.discountPercent == -99.0)
+            {
+                addDiscountflag = false;
+                editDiscountflag = false;
+                unEdited = null;
+                del = null;
+            }
+            else if (addDiscountflag == true)
+            {
+                string json = JsonConvert.SerializeObject(temp);
+
+                HttpRequest httpRequest = new HttpRequest();
+                string responseContent = httpRequest.PostAsyncJson(addDiscountURL, json);
+                //MessageBox.Show(responseContent);
+                JObject objTemp = JObject.Parse(responseContent);
+                string status = (string)objTemp["status"];
+                string message = (string)objTemp["message"];
+                if (status.Equals("True") && message.Equals("Add discount successfully"))
+                {
+                    MessageBox.Show("Add discount successfully");
+                }
+                addDiscountflag = false;
+                getAndBindingDiscountData();
+            }
+            else if(editDiscountflag == true)
+            {
+                string json = JsonConvert.SerializeObject(temp);
+                HttpRequest httpRequest = new HttpRequest();
+                string responseContent = httpRequest.PostAsyncJson(editDiscountUrl, json);
+                //MessageBox.Show(responseContent);
+
+                JObject objTemp = JObject.Parse(responseContent);
+                string status = (string)objTemp["status"];
+                string message = (string)objTemp["message"];
+                if (status.Equals("True") && message.Equals("Edit discount successfully"))
+                {
+                    MessageBox.Show("Edit discount successfully");
+                }
+                //MessageBox.Show(discounts.IndexOf(unEdited).ToString());
+                discounts.RemoveAt(discounts.IndexOf(unEdited));
+                unEdited = null;
+                editDiscountflag = false;
+                discounts.Add(temp);
+                refreshViewSource(discounts);
+            }
+            del = null;
         }
     }
 }

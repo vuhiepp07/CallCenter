@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class Staff
+    public class Staff
     {
+        public Staff(){
+
+        }   
+
+        public Staff(Staff temp){
+
+        } 
+
     }
+
 }
