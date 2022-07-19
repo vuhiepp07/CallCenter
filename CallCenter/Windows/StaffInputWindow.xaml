@@ -13,15 +13,17 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="StaffInputWindow" Height="500" Width="448">
+        Title="StaffInputWindow" Height="363" Width="431">
     <Border Margin="10" Padding="10" CornerRadius="10" BorderThickness="1" BorderBrush="LightGray" Background="#039BE5">
         <StackPanel DockPanel.Dock="Right" Background="#039BE5">
-            <Label Content="Add Discount" FontSize="20" Foreground="White" FontWeight="DemiBold" Height="49" Width="139"/>
-            <Label Content="Discount name" FontSize="15" Foreground="White" FontWeight="DemiBold"/>
-            <TextBox Height="25" x:Name="discountName"/>
-            <Label Content="Discount percentage" FontSize="15" Foreground="White" FontWeight="DemiBold"/>
-            <TextBox Height="25" x:Name="discountPercent"/>
-            <Label Content="Start date " FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <Label Content="Add Staff" FontSize="20" Foreground="White" FontWeight="DemiBold" Height="49" Width="139"/>
+            <Label Content="Username" FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <TextBox Height="25" x:Name="staffUserName"/>
+            <Label Content="Password" FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <PasswordBox Height="25" x:Name="staffPassword"/>
+            <Label Content="Staff role" FontSize="15" Foreground="White" FontWeight="DemiBold"/>
+            <ComboBox x:Name="roleCombobox"></ComboBox>
+            <!--<Label Content="Start date " FontSize="15" Foreground="White" FontWeight="DemiBold"/>
             <DatePicker
                   x:Name="startDatePicker"
                   Width="405"
@@ -34,7 +36,7 @@
                   materialDesign:HintAssist.Hint="Pick Date"
                   Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
             <Label Content="Quantity " FontSize="15" Foreground="White" FontWeight="DemiBold"/>
-            <TextBox Height="25" x:Name="discountQuantity"/>
+            <TextBox Height="25" x:Name="discountQuantity"/>-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="84">
                 <Button Margin="5" Width="90" x:Name="addStaffBtn" Click="addStaffBtn_Click" Content="Update"/>
                 <Button Margin="5" Width="90" x:Name="cancelBtn" Click="cancelBtn_Click" Content="Cancel" />

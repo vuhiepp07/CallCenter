@@ -45,10 +45,13 @@
   materialDesign:HintAssist.Hint="Start" Canvas.Left="969" Canvas.Top="230" Height="40" Width="290" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <ComboBox IsEditable="True" x:Name="DestinationCBox" SelectionChanged="DestinationCBox_SelectionChanged"
   materialDesign:HintAssist.Hint="Destination" Canvas.Left="969" Canvas.Top="369" Height="40" Width="290" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Label Content="User note:" Canvas.Left="969" Canvas.Top="488" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <Label Content="Vehicle type:" Canvas.Left="969" Canvas.Top="493" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <ComboBox IsEditable="False" x:Name="VehicleCBox"
+  materialDesign:HintAssist.Hint="" Canvas.Left="1067" Canvas.Top="484" Height="40" Width="250" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="User note:" Canvas.Left="969" Canvas.Top="571" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
         <TextBox Width="280"
           x:Name="userNoteTextBox"
-          materialDesign:TransitionAssist.DisableTransitions="True" Canvas.Left="1037" Canvas.Top="487" HorizontalAlignment="Left" VerticalAlignment="Center" />
+          materialDesign:TransitionAssist.DisableTransitions="True" Canvas.Left="1037" Canvas.Top="570" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <!--<Button Name="viewRouteBtn"
         Click="viewRouteBtn_Click"
         Style="{StaticResource MaterialDesignRaisedButton}"
@@ -61,6 +64,6 @@
         Style="{StaticResource MaterialDesignRaisedButton}"
         ToolTip="Resource name: MaterialDesignRaisedButton"
         Content="Send request"
-        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="1057" Canvas.Top="584" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="1057" Canvas.Top="656" HorizontalAlignment="Center" VerticalAlignment="Top" />
     </Canvas>
 </Page>

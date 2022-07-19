@@ -8,8 +8,8 @@ namespace CallCenter.Models
 {
     internal class Request
     {
-        public Address startAddress { get; set; }
-        public Address destination { get; set; }
+        public point startAddress { get; set; }
+        public point destination { get; set; }
         public string timeSecond { get; set; }
         public string phoneNumber { get; set; }
         public DateTime createdTime { get; set; }   

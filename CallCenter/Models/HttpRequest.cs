@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CallCenter.Models
 {
@@ -11,6 +12,25 @@ namespace CallCenter.Models
     {
         HttpClient _httpClient = null;
         public HttpClient httpClient => _httpClient ?? (new HttpClient());
+
+        public string PutAsyncJson(string url, string json)
+        {
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Put, url);
+                HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                request.Content = httpContent;
+                var response = httpClient.Send(request);
+                var rcontent = response.Content.ReadAsStringAsync();
+                return rcontent.Result;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw e;
+            }
+        }
 
         // Post Json Data
         public string PostAsyncJson(string url, string json)
@@ -20,6 +40,26 @@ namespace CallCenter.Models
                 var request = new HttpRequestMessage(HttpMethod.Post, url);
                 HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                 request.Content = httpContent;
+                var response = httpClient.Send(request);
+                var rcontent = response.Content.ReadAsStringAsync();
+                return rcontent.Result;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw e;
+            }
+        }
+
+        public string PostAsyncJson(string url, string json, string accessToken)
+        {
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Post, url);
+                HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                request.Content = httpContent;
+                request.Headers.Add("token", accessToken);
                 var response = httpClient.Send(request);
                 var rcontent = response.Content.ReadAsStringAsync();
                 return rcontent.Result;
@@ -43,6 +83,25 @@ namespace CallCenter.Models
                 var res = httpClient.Send(msg);
 
                 var content = res.Content.ReadAsStringAsync();
+                return content.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw ex;
+            }
+        }
+
+        public string GetDataFromUrlAsync(string url, string accessToken)
+        {
+            //httpClient.DefaultRequestHeaders.Add("token", accessToken);
+            try
+            {
+                var msg = new HttpRequestMessage(HttpMethod.Get, url);
+                msg.Headers.Add("token", accessToken);
+                var res = httpClient.Send(msg);
+                var content = res.Content.ReadAsStringAsync();
+                MessageBox.Show(msg.ToString());
                 return content.Result;
             }
             catch (Exception ex)

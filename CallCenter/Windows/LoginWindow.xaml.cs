@@ -33,50 +33,50 @@ namespace CallCenter.Windows
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-            CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken);
-            callCenterWindow.Show();
+            //CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken);
+            //callCenterWindow.Show();
 
-            //string username = userNameTextBox.Text;
-            //string password = passwordBox.Password.ToString();
-            //Dictionary<string, string> map = new Dictionary<string, string>();
-            //map.Add("username", username);
-            //map.Add("password", password);
-            //string json = JsonConvert.SerializeObject(map);
+            string username = userNameTextBox.Text;
+            string password = passwordBox.Password.ToString();
+            Dictionary<string, string> map = new Dictionary<string, string>();
+            map.Add("username", username);
+            map.Add("password", password);
+            string json = JsonConvert.SerializeObject(map);
 
-            //HttpRequest httpRequest = new HttpRequest();
-            //string responseContent = httpRequest.PostAsyncJson(loginURL, json);
-            //MessageBox.Show(responseContent);
-            //JObject objTemp = JObject.Parse(responseContent);
-            //string status = (string)objTemp["status"];
-            //string message = (string)objTemp["message"];
-            ////MessageBox.Show(status);
-            //if (status.Equals("True") && message.Equals("Login successfully"))
-            //{
-            //    role = (string)objTemp["data"]["role"];
-            //    accessToken = (string)objTemp["data"]["token"];
-            //    if (role == "ADMIN")
-            //    {
-            //        AdministratorWindow administratorWindow = new AdministratorWindow(accessToken);
-            //        administratorWindow.Show();
-            //    }
-            //    else if (role == "CALLSTAFF")
-            //    {
-            //        CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken);
-            //        callCenterWindow.Show();
-            //    }
-            //    else if(role == "TRIPSTAFF")
-            //    {
-            //        TripTrackingWindow tripTrackingWindow = new TripTrackingWindow(accessToken);
-            //        tripTrackingWindow.Show();
-            //    }
-            //    this.Close();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Invalid account, please login again");
-            //    userNameTextBox.Clear();
-            //    passwordBox.Clear();
-            //}
+            HttpRequest httpRequest = new HttpRequest();
+            string responseContent = httpRequest.PostAsyncJson(loginURL, json);
+            MessageBox.Show(responseContent);
+            JObject objTemp = JObject.Parse(responseContent);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            //MessageBox.Show(status);
+            if (status.Equals("True") && message.Equals("Login successfully"))
+            {
+                role = (string)objTemp["data"]["role"];
+                accessToken = (string)objTemp["data"]["token"];
+                if (role == "ADMIN")
+                {
+                    AdministratorWindow administratorWindow = new AdministratorWindow(accessToken);
+                    administratorWindow.Show(); 
+                }
+                else if (role == "CALLSTAFF")
+                {
+                    CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken);
+                    callCenterWindow.Show();
+                }
+                else if (role == "TRIPSTAFF")
+                {
+                    TripTrackingWindow tripTrackingWindow = new TripTrackingWindow(accessToken);
+                    tripTrackingWindow.Show();
+                }
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid account, please login again");
+                userNameTextBox.Clear();
+                passwordBox.Clear();
+            }
 
 
             ////MessageBox.Show(content.ToString());

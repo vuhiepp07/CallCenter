@@ -14,7 +14,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="TripTrackingWindow" WindowState="Maximized">
-    <!--<Grid>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="44.496"/>
             <ColumnDefinition Width="155.504"/>
@@ -55,35 +55,35 @@
             </Grid>
 
             <StackPanel Grid.Row="1">
-                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToUser">
+                <!--<Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToUser">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="USERS" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
-                </Button>
+                </Button>-->
 
-                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToTrip">
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToTripManagement">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Motorbike" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="TRIP" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToRequest">
+                <!--<Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToRequest">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="CellphonePlay" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="REQUEST" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
-                </Button>
+                </Button>-->
 
-                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToDiscount">
+                <!--<Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToDiscount">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="PercentBoxOutline" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="DISCOUNT" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
-                </Button>
+                </Button>-->
 
-                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5">
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" >
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Settings" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="CONFIGURATION" FontFamily="Champagne &amp; Limousines"/>
@@ -91,5 +91,5 @@
                 </Button>
             </StackPanel>
         </Grid>
-    </Grid>-->
+    </Grid>
 </Window>

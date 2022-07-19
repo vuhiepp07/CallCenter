@@ -37,10 +37,10 @@ namespace CallCenter
 
         }
 
-        private void NavigateToTrip(object sender, RoutedEventArgs e)
+        private void NavigateToTripManagement(object sender, RoutedEventArgs e)
         {
-            //Main.Content = new TripManagement();
-            //Main.NavigationService.RemoveBackEntry();
+            Main.Content = new TripManagement();
+            Main.NavigationService.RemoveBackEntry();
         }
     }
 }

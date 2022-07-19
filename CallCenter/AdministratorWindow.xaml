@@ -76,10 +76,10 @@
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5">
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToStaffManagement">
                     <Grid Width="150">
-                        <materialDesign:PackIcon Kind="CellphonePlay" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="REQUEST" FontFamily="Champagne &amp; Limousines"/>
+                        <materialDesign:PackIcon Kind="HumanChild" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="STAFF" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
                 </Button>
 

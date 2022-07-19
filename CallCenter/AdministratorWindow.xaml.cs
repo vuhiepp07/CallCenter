@@ -49,5 +49,11 @@ namespace CallCenter
             Main.Content = new IncomeAndNumOfTripReport();
             Main.NavigationService.RemoveBackEntry();
         }
+
+        private void NavigateToStaffManagement(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new StaffManagement(accessToken);
+            Main.NavigationService.RemoveBackEntry();
+        }
     }
 }

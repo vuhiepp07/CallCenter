@@ -1,5 +1,7 @@
 ﻿using CallCenter.Models;
 using CallCenter.Pages;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,33 +23,47 @@ namespace CallCenter.Windows
     /// </summary>
     public partial class StaffInputWindow : Window
     {
-        Staff resultAfterEdit;
+        private string accessToken;
+        private string signUpStaffUrl = "https://ubercloneserver.herokuapp.com/staff/signup";
         public DataTransferDelegateStaff dataTransferDelegateStaff;
+        private readonly List<string> rolesArr = new List<string>() { "ADMIN", "CALLSTAFF", "TRIPSTAFF" };
+
         public StaffInputWindow()
         {
             InitializeComponent();
+            roleCombobox.ItemsSource = rolesArr;
         }
 
-        public StaffInputWindow(DataTransferDelegateStaff del)
+        public StaffInputWindow(DataTransferDelegateStaff del, string accessToken)
         {
+            this.accessToken = accessToken;
             InitializeComponent();
             dataTransferDelegateStaff = del;
-            resultAfterEdit = new Staff();
+            roleCombobox.ItemsSource = rolesArr;
         }
 
         private void addStaffBtn_Click(object sender, RoutedEventArgs e)
         {
-            //resultAfterEdit.discountPercent = float.Parse(discountPercent.Text);
-            //resultAfterEdit.discountName = discountName.Text;
-            //resultAfterEdit.startDate = startDatePicker.Text;
-            //resultAfterEdit.endDate = endDatePicker.Text;
-            //resultAfterEdit.quantity = discountQuantity.Text;
-            //dataTransferDelegateStaff?.Invoke(resultAfterEdit);
+            var temp = new {username = staffUserName.Text, password = staffPassword.Password.ToString(), type = roleCombobox.SelectedItem.ToString()};
+            string json = JsonConvert.SerializeObject(temp);
+            MessageBox.Show(json);
+            HttpRequest httpRequest = new HttpRequest();
+            string responseContent = httpRequest.PostAsyncJson(signUpStaffUrl, json, accessToken);
+            MessageBox.Show(responseContent);
+            JObject objTemp = JObject.Parse(responseContent);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            //MessageBox.Show(status);
+            if (status.Equals("True") && message.Equals("Signup successfully"))
+            {
+                dataTransferDelegateStaff?.Invoke(true);
+            }
             this.Close();
         }
 
         private void cancelBtn_Click(object sender, RoutedEventArgs e)
         {
+            dataTransferDelegateStaff?.Invoke(false);
             this.Close();
         }
 

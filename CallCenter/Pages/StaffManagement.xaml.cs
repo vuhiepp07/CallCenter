@@ -19,14 +19,14 @@ using System.Windows.Shapes;
 
 namespace CallCenter.Pages
 {
-    public delegate void DataTransferDelegateStaff(Staff data);
+    public delegate void DataTransferDelegateStaff(bool result);
     /// <summary>
     /// Interaction logic for StaffManagement.xaml
     /// </summary>
     public partial class StaffManagement : Page
     {
         private string getAllStaffUrl = "https://ubercloneserver.herokuapp.com/staff/getAllStaff";
-        private string signUpStaffUrl = "https://ubercloneserver.herokuapp.com/staff/signup";
+        private string accessToken;
 
         public DataTransferDelegateStaff del;
         Boolean addStaffflag;
@@ -41,14 +41,14 @@ namespace CallCenter.Pages
 
         private CollectionViewSource StaffViewSource;
 
-        public void getAndBindingStaffData()
+        public void getAndBindingStaffData(string accessToken)
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(getAllStaffUrl);
-            //MessageBox.Show(content.ToString());
+            var content = httpRequest.GetDataFromUrlAsync(getAllStaffUrl, accessToken);
+            MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
-            JArray arr = (JArray)o["data"];
-            staffs = arr.ToObject<List<Staff>>();
+            //JArray arr = (JArray)o["data"];
+            //staffs = arr.ToObject<List<Staff>>();
             refreshViewSource(staffs);
         }
 
@@ -57,7 +57,16 @@ namespace CallCenter.Pages
             addStaffflag = false;
             InitializeComponent();
             StaffViewSource = (CollectionViewSource)FindResource(nameof(StaffViewSource));
-            getAndBindingStaffData();
+            getAndBindingStaffData(accessToken);
+        }
+
+        public StaffManagement(string accessToken)
+        {
+            this.accessToken = accessToken;
+            addStaffflag = false;
+            InitializeComponent();
+            StaffViewSource = (CollectionViewSource)FindResource(nameof(StaffViewSource));
+            getAndBindingStaffData(this.accessToken);
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -72,7 +81,7 @@ namespace CallCenter.Pages
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
         {
-            getAndBindingStaffData();    
+            getAndBindingStaffData(accessToken);    
         }
 
         private void refreshViewSource(IList<Staff> staffs)
@@ -135,31 +144,16 @@ namespace CallCenter.Pages
         {
             addStaffflag = true;
             del += new DataTransferDelegateStaff(passData);
-            StaffInputWindow staffInputWindow = new StaffInputWindow(del);
+            StaffInputWindow staffInputWindow = new StaffInputWindow(del, accessToken);
             staffInputWindow.Show();
         }
 
-        public void passData(Staff data)
+        public void passData(bool result)
         {
-            Staff temp = new Staff(data);
-            if (addStaffflag == true)
+            if(result == true)
             {
-                string json = JsonConvert.SerializeObject(temp);
-
-                HttpRequest httpRequest = new HttpRequest();
-                string responseContent = httpRequest.PostAsyncJson(signUpStaffUrl, json);
-                //MessageBox.Show(responseContent);
-                JObject objTemp = JObject.Parse(responseContent);
-                string status = (string)objTemp["status"];
-                string message = (string)objTemp["message"];
-                if (status.Equals("True") && message.Equals("Add staff successfully"))
-                {
-                    MessageBox.Show("Add staff successfully");
-                }
-                addStaffflag = false;
-                getAndBindingStaffData();
+                getAndBindingStaffData(accessToken);
             }
-            del = null;
         }
     }
 }
