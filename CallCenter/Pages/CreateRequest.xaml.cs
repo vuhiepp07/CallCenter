@@ -27,6 +27,7 @@ namespace CallCenter.Pages
         private string Map4DApiUrl = "https://api.map4d.vn/sdk/place/text-search?key=49504631a3ee3700ee08bdca573b00c5&text=";
         private string mapRouteUrl = "https://www.google.com/maps/dir/";
         private string bookingUrl = "https://ubercloneserver.herokuapp.com/staff/booking";
+        private string confirmBookingUrl = "https://ubercloneserver.herokuapp.com/staff/confirmBooking/";
         private string Start, End;
         //private string Map4DApiRouting = "http://api.map4d.vn/sdk/route?key=9535db74e2210bbdf73a8ce3c4fb03be&origin={origin}&destination={destination}&mode=motorcycle";
         JObject startObj, endObj, requestObj;
@@ -103,7 +104,7 @@ namespace CallCenter.Pages
             int endIndex = DestinationCBox.SelectedIndex;
             string origin = (string)startObj["result"][startIndex]["location"]["lat"] + "," + (string)startObj["result"][startIndex]["location"]["lng"];
             string destination = (string)endObj["result"][startIndex]["location"]["lat"] + "," + (string)endObj["result"][startIndex]["location"]["lng"];
-            MessageBox.Show(origin + " ----" + destination);
+            //MessageBox.Show(origin + " ----" + destination);
             string map4DRoutingUrl = $"http://api.map4d.vn/sdk/route?key=9535db74e2210bbdf73a8ce3c4fb03be&origin={origin}&destination={destination}&mode=motorcycle";
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlAsync(map4DRoutingUrl);
@@ -141,35 +142,41 @@ namespace CallCenter.Pages
             string json = JsonConvert.SerializeObject(request);
             httpRequest = new HttpRequest();
             string responseContent = httpRequest.PutAsyncJson(bookingUrl, json);
-            MessageBox.Show(responseContent);
+            //MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];
+            string priceTemp = objTemp["data"]["price"].ToString();
+            int price = (int)double.Parse(priceTemp);
             string message = (string)objTemp["message"];
-            MessageBox.Show(status);
-            if (status.Equals("True") && message.Equals("Login successfully"))
+            if (status.Equals("True") && message.Equals("Request and get price successfully"))
             {
+                MessageBoxResult result =  MessageBox.Show($"The customer trip price is {price}VND, does him/her agree?", "User agreement", MessageBoxButton.YesNo);
+                if(result == MessageBoxResult.Yes)
+                {
+                    string temp = confirmBookingUrl + (string)objTemp["data"]["requestId"];
 
+                    httpRequest = new HttpRequest();
+                    responseContent = httpRequest.PutRequest(temp);
+                    //MessageBox.Show(responseContent);
+                    objTemp = JObject.Parse(responseContent);
+                    status = (string)objTemp["status"];
+                    message = (string)objTemp["message"];
+                    if(status.Equals("True"))
+                    {
+                        MessageBox.Show("Booking success");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Some error happened, please try again");
+                    }
+                    this.NavigationService.Navigate(new Uri("/Pages/RequestManagement.xaml", UriKind.Relative));
+                }
+                else
+                {
+                    MessageBox.Show("Request canceled");
+                    this.NavigationService.Navigate(new Uri("/Pages/RequestManagement.xaml", UriKind.Relative));
+                }
             }
-
-            //MessageBox.Show(json);
-            //httpRequest = new HttpRequest();
-            //string responseContent = httpRequest.PostAsyncJson(signUpStaffUrl, json, accessToken);
-            //MessageBox.Show(responseContent);
-            //JObject objTemp = JObject.Parse(responseContent);
-            //string status = (string)objTemp["status"];
-            //string message = (string)objTemp["message"];
-
-            //var request = new
-            //{
-            //    startAddress = a,
-            //    destination = b,
-            //    timeSecond = (string)requestObj["result"]["routes"]["legs"]["duration"]["value"],
-            //    phoneNumber = PhoneTextBox.Text,
-            //    createdTime = DateTime.Now,
-            //    distance = (string)requestObj["result"]["routes"]["legs"]["distance"]["value"],
-            //    vehicleType = VehicleCBox.Text,
-            //    note = userNoteTextBox.Text
-            //};
         }
 
         //private void viewRouteBtn_Click(object sender, RoutedEventArgs e)

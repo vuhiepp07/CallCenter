@@ -8,6 +8,8 @@ namespace CallCenter.Models
 {
     internal class Request
     {
+        public string requestId { get; set; }
+        public string userId { get; set; }
         public point startAddress { get; set; }
         public point destination { get; set; }
         public string timeSecond { get; set; }
@@ -16,6 +18,6 @@ namespace CallCenter.Models
         public string distance { get; set; }
         public string vehicleType { get; set; }
         public string note { get; set; }
-
+        public string status { get; set; }
     }
 }

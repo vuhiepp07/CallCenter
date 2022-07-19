@@ -13,6 +13,24 @@ namespace CallCenter.Models
         HttpClient _httpClient = null;
         public HttpClient httpClient => _httpClient ?? (new HttpClient());
 
+        public string PutRequest(string url)
+        {
+            try
+            {
+                var msg = new HttpRequestMessage(HttpMethod.Put, url);
+                //msg.Headers.Add("User-Agent", "C# Program");
+                var res = httpClient.Send(msg);
+
+                var content = res.Content.ReadAsStringAsync();
+                return content.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw ex;
+            }
+        }
+
         public string PutAsyncJson(string url, string json)
         {
             try

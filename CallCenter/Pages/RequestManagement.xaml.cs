@@ -36,7 +36,7 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlAsync(GetAllRequestUrl);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             requests = arr.ToObject<List<Request>>();
@@ -49,7 +49,7 @@ namespace CallCenter.Pages
             getAndBindingRequestData();
         }
 
-        private const string GetAllRequestUrl = "https://ubercloneserver.herokuapp.com/staff/getAllDriver";
+        private const string GetAllRequestUrl = "https://ubercloneserver.herokuapp.com/staff/getAllRequest";
 
         IList<Request> requests = new List<Request>();
         List<Request> RequestsListToView = new List<Request> { };
@@ -57,7 +57,7 @@ namespace CallCenter.Pages
         int _totalItems = 0;
         int _currentPage = 0;
         int _totalPages = 0;
-        int _rowsPerPage = 10;
+        int _rowsPerPage = 13;
 
         private CollectionViewSource RequestViewSource;
 
@@ -96,6 +96,11 @@ namespace CallCenter.Pages
                 SelectedRequests = RequestsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
                 RequestViewSource.Source = SelectedRequests;
             }
+        }
+
+        private void addRequestBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/Pages/CreateRequest.xaml", UriKind.Relative));
         }
     }
 }
