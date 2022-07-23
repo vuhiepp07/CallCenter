@@ -51,11 +51,12 @@
             </Button>
         </DockPanel>
         <Grid Background="White" Canvas.Top="149" Canvas.Left="-1">
-            <ListView 
+            <ListView x:Name="driverListView"
         ItemsSource="{Binding Source={StaticResource DriverViewSource}}" Margin="0,0,0,204" >
                 <ListView.Resources>
                     <ContextMenu x:Key="DriverContextMenu">
                         <MenuItem Header="View 5 latest trips" Name="btnLatestTrips" Click="btnLatestTrips_Click" FontSize ="13" />
+                        <MenuItem Header="View this driver vehicles" Name="btnViewVehicleOfDriver" Click="btnViewVehicleOfDriver_Click" FontSize ="13" />
                     </ContextMenu>
                 </ListView.Resources>
 

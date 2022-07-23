@@ -38,7 +38,7 @@
             <Label Content="Quantity " FontSize="15" Foreground="White" FontWeight="DemiBold"/>
             <TextBox Height="25" x:Name="discountQuantity"/>-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="84">
-                <Button Margin="5" Width="90" x:Name="addStaffBtn" Click="addStaffBtn_Click" Content="Update"/>
+                <Button Margin="5" Width="90" x:Name="addStaffBtn" Click="addStaffBtn_Click" Content="Sign up"/>
                 <Button Margin="5" Width="90" x:Name="cancelBtn" Click="cancelBtn_Click" Content="Cancel" />
             </StackPanel>
         </StackPanel>

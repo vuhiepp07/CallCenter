@@ -25,6 +25,7 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class StaffManagement : Page
     {
+        private string deleteStaffUrl = "";
         private string getAllStaffUrl = "https://ubercloneserver.herokuapp.com/staff/getAllStaff";
         private string accessToken;
 
@@ -47,8 +48,9 @@ namespace CallCenter.Pages
             var content = httpRequest.GetDataFromUrlAsync(getAllStaffUrl, accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
-            //JArray arr = (JArray)o["data"];
-            //staffs = arr.ToObject<List<Staff>>();
+            JArray arr = (JArray)o["data"];
+            staffs = arr.ToObject<List<Staff>>();
+            MessageBox.Show(arr.ToString());
             refreshViewSource(staffs);
         }
 
@@ -73,9 +75,9 @@ namespace CallCenter.Pages
         {
             var staffId = SearchField.Text;
             SearchField.Text = "";
-            //StaffViewSource.Source = from staff in staffs
-            //                            where staff.staffId == staffId
-            //                            select staff;
+            StaffViewSource.Source = from staff in staffs
+                                     where staff.id == staffId
+                                     select staff;
             refreshViewSource((IList<Staff>)StaffViewSource.Source);
         }
 
@@ -154,6 +156,11 @@ namespace CallCenter.Pages
             {
                 getAndBindingStaffData(accessToken);
             }
+        }
+
+        private void deleteStaffbtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

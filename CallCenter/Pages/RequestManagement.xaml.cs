@@ -22,6 +22,8 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class RequestManagement : Page
     {
+        string accessToken;
+        private string cancelBookingUrl = "https://ubercloneserver.herokuapp.com/staff/cancelBooking/";
         private void refreshViewSource(IList<Request> requests)
         {
             RequestsListToView = (List<Request>)requests;
@@ -35,12 +37,20 @@ namespace CallCenter.Pages
         public void getAndBindingRequestData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllRequestUrl);
-            //MessageBox.Show(content.ToString());
+            var content = httpRequest.GetDataFromUrlAsync(GetAllRequestUrl, accessToken);
+            MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
-            requests = arr.ToObject<List<Request>>();
+            //requests = arr.ToObject<List<Request>>();
             refreshViewSource(requests);
+        }
+
+        public RequestManagement(string token)
+        {
+            InitializeComponent();
+            accessToken = token;
+            RequestViewSource = (CollectionViewSource)FindResource(nameof(RequestViewSource));
+            getAndBindingRequestData();
         }
         public RequestManagement()
         {
@@ -86,7 +96,7 @@ namespace CallCenter.Pages
                 RequestViewSource.Source = SelectedRequests;
             }
         }
-
+        
         private void PrevRequestPageBtn_Click(object sender, RoutedEventArgs e)
         {
             if (_currentPage > 1)
@@ -101,6 +111,18 @@ namespace CallCenter.Pages
         private void addRequestBtn_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/Pages/CreateRequest.xaml", UriKind.Relative));
+        }
+
+        private void btnCancelRequest_Click(object sender, RoutedEventArgs e)
+        {
+            var unEdited = (Request)requestListView.SelectedItem;
+            string selectedRequestId = unEdited.requestId;
+            string tempUrl = cancelBookingUrl + selectedRequestId;
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.PutRequest(tempUrl);
+            MessageBox.Show(content.ToString());
+            JObject o = JObject.Parse(content);
+            JArray arr = (JArray)o["data"];
         }
     }
 }

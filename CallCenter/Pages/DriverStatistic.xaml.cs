@@ -70,7 +70,7 @@ namespace CallCenter.Pages
             pie.SliceLabels = labels;
             pie.ShowPercentages = true;
             WpfPlot1.Plot.Legend(location: Alignment.LowerLeft);
-            WpfPlot1.Plot.Title("Customer review");
+            //WpfPlot1.Plot.Title("Customer review");
 
             numofRequestRejected = 29;
             numofRequestAccepted = 89;
@@ -79,7 +79,7 @@ namespace CallCenter.Pages
             pie2.SliceLabels = labels2;
             pie2.ShowPercentages = true;
             WpfPlot2.Plot.Legend(location: Alignment.LowerLeft);
-            WpfPlot2.Plot.Title("Trip accept");
+            //WpfPlot2.Plot.Title("Trip accept");
 
             RatingBar.Value = (int)calAverageStar(userReviewNumOfStar);
         }

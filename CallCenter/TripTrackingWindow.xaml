@@ -69,12 +69,12 @@
                     </Grid>
                 </Button>
 
-                <!--<Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToRequest">
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToVehicleManagement">
                     <Grid Width="150">
-                        <materialDesign:PackIcon Kind="CellphonePlay" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="REQUEST" FontFamily="Champagne &amp; Limousines"/>
+                        <materialDesign:PackIcon Kind="CarEstate" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Text="VEHICLE" FontFamily="Champagne &amp; Limousines"/>
                     </Grid>
-                </Button>-->
+                </Button>
 
                 <!--<Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToDiscount">
                     <Grid Width="150">
@@ -83,7 +83,7 @@
                     </Grid>
                 </Button>-->
 
-                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" >
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToConfigurationPage">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Settings" VerticalAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Center" Text="CONFIGURATION" FontFamily="Champagne &amp; Limousines"/>

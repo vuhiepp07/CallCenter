@@ -22,6 +22,7 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class DriverManagement : Page
     {
+        private string getVehiclesOfSpecificDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getVehicleOfDriver/"; 
         private void refreshViewSource(IList<Driver> drivers)
         {
             DriversListToView = (List<Driver>)drivers;
@@ -103,6 +104,16 @@ namespace CallCenter.Pages
         private void BtnReload_Click(object sender, RoutedEventArgs e)
         {
             getAndBindingDriverData();
+        }
+
+        private void btnViewVehicleOfDriver_Click(object sender, RoutedEventArgs e)
+        {
+            string driverId = ((Driver)driverListView.SelectedItem).driverId;
+            string tempUrl = getVehiclesOfSpecificDriverUrl + driverId;
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.GetDataFromUrlAsync(tempUrl);
+            MessageBox.Show(content.ToString());
+            //JObject o = JObject.Parse(Vehicle);
         }
     }
 }

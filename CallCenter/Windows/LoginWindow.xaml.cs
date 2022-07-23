@@ -56,17 +56,17 @@ namespace CallCenter.Windows
                 accessToken = (string)objTemp["data"]["token"];
                 if (role == "ADMIN")
                 {
-                    AdministratorWindow administratorWindow = new AdministratorWindow(accessToken);
+                    AdministratorWindow administratorWindow = new AdministratorWindow(accessToken, username);
                     administratorWindow.Show(); 
                 }
                 else if (role == "CALLSTAFF")
                 {
-                    CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken);
+                    CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken, username);
                     callCenterWindow.Show();
                 }
                 else if (role == "TRIPSTAFF")
                 {
-                    TripTrackingWindow tripTrackingWindow = new TripTrackingWindow(accessToken);
+                    TripTrackingWindow tripTrackingWindow = new TripTrackingWindow(accessToken, username);
                     tripTrackingWindow.Show();
                 }
                 this.Close();

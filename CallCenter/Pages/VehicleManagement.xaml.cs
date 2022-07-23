@@ -22,7 +22,7 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class VehicleManagement : Page
     {
-        private const string GetAllVehicleUrl = "https://ubercloneserver.herokuapp.com/staff/getAllUser";
+        private const string GetAllVehicleUrl = "https://ubercloneserver.herokuapp.com/staff/getAllVehicle";
 
         IList<Vehicle> vehicles = new List<Vehicle>();
         List<Vehicle> VehiclesListToView = new List<Vehicle> { };
@@ -46,18 +46,19 @@ namespace CallCenter.Pages
         }
         public void getAndBindingVehicleData()
         {
-            HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllVehicleUrl);
-            MessageBox.Show(content.ToString());
-            JObject o = JObject.Parse(content);
-            JArray arr = (JArray)o["data"];
-            vehicles = arr.ToObject<List<Vehicle>>();
-            refreshViewSource(vehicles);
+            //HttpRequest httpRequest = new HttpRequest();
+            //var content = httpRequest.GetDataFromUrlAsync(GetAllVehicleUrl);
+            //MessageBox.Show(content.ToString());
+            //JObject o = JObject.Parse(content);
+            //JArray arr = (JArray)o["data"];
+            //vehicles = arr.ToObject<List<Vehicle>>();
+            //refreshViewSource(vehicles);
         }
 
         public VehicleManagement()
         {
             InitializeComponent();
+            getAndBindingVehicleData();
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -65,8 +66,8 @@ namespace CallCenter.Pages
             var ownerName = SearchField.Text.Trim().ToLower();
             SearchField.Text = "";
             VehicleViewSource.Source = from vehicle in vehicles
-                                    where vehicle.ownerName.ToLower() == ownerName.ToLower()
-                                    select vehicle;
+                                       where vehicle.ownerName.ToLower() == ownerName.ToLower()
+                                       select vehicle;
             refreshViewSource((IList<Vehicle>)VehicleViewSource.Source);
         }
 
@@ -95,6 +96,11 @@ namespace CallCenter.Pages
                 SelectedVehicles = VehiclesListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
                 VehicleViewSource.Source = SelectedVehicles;
             }
+        }
+
+        private void ViewAddVehicleRequestListbtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/Pages/AddVehicleManagement.xaml", UriKind.Relative));
         }
     }
 }

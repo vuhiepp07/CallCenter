@@ -23,11 +23,12 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class CreateRequest : Page
     {
+        private string getVehicleAndPriceUrl = "https://ubercloneserver.herokuapp.com/staff/getVehicleAndPrice";
         private string mapViewPlaceUrl = "https://www.google.com/maps/search/";
         private string Map4DApiUrl = "https://api.map4d.vn/sdk/place/text-search?key=49504631a3ee3700ee08bdca573b00c5&text=";
         private string mapRouteUrl = "https://www.google.com/maps/dir/";
         private string bookingUrl = "https://ubercloneserver.herokuapp.com/staff/booking";
-        private string confirmBookingUrl = "https://ubercloneserver.herokuapp.com/staff/confirmBooking/";
+        //private string cancelBookingUrl = "https://ubercloneserver.herokuapp.com/staff/cancelBooking/";
         private string Start, End;
         //private string Map4DApiRouting = "http://api.map4d.vn/sdk/route?key=9535db74e2210bbdf73a8ce3c4fb03be&origin={origin}&destination={destination}&mode=motorcycle";
         JObject startObj, endObj, requestObj;
@@ -111,6 +112,7 @@ namespace CallCenter.Pages
             //MessageBox.Show(content);
             requestObj = JObject.Parse(content);
 
+            //Lay toa do diem di diem den
             point a = new point()
             {
                 address = StartCBox.Text,
@@ -127,41 +129,41 @@ namespace CallCenter.Pages
 
             //MessageBox.Show(requestObj["result"]["routes"][0]["legs"].ToString());
 
-            string dis = (string)requestObj["result"]["routes"][0]["legs"][0]["distance"]["value"];
-            Request request = new Request()
-            {
-                startAddress = a,
-                destination = b,
-                timeSecond = (string)requestObj["result"]["routes"][0]["legs"][0]["duration"]["value"],
-                phoneNumber = PhoneTextBox.Text,
-                createdTime = DateTime.Now,
-                distance = (double.Parse(dis)/1000.0).ToString(),
-                vehicleType = VehicleCBox.Text,
-                note = userNoteTextBox.Text
-            };
-            string json = JsonConvert.SerializeObject(request);
+            string dis = ((int)(requestObj["result"]["routes"][0]["legs"][0]["distance"]["value"])/1000).ToString();
+            string timeSecond = (string)requestObj["result"]["routes"][0]["legs"][0]["duration"]["value"];
+            var disTime = new { distance = dis, timeSecond = timeSecond};
+            string json = JsonConvert.SerializeObject(disTime);
+            MessageBox.Show(json);
             httpRequest = new HttpRequest();
-            string responseContent = httpRequest.PutAsyncJson(bookingUrl, json);
-            //MessageBox.Show(responseContent);
+            string responseContent = httpRequest.PutAsyncJson(getVehicleAndPriceUrl, json);
+            MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
-            string status = (string)objTemp["status"];
-            string priceTemp = objTemp["data"]["price"].ToString();
-            int price = (int)double.Parse(priceTemp);
-            string message = (string)objTemp["message"];
-            if (status.Equals("True") && message.Equals("Request and get price successfully"))
-            {
-                MessageBoxResult result =  MessageBox.Show($"The customer trip price is {price}VND, does him/her agree?", "User agreement", MessageBoxButton.YesNo);
-                if(result == MessageBoxResult.Yes)
-                {
-                    string temp = confirmBookingUrl + (string)objTemp["data"]["requestId"];
+            double tripprice = double.Parse((string)objTemp["data"]["vehiclesAndPrices"][VehicleCBox.SelectedIndex]["price"]);
 
+            var vehiclePrice = new { vehicleType = VehicleCBox.Text, price = tripprice };
+            if(objTemp["status"].ToString().Equals("True"))
+            {
+                MessageBoxResult result = MessageBox.Show($"The customer trip price is {tripprice}VND, does him/her agree?", "User agreement", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    var request = new
+                    {
+                        startAddress = a,
+                        destination = b,
+                        vehicleAndPrice = vehiclePrice,
+                        createdTime = DateTime.Now,
+                        phoneNumber = PhoneTextBox.Text,
+                        distanceAndTime = disTime,
+                        note = userNoteTextBox.Text,
+                    };
+                    string bookingjson = JsonConvert.SerializeObject(request);
                     httpRequest = new HttpRequest();
-                    responseContent = httpRequest.PutRequest(temp);
+                    responseContent = httpRequest.PutAsyncJson(bookingUrl, bookingjson);
                     //MessageBox.Show(responseContent);
                     objTemp = JObject.Parse(responseContent);
-                    status = (string)objTemp["status"];
-                    message = (string)objTemp["message"];
-                    if(status.Equals("True"))
+                    string status = (string)objTemp["status"];
+                    string message = (string)objTemp["message"];
+                    if (status.Equals("True") && message.Equals("Request vehicle successfully and receive price"))
                     {
                         MessageBox.Show("Booking success");
                     }
@@ -169,13 +171,12 @@ namespace CallCenter.Pages
                     {
                         MessageBox.Show("Some error happened, please try again");
                     }
-                    this.NavigationService.Navigate(new Uri("/Pages/RequestManagement.xaml", UriKind.Relative));
                 }
                 else
                 {
                     MessageBox.Show("Request canceled");
-                    this.NavigationService.Navigate(new Uri("/Pages/RequestManagement.xaml", UriKind.Relative));
                 }
+                this.NavigationService.Navigate(new Uri("/Pages/RequestManagement.xaml", UriKind.Relative));
             }
         }
 
@@ -187,7 +188,7 @@ namespace CallCenter.Pages
         //    mapurl += @"/";
         //    mapurl += End;
         //    Ggmap.Source = new Uri(mapurl);
-            
+
         //}
 
         private void DestinationCBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

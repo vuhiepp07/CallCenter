@@ -21,15 +21,17 @@ namespace CallCenter
     public partial class TripTrackingWindow : Window
     {
         private string accessToken;
+        private string username;
         public TripTrackingWindow()
         { 
             InitializeComponent();
         }
 
-        public TripTrackingWindow(string token)
+        public TripTrackingWindow(string token, string username)
         {
-            accessToken = token;
             InitializeComponent();
+            accessToken = token;
+            this.username = username;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -40,6 +42,18 @@ namespace CallCenter
         private void NavigateToTripManagement(object sender, RoutedEventArgs e)
         {
             Main.Content = new TripManagement();
+            Main.NavigationService.RemoveBackEntry();
+        }
+
+        private void NavigateToVehicleManagement(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new VehicleManagement();
+            Main.NavigationService.RemoveBackEntry();
+        }
+
+        private void NavigateToConfigurationPage(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new ConfigurationPage(accessToken, username);
             Main.NavigationService.RemoveBackEntry();
         }
     }

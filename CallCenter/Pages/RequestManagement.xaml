@@ -51,11 +51,12 @@
             </Button>
         </DockPanel>
         <Grid Background="White" Canvas.Top="149" Canvas.Left="-1">
-            <ListView 
+            <ListView Name="requestListView"
         ItemsSource="{Binding Source={StaticResource RequestViewSource}}" Margin="0,0,0,204" >
-                <ListView.Resources>
+                <ListView.Resources >
                     <ContextMenu x:Key="RequestContextMenu">
                         <!--<MenuItem Header="View 5 latest trips" Name="btnLatestTrips" Click="btnLatestTrips_Click" FontSize ="13" />-->
+                        <MenuItem Header="Cancel request" Name="btnCancelRequest" Click="btnCancelRequest_Click"></MenuItem>
                     </ContextMenu>
                 </ListView.Resources>
 
