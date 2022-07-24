@@ -9,11 +9,11 @@ namespace CallCenter.Models
     internal class Vehicle
     {
         public string licensePlateNum { get; set; }
-        public string ownerName { get; set; }
-        public string driverID { get; set; }
+        public string driverName { get; set; }
+        public string driverId { get; set; }
         public string typeOfVehicle { get; set; }
-        public string condition { get; set; }
+        public string conditionVehicle { get; set; }
         public string brand { get; set; }
-        public string numOfSeats { get; set; }
+        public string status { get; set; }
     }
 }

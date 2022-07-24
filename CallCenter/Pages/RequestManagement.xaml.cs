@@ -41,7 +41,8 @@ namespace CallCenter.Pages
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
-            //requests = arr.ToObject<List<Request>>();
+            requests = arr.ToObject<List<Request>>();
+            requests = Enumerable.Reverse(requests).ToList();
             refreshViewSource(requests);
         }
 
@@ -121,8 +122,15 @@ namespace CallCenter.Pages
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.PutRequest(tempUrl);
             MessageBox.Show(content.ToString());
-            JObject o = JObject.Parse(content);
-            JArray arr = (JArray)o["data"];
+            JObject objTemp = JObject.Parse(content);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            if(status.Equals("True") && message.Equals("Cancel booking successfully"))
+            {
+                MessageBox.Show("Cancel request successfully");
+                unEdited.status = "Canceled";
+            }
         }
+
     }
 }

@@ -68,7 +68,7 @@
                 <ListView.View>
                     <GridView>
 
-                        <GridViewColumn Header="ID" Width="50">
+                        <GridViewColumn Header="ID" Width="70">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -78,7 +78,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding requestId}" TextAlignment="Center" FontSize="14" Width="50" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding requestId}" TextAlignment="Center" FontSize="14" Width="70" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -98,7 +98,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Start address" Width="320">
+                        <GridViewColumn Header="Start address" Width="300">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -113,7 +113,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="End address" Width="320">
+                        <GridViewColumn Header="End address" Width="300">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -153,7 +153,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding distance}" TextAlignment="Center" IsReadOnly="True" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding distanceAndTime.distance}" TextAlignment="Center" IsReadOnly="True" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -168,7 +168,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding vehicleType}" TextAlignment="Center" IsReadOnly="True" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding vehicleAndPrice.vehicleType}" TextAlignment="Center" IsReadOnly="True" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

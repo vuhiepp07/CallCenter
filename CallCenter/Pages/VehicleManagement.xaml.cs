@@ -46,28 +46,29 @@ namespace CallCenter.Pages
         }
         public void getAndBindingVehicleData()
         {
-            //HttpRequest httpRequest = new HttpRequest();
-            //var content = httpRequest.GetDataFromUrlAsync(GetAllVehicleUrl);
-            //MessageBox.Show(content.ToString());
-            //JObject o = JObject.Parse(content);
-            //JArray arr = (JArray)o["data"];
-            //vehicles = arr.ToObject<List<Vehicle>>();
-            //refreshViewSource(vehicles);
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.GetDataFromUrlAsync(GetAllVehicleUrl);
+            MessageBox.Show(content.ToString());
+            JObject o = JObject.Parse(content);
+            JArray arr = (JArray)o["data"];
+            vehicles = arr.ToObject<List<Vehicle>>();
+            refreshViewSource(vehicles);
         }
 
         public VehicleManagement()
         {
             InitializeComponent();
+            VehicleViewSource = (CollectionViewSource)FindResource(nameof(VehicleViewSource));
             getAndBindingVehicleData();
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            var ownerName = SearchField.Text.Trim().ToLower();
-            SearchField.Text = "";
-            VehicleViewSource.Source = from vehicle in vehicles
-                                       where vehicle.ownerName.ToLower() == ownerName.ToLower()
-                                       select vehicle;
+            //var ownerName = SearchField.Text.Trim().ToLower();
+            //SearchField.Text = "";
+            //VehicleViewSource.Source = from vehicle in vehicles
+            //                           where vehicle.ownerName.ToLower() == ownerName.ToLower()
+            //                           select vehicle;
             refreshViewSource((IList<Vehicle>)VehicleViewSource.Source);
         }
 

@@ -129,7 +129,7 @@ namespace CallCenter.Pages
 
             //MessageBox.Show(requestObj["result"]["routes"][0]["legs"].ToString());
 
-            string dis = ((int)(requestObj["result"]["routes"][0]["legs"][0]["distance"]["value"])/1000).ToString();
+            string dis = ((double)(requestObj["result"]["routes"][0]["legs"][0]["distance"]["value"])/1000.0).ToString();
             string timeSecond = (string)requestObj["result"]["routes"][0]["legs"][0]["duration"]["value"];
             var disTime = new { distance = dis, timeSecond = timeSecond};
             string json = JsonConvert.SerializeObject(disTime);
