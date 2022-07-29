@@ -44,7 +44,7 @@ namespace CallCenter.Windows
             string json = JsonConvert.SerializeObject(map);
 
             HttpRequest httpRequest = new HttpRequest();
-            string responseContent = httpRequest.PostAsyncJson(loginURL, json);
+            string responseContent = httpRequest.PostLoginJson(loginURL, json);
             MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];
@@ -54,19 +54,23 @@ namespace CallCenter.Windows
             {
                 role = (string)objTemp["data"]["role"];
                 accessToken = (string)objTemp["data"]["token"];
+
+                AccountnTokenHelper.userName = username;
+                AccountnTokenHelper.accessToken = accessToken;
+
                 if (role == "ADMIN")
                 {
-                    AdministratorWindow administratorWindow = new AdministratorWindow(accessToken, username);
+                    AdministratorWindow administratorWindow = new AdministratorWindow();
                     administratorWindow.Show(); 
                 }
                 else if (role == "CALLSTAFF")
                 {
-                    CallCenterWindow callCenterWindow = new CallCenterWindow(accessToken, username);
+                    CallCenterWindow callCenterWindow = new CallCenterWindow();
                     callCenterWindow.Show();
                 }
                 else if (role == "TRIPSTAFF")
                 {
-                    TripTrackingWindow tripTrackingWindow = new TripTrackingWindow(accessToken, username);
+                    TripTrackingWindow tripTrackingWindow = new TripTrackingWindow();
                     tripTrackingWindow.Show();
                 }
                 this.Close();
@@ -77,19 +81,6 @@ namespace CallCenter.Windows
                 userNameTextBox.Clear();
                 passwordBox.Clear();
             }
-
-
-            ////MessageBox.Show(content.ToString());
-            ////JObject o = JObject.Parse(content);
-            ////JArray arr = (JArray)o["data"];
-            ////users = arr.ToObject<List<User>>();
-            ////UsersListToView = (List<User>)users;
-            ////SelectedUsers = UsersListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-
-            ////responseContent.Wait();
-            //// string a = responseContent.Result;
-            ////Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseContent);
-            ////MessageBox.Show(values(["data"]["role"]));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -116,7 +116,7 @@ namespace CallCenter.Pages
             Discount temp = (Discount)discountListView.SelectedItem;
             string tempUrl = deleteDiscountUrl + temp.discountId;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.DeleteDataByUrl(tempUrl);
+            var content = httpRequest.DeleteDataByUrlWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
             //MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
@@ -165,7 +165,7 @@ namespace CallCenter.Pages
                 string json = JsonConvert.SerializeObject(temp);
 
                 HttpRequest httpRequest = new HttpRequest();
-                string responseContent = httpRequest.PostAsyncJson(addDiscountURL, json);
+                string responseContent = httpRequest.PostAsyncJsonWithAccessToken(addDiscountURL, json, AccountnTokenHelper.accessToken);
                 //MessageBox.Show(responseContent);
                 JObject objTemp = JObject.Parse(responseContent);
                 string status = (string)objTemp["status"];
@@ -181,7 +181,7 @@ namespace CallCenter.Pages
             {
                 string json = JsonConvert.SerializeObject(temp);
                 HttpRequest httpRequest = new HttpRequest();
-                string responseContent = httpRequest.PostAsyncJson(editDiscountUrl, json);
+                string responseContent = httpRequest.PostAsyncJsonWithAccessToken(editDiscountUrl, json, AccountnTokenHelper.accessToken);
                 //MessageBox.Show(responseContent);
 
                 JObject objTemp = JObject.Parse(responseContent);

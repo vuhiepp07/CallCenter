@@ -47,7 +47,7 @@ namespace CallCenter.Pages
         public void getAndBindingVehicleData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllVehicleUrl);
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllVehicleUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];

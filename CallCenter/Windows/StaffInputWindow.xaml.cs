@@ -23,7 +23,6 @@ namespace CallCenter.Windows
     /// </summary>
     public partial class StaffInputWindow : Window
     {
-        private string accessToken;
         private string signUpStaffUrl = "https://ubercloneserver.herokuapp.com/staff/signup";
         public DataTransferDelegateStaff dataTransferDelegateStaff;
         private readonly List<string> rolesArr = new List<string>() { "ADMIN", "CALLSTAFF", "TRIPSTAFF" };
@@ -34,9 +33,8 @@ namespace CallCenter.Windows
             roleCombobox.ItemsSource = rolesArr;
         }
 
-        public StaffInputWindow(DataTransferDelegateStaff del, string accessToken)
+        public StaffInputWindow(DataTransferDelegateStaff del)
         {
-            this.accessToken = accessToken;
             InitializeComponent();
             dataTransferDelegateStaff = del;
             roleCombobox.ItemsSource = rolesArr;
@@ -48,7 +46,7 @@ namespace CallCenter.Windows
             string json = JsonConvert.SerializeObject(temp);
             MessageBox.Show(json);
             HttpRequest httpRequest = new HttpRequest();
-            string responseContent = httpRequest.PostAsyncJson(signUpStaffUrl, json, accessToken);
+            string responseContent = httpRequest.PostAsyncJsonWithAccessToken(signUpStaffUrl, json, AccountnTokenHelper.accessToken);
             MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];

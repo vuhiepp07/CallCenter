@@ -22,7 +22,6 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class RequestManagement : Page
     {
-        string accessToken;
         private string cancelBookingUrl = "https://ubercloneserver.herokuapp.com/staff/cancelBooking/";
         private void refreshViewSource(IList<Request> requests)
         {
@@ -37,21 +36,13 @@ namespace CallCenter.Pages
         public void getAndBindingRequestData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllRequestUrl, accessToken);
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllRequestUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             requests = arr.ToObject<List<Request>>();
             requests = Enumerable.Reverse(requests).ToList();
             refreshViewSource(requests);
-        }
-
-        public RequestManagement(string token)
-        {
-            InitializeComponent();
-            accessToken = token;
-            RequestViewSource = (CollectionViewSource)FindResource(nameof(RequestViewSource));
-            getAndBindingRequestData();
         }
         public RequestManagement()
         {
@@ -120,7 +111,7 @@ namespace CallCenter.Pages
             string selectedRequestId = unEdited.requestId;
             string tempUrl = cancelBookingUrl + selectedRequestId;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.PutRequest(tempUrl);
+            var content = httpRequest.PutRequestWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];

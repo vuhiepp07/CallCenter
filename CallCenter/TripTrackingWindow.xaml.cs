@@ -20,18 +20,9 @@ namespace CallCenter
     /// </summary>
     public partial class TripTrackingWindow : Window
     {
-        private string accessToken;
-        private string username;
         public TripTrackingWindow()
         { 
             InitializeComponent();
-        }
-
-        public TripTrackingWindow(string token, string username)
-        {
-            InitializeComponent();
-            accessToken = token;
-            this.username = username;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -53,7 +44,7 @@ namespace CallCenter
 
         private void NavigateToConfigurationPage(object sender, RoutedEventArgs e)
         {
-            Main.Content = new ConfigurationPage(accessToken, username);
+            Main.Content = new ConfigurationPage();
             Main.NavigationService.RemoveBackEntry();
         }
     }

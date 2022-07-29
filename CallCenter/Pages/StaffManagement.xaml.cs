@@ -27,7 +27,6 @@ namespace CallCenter.Pages
     {
         private string deleteStaffUrl = "";
         private string getAllStaffUrl = "https://ubercloneserver.herokuapp.com/staff/getAllStaff";
-        private string accessToken;
 
         public DataTransferDelegateStaff del;
         Boolean addStaffflag;
@@ -42,10 +41,10 @@ namespace CallCenter.Pages
 
         private CollectionViewSource StaffViewSource;
 
-        public void getAndBindingStaffData(string accessToken)
+        public void getAndBindingStaffData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(getAllStaffUrl, accessToken);
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(getAllStaffUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
@@ -59,16 +58,7 @@ namespace CallCenter.Pages
             addStaffflag = false;
             InitializeComponent();
             StaffViewSource = (CollectionViewSource)FindResource(nameof(StaffViewSource));
-            getAndBindingStaffData(accessToken);
-        }
-
-        public StaffManagement(string accessToken)
-        {
-            this.accessToken = accessToken;
-            addStaffflag = false;
-            InitializeComponent();
-            StaffViewSource = (CollectionViewSource)FindResource(nameof(StaffViewSource));
-            getAndBindingStaffData(this.accessToken);
+            getAndBindingStaffData();
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -83,7 +73,7 @@ namespace CallCenter.Pages
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
         {
-            getAndBindingStaffData(accessToken);    
+            getAndBindingStaffData();    
         }
 
         private void refreshViewSource(IList<Staff> staffs)
@@ -146,7 +136,7 @@ namespace CallCenter.Pages
         {
             addStaffflag = true;
             del += new DataTransferDelegateStaff(passData);
-            StaffInputWindow staffInputWindow = new StaffInputWindow(del, accessToken);
+            StaffInputWindow staffInputWindow = new StaffInputWindow(del);
             staffInputWindow.Show();
         }
 
@@ -154,7 +144,7 @@ namespace CallCenter.Pages
         {
             if(result == true)
             {
-                getAndBindingStaffData(accessToken);
+                getAndBindingStaffData();
             }
         }
 

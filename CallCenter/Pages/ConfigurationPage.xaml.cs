@@ -20,17 +20,9 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class ConfigurationPage : Page
     {
-        private string accessToken;
-        private string username;
         public ConfigurationPage()
         {
             InitializeComponent();
-        }
-
-        public ConfigurationPage(string token, string username)
-        {
-            InitializeComponent();
-            accessToken = token;
         }
     }
 }

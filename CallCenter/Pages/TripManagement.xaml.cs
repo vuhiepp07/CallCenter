@@ -48,7 +48,7 @@ namespace CallCenter.Pages
         public void getAndBindingTripData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllTripUrl);
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllTripUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];

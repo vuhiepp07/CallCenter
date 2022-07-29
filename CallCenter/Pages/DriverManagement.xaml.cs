@@ -22,7 +22,7 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class DriverManagement : Page
     {
-        private string getVehiclesOfSpecificDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getVehicleOfDriver/"; 
+        private string getVehiclesOfSpecificDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getVehicleOfDriver/";
         private void refreshViewSource(IList<Driver> drivers)
         {
             DriversListToView = (List<Driver>)drivers;
@@ -36,19 +36,21 @@ namespace CallCenter.Pages
         public void getAndBindingDriverData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllDriverUrl);
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllDriverUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             drivers = arr.ToObject<List<Driver>>();
             refreshViewSource(drivers);
         }
+
         public DriverManagement()
         {
             InitializeComponent();
             DriverViewSource = (CollectionViewSource)FindResource(nameof(DriverViewSource));
             getAndBindingDriverData();
         }
+
 
         private const string GetAllDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getAllDriver";
 
@@ -111,7 +113,7 @@ namespace CallCenter.Pages
             string driverId = ((Driver)driverListView.SelectedItem).driverId;
             string tempUrl = getVehiclesOfSpecificDriverUrl + driverId;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(tempUrl);
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             //JObject o = JObject.Parse(Vehicle);
         }

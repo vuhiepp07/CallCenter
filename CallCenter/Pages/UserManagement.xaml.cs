@@ -22,7 +22,7 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class UserManagement : Page
     {
-        private const string GetAllUserUrl = "https://ubercloneserver.herokuapp.com/staff/getAllUser";
+        private string GetAllUserUrl = "https://ubercloneserver.herokuapp.com/staff/getAllUser";
 
         IList<User> users = new List<User>();
         List<User> UsersListToView = new List<User> { };
@@ -47,7 +47,7 @@ namespace CallCenter.Pages
         public void getAndBindingUserData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllUserUrl);
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllUserUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];

@@ -20,18 +20,9 @@ namespace CallCenter
     /// </summary>
     public partial class CallCenterWindow : Window
     {
-        private string username;
-        private string accessToken;
         public CallCenterWindow()
         {
             InitializeComponent();
-        }
-
-        public CallCenterWindow(string token, string username)
-        {
-            InitializeComponent();
-            accessToken = token;
-            this.username = username;
         }
 
         private void NavigateToUser(object sender, RoutedEventArgs e)
@@ -48,7 +39,7 @@ namespace CallCenter
 
         private void NavigateToRequest(object sender, RoutedEventArgs e)
         {
-            Main.Content = new RequestManagement(accessToken);
+            Main.Content = new RequestManagement();
             Main.NavigationService.RemoveBackEntry();
         }
 
@@ -65,7 +56,7 @@ namespace CallCenter
 
         private void NavigateToConfigurationPage(object sender, RoutedEventArgs e)
         {
-            Main.Content = new ConfigurationPage(accessToken, username);
+            Main.Content = new ConfigurationPage();
             Main.NavigationService.RemoveBackEntry();
         }
     }

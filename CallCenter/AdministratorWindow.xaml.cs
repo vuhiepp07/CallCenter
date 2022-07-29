@@ -20,18 +20,9 @@ namespace CallCenter
     /// </summary>
     public partial class AdministratorWindow : Window
     {
-        private string username;
-        private string accessToken;
         public AdministratorWindow()
         {
             InitializeComponent();
-        }
-
-        public AdministratorWindow(string token, string usname)
-        {
-            InitializeComponent();
-            accessToken = token;
-            username = usname;
         }
 
         private void NavigateToRequestStatistic(object sender, RoutedEventArgs e)
@@ -54,13 +45,13 @@ namespace CallCenter
 
         private void NavigateToStaffManagement(object sender, RoutedEventArgs e)
         {
-            Main.Content = new StaffManagement(accessToken);
+            Main.Content = new StaffManagement();
             Main.NavigationService.RemoveBackEntry();
         }
 
         private void NavigateToConfigurationPage(object sender, RoutedEventArgs e)
         {
-            Main.Content = new ConfigurationPage(accessToken, username);
+            Main.Content = new ConfigurationPage();
             Main.NavigationService.RemoveBackEntry();
         }
     }

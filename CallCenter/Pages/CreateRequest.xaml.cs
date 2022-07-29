@@ -33,7 +33,6 @@ namespace CallCenter.Pages
         //private string Map4DApiRouting = "http://api.map4d.vn/sdk/route?key=9535db74e2210bbdf73a8ce3c4fb03be&origin={origin}&destination={destination}&mode=motorcycle";
         JObject startObj, endObj, requestObj;
 
-
         IList<Address> startPoints = new List<Address>();
         IList<Address> endPoints = new List<Address>();
         List<string> vehicleList = new List<string>
@@ -48,7 +47,6 @@ namespace CallCenter.Pages
             InitializeComponent();
             VehicleCBox.ItemsSource = vehicleList;
         }
-
 
         private void StartCBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -135,7 +133,7 @@ namespace CallCenter.Pages
             string json = JsonConvert.SerializeObject(disTime);
             MessageBox.Show(json);
             httpRequest = new HttpRequest();
-            string responseContent = httpRequest.PutAsyncJson(getVehicleAndPriceUrl, json);
+            string responseContent = httpRequest.PutAsyncJsonWithAccessToken(getVehicleAndPriceUrl, json, AccountnTokenHelper.accessToken);
             MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             double tripprice = double.Parse((string)objTemp["data"]["vehiclesAndPrices"][VehicleCBox.SelectedIndex]["price"]);
@@ -158,7 +156,7 @@ namespace CallCenter.Pages
                     };
                     string bookingjson = JsonConvert.SerializeObject(request);
                     httpRequest = new HttpRequest();
-                    responseContent = httpRequest.PutAsyncJson(bookingUrl, bookingjson);
+                    responseContent = httpRequest.PutAsyncJsonWithAccessToken(bookingUrl, bookingjson, AccountnTokenHelper.accessToken);
                     //MessageBox.Show(responseContent);
                     objTemp = JObject.Parse(responseContent);
                     string status = (string)objTemp["status"];
