@@ -149,6 +149,26 @@ namespace CallCenter.Models
             }
         }
 
+        public string GetDataFromUrlAsyncWithAccessTokenAndJson(string url, string json, string accessToken)
+        {
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, url);
+                HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                request.Content = httpContent;
+                request.Headers.Add("token", accessToken);
+                var response = httpClient.Send(request);
+                var rcontent = response.Content.ReadAsStringAsync();
+                return rcontent.Result;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw e;
+            }
+        }
+
         public string GetDataFromUrlAsyncWithAccessToken(string url, string accessToken)
         {
             //httpClient.DefaultRequestHeaders.Add("token", accessToken);
