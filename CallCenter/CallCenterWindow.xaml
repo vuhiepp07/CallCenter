@@ -15,6 +15,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="CallCenterWindow" WindowState="Maximized" Loaded="Window_Loaded">
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="44.496"/>
             <ColumnDefinition Width="155.504"/>

@@ -28,13 +28,14 @@
         <Label Content="Email:" FontSize="24" Canvas.Left="184" Canvas.Top="403" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.522,0.103"/>
         <Label Content="Gender:" FontSize="24" Canvas.Left="173" Canvas.Top="477" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label Content="Staff type:" FontSize="24" Canvas.Left="155" Canvas.Top="623" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBox Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="119" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="331" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="403" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="552" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="623" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ComboBox Canvas.Left="326" Canvas.Top="483" Width="477" HorizontalAlignment="Left"/>
-        <TextBox Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="193" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="261" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox Name="AddressTextBox" Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="119" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox Name="FullNameTextBox" Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="331" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox Name="EmailTextBox" Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="403" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox Name="PhoneTextBox" Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="552" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ComboBox Name="GenderCBox" Canvas.Left="326" Canvas.Top="483" Width="477" HorizontalAlignment="Left"/>
+        <TextBox Name="StaffIDTextBox" Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="193" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox Name="UsernameTextBox" Canvas.Left="326" TextWrapping="Wrap" Text="TextBox" Canvas.Top="261" Width="477" Height="37" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name="btnUpdate" Click="btnUpdate_Click" Content="Update" Canvas.Left="453" Canvas.Top="732"/>
+        <ComboBox Name="StaffTypeCBox" Canvas.Left="326" Canvas.Top="623" Width="477" Height="50" HorizontalAlignment="Left"/>
     </Canvas>
 </Page>
