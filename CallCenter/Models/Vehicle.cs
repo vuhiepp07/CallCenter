@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class Vehicle
+    public class Vehicle
     {
         public string licensePlateNum { get; set; }
         public string driverName { get; set; }

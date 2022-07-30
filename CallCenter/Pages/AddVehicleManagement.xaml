@@ -14,12 +14,12 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-      Title="AddVehicleManagement">
+      Title="AddVehicleManagement" Loaded="Page_Loaded">
     <Page.Resources>
-        <CollectionViewSource x:Key="PendingVehicleViewSource"/>
+        <CollectionViewSource x:Key="VehicleViewSource"/>
     </Page.Resources>
     <Canvas Margin="0,10,-547,-348" Background="White">
-        <Label Content="Pending Vehicle Management" FontSize="32" Foreground="Black" Canvas.Left="458" Canvas.Top="37" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+        <Label Content="Vehicle Management" FontSize="32" Foreground="Black" Canvas.Left="538" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
         <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Canvas.Left="918" Canvas.Top="37" Height="157" Width="419" VerticalAlignment="Top">
             <TextBox
                 x:Name="SearchField"
@@ -30,7 +30,7 @@
                 FontSize="10"
                 TextWrapping="Wrap"
                 MaxWidth="400"
-                materialDesign:HintAssist.Hint="Please insert exacly discountID"
+                materialDesign:HintAssist.Hint="Please insert exacly driver name"
                 IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
             <Button
                 Click="BtnSearch_Click"
@@ -51,10 +51,10 @@
             </Button>
         </DockPanel>
         <Grid Background="White" Canvas.Top="149" Canvas.Left="-1">
-            <ListView Name="discountListView"
-        ItemsSource="{Binding Source={StaticResource PendingVehicleViewSource}}" Margin="0,0,0,204" >
+            <ListView Name="vehicleListView"
+        ItemsSource="{Binding Source={StaticResource VehicleViewSource}}" Margin="0,0,0,204" >
                 <ListView.Resources>
-                    <ContextMenu x:Key="PendingVehicleContextMenu">
+                    <ContextMenu x:Key="VehicleContextMenu">
                         <!--<MenuItem Header="View 5 latest trips" Name="btnLatestTrips" Click="btnLatestTrips_Click" FontSize ="13" />
                         <MenuItem Header="Most frequented destinations" Name="btnFrequentDes" Click="btnFrequentDes_Click"  FontSize ="13"/>-->
                     </ContextMenu>
@@ -62,13 +62,19 @@
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" >
-                        <Setter Property="ContextMenu" Value="{StaticResource PendingVehicleContextMenu}" />
+                                    <Style.Triggers>
+                    <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                        <Setter Property="ContextMenu" Value="{StaticResource VehicleContextMenu}" />
+                        <Setter Property="IsSelected" Value="True"/>
+                    </Trigger>
+                </Style.Triggers>
+                <EventSetter Event="PreviewGotKeyboardFocus" Handler="SelectCurrentItem"/>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
 
-                        <GridViewColumn Header="ID" Width="100">
+                        <GridViewColumn Header="Licenseplate num" Width="280">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -78,12 +84,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding discountId}" TextAlignment="Center" FontSize="14" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding licensePlateNum}" TextAlignment="Center" FontSize="14" Width="280" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Name" Width="200">
+                        <GridViewColumn Header="Driver name" Width="200">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -93,12 +99,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding discountName}" TextAlignment="Center" FontSize="14" Width="200" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding driverName}" TextAlignment="Center" FontSize="14" Width="200" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Discount percentage" Width="230">
+                        <GridViewColumn Header="Driver ID" Width="200">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -108,12 +114,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding discountPercent}" TextAlignment="Center" FontSize="14" Width="230" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding driverId}" TextAlignment="Center" FontSize="14" Width="200" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Start date" Width="250">
+                        <GridViewColumn Header="Type" Width="150">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -123,12 +129,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding startDate}" TextAlignment="Center" FontSize="14" Width="250" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding typeOfVehicle}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="End date" Width="250">
+                        <GridViewColumn Header="Condition" Width="150">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -138,12 +144,12 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding endDate}" TextAlignment="Center" FontSize="14" Width="250" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding conditionVehicle}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Quantity" Width="300">
+                        <GridViewColumn Header="Brand" Width="200">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -153,10 +159,23 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <!--<TextBox Text="{Binding quantity}" TextAlignment="Center" IsReadOnly="True" Width="300" IsEnabled="False" Foreground="Black"></TextBox>-->
-                                    <Button x:Name="acceptVehicleBtn" Content="Accept" Click="acceptVehicleBtn_Click"/>
+                                    <TextBox Text="{Binding brand}" TextAlignment="Center" IsReadOnly="True" Width="200" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn  Header="Accept" Width="150" >
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Setter Property="FontSize" Value="16" />
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate> 
+                                    <DataTemplate> 
+                                    <Button x:Name="btnApproveVehicle" Width="150" Click="btnApproveVehicle_Click">Approve</Button> 
+                                    </DataTemplate> 
+                                </GridViewColumn.CellTemplate> 
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>

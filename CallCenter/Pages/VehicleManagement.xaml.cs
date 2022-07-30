@@ -62,6 +62,15 @@ namespace CallCenter.Pages
             getAndBindingVehicleData();
         }
 
+        public VehicleManagement(List<Vehicle> list)
+        {
+            InitializeComponent();
+            VehicleViewSource = (CollectionViewSource)FindResource(nameof(VehicleViewSource));
+            vehicles = list;
+            ViewAddVehicleRequestListbtn.IsEnabled = false;
+            refreshViewSource(vehicles);
+        }
+
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             //var ownerName = SearchField.Text.Trim().ToLower();
