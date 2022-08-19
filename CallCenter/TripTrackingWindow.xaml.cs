@@ -47,5 +47,11 @@ namespace CallCenter
             Main.Content = new ConfigurationPage();
             Main.NavigationService.RemoveBackEntry();
         }
+
+        private void NavigateToAddVehicleManagement(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new AddVehicleManagement();
+            Main.NavigationService.RemoveBackEntry();
+        }
     }
 }

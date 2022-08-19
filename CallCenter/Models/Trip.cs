@@ -6,21 +6,17 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class Trip
+    public class Trip
     {
-        public string tripID { get; set; }
-        public string pickingAddress { get; set; }
-        public string arrivingAddress { get; set; }
+        public string tripId { get; set; }
+        public point startAddress { get; set; }
+        public point destination { get; set; }
+        public string createdTime { get; set; }
+        public vehiclePrice vehicleAndPrice { get; set; }
+        public distanceTime distanceAndTime { get; set; }
+        public string paymentType { get; set; }
+        public string userId { get; set; }
+        public string driverId { get; set; }
         public string status { get; set; }
-        public string departureTime { get; set; }
-        public string arriveTime { get; set; }
-        public string distance { get; set; }
-        public string customerBookTime { get; set; }
-        public string totalPrice { get; set; }
-        public string discountID { get; set; }
-        public string estimateTime { get; set; }
-        public string paymentMethod { get; set; }
-        public string customerName { get; set; }
-        public string driverName { get; set; }
     }
 }

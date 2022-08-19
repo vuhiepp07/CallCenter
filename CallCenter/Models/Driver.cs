@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class Driver
+    public class Driver
     {
         public string driverId { get; set; }
         public string username { get; set; }

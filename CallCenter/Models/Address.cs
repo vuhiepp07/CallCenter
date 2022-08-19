@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class Address
+    public class Address
     {
         public string id { get; set; }
         public string name { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class Request : INotifyPropertyChanged
+    public class Request : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public string requestId { get; set; }

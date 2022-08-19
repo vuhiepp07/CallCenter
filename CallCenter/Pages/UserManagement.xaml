@@ -51,7 +51,7 @@
             </Button>
         </DockPanel>
         <Grid Background="White" Canvas.Top="149" Canvas.Left="-1">
-            <ListView 
+            <ListView Name="userListView"
         ItemsSource="{Binding Source={StaticResource UserViewSource}}" Margin="0,0,0,204" >
                 <ListView.Resources>
                     <ContextMenu x:Key="UserContextMenu">

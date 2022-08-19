@@ -22,7 +22,8 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class TripManagement : Page
     {
-        private const string GetAllTripUrl = "https://ubercloneserver.herokuapp.com/staff/getAllUser";
+        private const string GetAllTripUrl = "https://ubercloneserver.herokuapp.com/staff/getAllTrip";
+        private const string tripTrackingUrl = "";
 
         IList<Trip> trips = new List<Trip>();
         List<Trip> TripsListToView = new List<Trip> { };
@@ -62,13 +63,20 @@ namespace CallCenter.Pages
             getAndBindingTripData();
         }
 
+        public TripManagement(List<Trip> tripReceived)
+        {
+            this.trips = tripReceived;
+            TripViewSource = (CollectionViewSource)FindResource(nameof(TripViewSource));
+            refreshViewSource(trips);
+        }
+
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             var tripID = SearchField.Text.Trim().ToLower();
             SearchField.Text = "";
-            TripViewSource.Source = from trip in trips
-                                    where trip.tripID.ToLower() == tripID.ToLower()
-                                    select trip;
+            //TripViewSource.Source = from trip in trips
+            //                        where trip.tripID.ToLower() == tripID.ToLower()
+            //                        select trip;
             refreshViewSource((IList<Trip>)TripViewSource.Source);
         }
 
@@ -96,6 +104,34 @@ namespace CallCenter.Pages
                 PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
                 SelectedTrips = TripsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
                 TripViewSource.Source = SelectedTrips;
+            }
+        }
+
+        private void btnTracking_Click(object sender, RoutedEventArgs e)
+        {
+            Trip temp = (Trip)tripListView.SelectedItem;
+            if (temp.status.Equals("Completed"))
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("This trip has reach its destination");
+            }
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllTripUrl, AccountnTokenHelper.accessToken);
+            MessageBox.Show(content);
+            JObject objTemp = JObject.Parse(content);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            if (status.Equals("True") && message.Equals("Delete staff successfully"))
+            {
+                //JArray arr = (JArray)o["data"];
+                //List<Trip> trips = arr.ToObject<List<Trip>>();
+            }
+            else
+            {
+                MessageBox.Show("Some error occured");
             }
         }
     }

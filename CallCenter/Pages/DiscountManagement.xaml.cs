@@ -47,8 +47,8 @@ namespace CallCenter.Pages
         public void getAndBindingDiscountData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(GetAllDiscountUrl);
-            //MessageBox.Show(content.ToString());
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllDiscountUrl, AccountnTokenHelper.accessToken);
+            MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             discounts = arr.ToObject<List<Discount>>();

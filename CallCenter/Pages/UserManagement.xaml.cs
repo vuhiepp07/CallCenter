@@ -23,6 +23,7 @@ namespace CallCenter.Pages
     public partial class UserManagement : Page
     {
         private string GetAllUserUrl = "https://ubercloneserver.herokuapp.com/staff/getAllUser";
+        private string Get5LatestTripUrl = "https://ubercloneserver.herokuapp.com/staff/get5latestTripForUser/";
 
         IList<User> users = new List<User>();
         List<User> UsersListToView = new List<User> { };
@@ -63,7 +64,31 @@ namespace CallCenter.Pages
 
         private void btnLatestTrips_Click(object sender, RoutedEventArgs e)
         {
-
+            User temp = (User)userListView.SelectedItem;
+            string tempUrl = Get5LatestTripUrl + temp.id;
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
+            MessageBox.Show(content);
+            JObject objTemp = JObject.Parse(content);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            if (status.Equals("True") && message.Equals("Delete staff successfully"))
+            {
+                JArray arr = (JArray)objTemp["data"];
+                List<Trip> trips = arr.ToObject<List<Trip>>();
+                if (trips.Count == 0)
+                {
+                    MessageBox.Show("This user did not have any trip");
+                }
+                else
+                {
+                    this.NavigationService.Navigate(new TripManagement(trips));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Some error occured");
+            }
         }
 
         private void btnFrequentDes_Click(object sender, RoutedEventArgs e)

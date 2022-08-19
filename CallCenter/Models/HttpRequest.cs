@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace CallCenter.Models
 {
-    internal class HttpRequest
+    public class HttpRequest
     {
         HttpClient _httpClient = null;
         public HttpClient httpClient => _httpClient ?? (new HttpClient());

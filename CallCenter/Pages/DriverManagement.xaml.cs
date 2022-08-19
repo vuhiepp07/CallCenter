@@ -22,6 +22,8 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class DriverManagement : Page
     {
+        private const string GetAllDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getAllDriver";
+        private string getAllTripOfDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getAllTripByDriver/";
         private string getVehiclesOfSpecificDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getVehicleOfDriver/";
         List<Vehicle> vehiclesOfSpecificDrivers = new List<Vehicle>();
         private void refreshViewSource(IList<Driver> drivers)
@@ -53,7 +55,6 @@ namespace CallCenter.Pages
         }
 
 
-        private const string GetAllDriverUrl = "https://ubercloneserver.herokuapp.com/staff/getAllDriver";
 
         IList<Driver> drivers = new List<Driver>();
         List<Driver> DriversListToView = new List<Driver> { };
@@ -67,7 +68,31 @@ namespace CallCenter.Pages
 
         private void btnLatestTrips_Click(object sender, RoutedEventArgs e)
         {
-
+            User temp = (User)driverListView.SelectedItem;
+            string tempUrl = getAllTripOfDriverUrl + temp.id;
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
+            MessageBox.Show(content);
+            JObject objTemp = JObject.Parse(content);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            if (status.Equals("True") && message.Equals("Delete staff successfully"))
+            {
+                JArray arr = (JArray)objTemp["data"];
+                List<Trip> trips = arr.ToObject<List<Trip>>();
+                if (trips.Count == 0)
+                {
+                    MessageBox.Show("This driver haven't drive any trip yet");
+                }
+                else
+                {
+                    this.NavigationService.Navigate(new TripManagement(trips));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Some error occured");
+            }
         }
 
 

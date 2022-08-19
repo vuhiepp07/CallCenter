@@ -76,6 +76,12 @@
                     </Grid>
                 </Button>
 
+                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToAddVehicleManagement">
+                    <Grid Width="150">
+                        <TextBlock HorizontalAlignment="Center" Text="UNCENSORED VEHICLE" FontFamily="Champagne &amp; Limousines"/>
+                    </Grid>
+                </Button>
+
                 <!--<Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToDiscount">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="PercentBoxOutline" VerticalAlignment="Center"/>

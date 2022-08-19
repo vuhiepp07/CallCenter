@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class point
+    public class point
     {
         public string address { get; set; }
         public string longitude { get; set; }

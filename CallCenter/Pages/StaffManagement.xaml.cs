@@ -25,7 +25,7 @@ namespace CallCenter.Pages
     /// </summary>
     public partial class StaffManagement : Page
     {
-        private string deleteStaffUrl = "";
+        private string deleteStaffUrl = "https://ubercloneserver.herokuapp.com/staff/deleteStaff";
         private string getAllStaffUrl = "https://ubercloneserver.herokuapp.com/staff/getAllStaff";
 
         public DataTransferDelegateStaff del;
@@ -87,29 +87,6 @@ namespace CallCenter.Pages
             PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
         }
 
-        //private void deleteDiscountBtn_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Staff temp = (Staff)discountListView.SelectedItem;
-        //    string tempUrl = deleteDiscountUrl + temp.discountId;
-        //    HttpRequest httpRequest = new HttpRequest();
-        //    var content = httpRequest.DeleteDataByUrl(tempUrl);
-        //    //MessageBox.Show(content);
-        //    JObject objTemp = JObject.Parse(content);
-        //    string status = (string)objTemp["status"];
-        //    string message = (string)objTemp["message"];
-        //    if(status.Equals("True") && message.Equals("Delete discount successfully")){
-        //        MessageBox.Show("Delete discount successfully");
-        //        int index = staffs.IndexOf(temp);
-        //        staffs.RemoveAt(index);
-        //        refreshViewSource(staffs);
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Some error occured when delete this discount");
-        //    }
-        //}
-
-
         private void PrevStaffPageBtn_Click(object sender, RoutedEventArgs e)
         {
             if (_currentPage > 1)
@@ -150,7 +127,25 @@ namespace CallCenter.Pages
 
         private void deleteStaffbtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Staff temp = (Staff)staffListView.SelectedItem;
+            var temp2 = new { staffId= temp.id};
+            HttpRequest httpRequest = new HttpRequest();
+            var content = httpRequest.PostAsyncJsonWithAccessToken(deleteStaffUrl, JsonConvert.SerializeObject(temp2).ToString(), AccountnTokenHelper.accessToken);
+            MessageBox.Show(content);
+            JObject objTemp = JObject.Parse(content);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            if (status.Equals("True") && message.Equals("Delete staff successfully"))
+            {
+                MessageBox.Show("Delete discount successfully");
+                int index = staffs.IndexOf(temp);
+                staffs.RemoveAt(index);
+                refreshViewSource(staffs);
+            }
+            else
+            {
+                MessageBox.Show("Some error occured when delete this staff");
+            }
         }
     }
 }

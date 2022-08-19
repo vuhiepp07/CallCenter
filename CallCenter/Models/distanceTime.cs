@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class distanceTime
+    public class distanceTime
     {
         public double distance { get; set; }
         public int timeSecond { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CallCenter.Models
 {
-    internal class vehiclePrice
+    public class vehiclePrice
     {
         public string vehicleType { get; set; }
         public double price { get; set; }

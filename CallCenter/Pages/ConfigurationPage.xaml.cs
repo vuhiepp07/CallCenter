@@ -26,6 +26,7 @@ namespace CallCenter.Pages
     {
         private string getStaffInfoUrl = "https://ubercloneserver.herokuapp.com/staff/infor";
         private string changePasswordUrl = "https://ubercloneserver.herokuapp.com/staff/changePassword";
+        private string editStaffInfoUrl = "https://ubercloneserver.herokuapp.com/staff/editStaffInfo";
         List<string> genders = new List<string> { "male", "female" };
         public ConfigurationPage()
         {
@@ -59,16 +60,16 @@ namespace CallCenter.Pages
             string json = JsonConvert.SerializeObject(temp);
 
             HttpRequest httpRequest = new HttpRequest();
-            string responseContent = httpRequest.PostAsyncJsonWithAccessToken( changePasswordUrl, json, AccountnTokenHelper.accessToken);
+            string responseContent = httpRequest.PostAsyncJsonWithAccessToken(editStaffInfoUrl, json, AccountnTokenHelper.accessToken);
             MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];
 
-            if (message.Equals("") && status.Equals("True"))
+            if (message.Equals("Edit successfully") && status.Equals("True"))
             {
                 MessageBox.Show("Update staff information successfully");
-                Canvas_Loaded(sender, e);
+                OnOff(true);
             }
             else
             {
