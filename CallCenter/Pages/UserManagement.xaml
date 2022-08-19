@@ -78,7 +78,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding id}" TextAlignment="Center" FontSize="14" Width="50" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding userId}" TextAlignment="Center" FontSize="14" Width="50" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

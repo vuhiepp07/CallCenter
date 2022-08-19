@@ -157,11 +157,11 @@ namespace CallCenter.Pages
                     string bookingjson = JsonConvert.SerializeObject(request);
                     httpRequest = new HttpRequest();
                     responseContent = httpRequest.PutAsyncJsonWithAccessToken(bookingUrl, bookingjson, AccountnTokenHelper.accessToken);
-                    //MessageBox.Show(responseContent);
+                    MessageBox.Show(responseContent);
                     objTemp = JObject.Parse(responseContent);
                     string status = (string)objTemp["status"];
                     string message = (string)objTemp["message"];
-                    if (status.Equals("True") && message.Equals("Request vehicle successfully and receive price"))
+                    if (status.Equals("True") && message.Equals("Booking successfully"))
                     {
                         MessageBox.Show("Booking success");
                     }

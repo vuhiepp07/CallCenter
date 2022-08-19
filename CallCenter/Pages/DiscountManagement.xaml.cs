@@ -30,20 +30,21 @@ namespace CallCenter.Pages
         private const string editDiscountUrl = "https://ubercloneserver.herokuapp.com/staff/editDiscount";
         private string addDiscountURL = "https://ubercloneserver.herokuapp.com/staff/addDiscount";
         private Discount unEdited;
+        private PagingHelper<Discount> pagingHelper;
 
         public DataTransferDelegate del;
         Boolean addDiscountflag, editDiscountflag;
 
         IList<Discount> discounts = new List<Discount>();
-        List<Discount> DiscountsListToView = new List<Discount> { };
-        List<Discount> SelectedDiscounts = new List<Discount> { };
-        int _totalItems = 0;
-        int _currentPage = 0;
-        int _totalPages = 0;
-        int _rowsPerPage = 10;
 
         private CollectionViewSource DiscountViewSource;
 
+        private void refreshViewSource(IList<Discount> discounts)
+        {
+            pagingHelper = new PagingHelper<Discount>(discounts);
+            DiscountViewSource.Source = pagingHelper.refreshView();
+            PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
+        }
         public void getAndBindingDiscountData()
         {
             HttpRequest httpRequest = new HttpRequest();
@@ -75,41 +76,27 @@ namespace CallCenter.Pages
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
         {
-            getAndBindingDiscountData();    
+            getAndBindingDiscountData();
         }
 
         private void PrevDiscountPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage > 1)
+            if (pagingHelper._currentPage > 1)
             {
-                _currentPage--;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedDiscounts = DiscountsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                DiscountViewSource.Source = SelectedDiscounts;
+                DiscountViewSource.Source = pagingHelper.prevPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
         private void NextDiscountPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage < _totalPages)
+            if (pagingHelper._currentPage < pagingHelper._totalPages)
             {
-                _currentPage++;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedDiscounts = DiscountsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                DiscountViewSource.Source = SelectedDiscounts;
+                DiscountViewSource.Source = pagingHelper.nextPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
-        private void refreshViewSource(IList<Discount> discounts)
-        {
-            DiscountsListToView = (List<Discount>)discounts;
-            SelectedDiscounts = DiscountsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            DiscountViewSource.Source = SelectedDiscounts;
-            _currentPage = 1;
-            _totalItems = discounts.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-        }
 
         private void deleteDiscountBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -121,7 +108,8 @@ namespace CallCenter.Pages
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];
-            if(status.Equals("True") && message.Equals("Delete discount successfully")){
+            if (status.Equals("True") && message.Equals("Delete discount successfully"))
+            {
                 MessageBox.Show("Delete discount successfully");
                 int index = discounts.IndexOf(temp);
                 discounts.RemoveAt(index);
@@ -153,7 +141,7 @@ namespace CallCenter.Pages
         public void passData(Discount data)
         {
             Discount temp = new Discount(data);
-            if(data.discountPercent == -99.0)
+            if (data.discountPercent == -99.0)
             {
                 addDiscountflag = false;
                 editDiscountflag = false;
@@ -177,7 +165,7 @@ namespace CallCenter.Pages
                 addDiscountflag = false;
                 getAndBindingDiscountData();
             }
-            else if(editDiscountflag == true)
+            else if (editDiscountflag == true)
             {
                 string json = JsonConvert.SerializeObject(temp);
                 HttpRequest httpRequest = new HttpRequest();

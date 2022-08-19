@@ -27,17 +27,12 @@ namespace CallCenter.Pages
     {
         private string deleteStaffUrl = "https://ubercloneserver.herokuapp.com/staff/deleteStaff";
         private string getAllStaffUrl = "https://ubercloneserver.herokuapp.com/staff/getAllStaff";
-
+        private PagingHelper<Staff> pagingHelper;
         public DataTransferDelegateStaff del;
         Boolean addStaffflag;
 
         IList<Staff> staffs = new List<Staff>();
-        List<Staff> StaffsListToView = new List<Staff> { };
-        List<Staff> SelectedStaffs = new List<Staff> { };
-        int _totalItems = 0;
-        int _currentPage = 0;
-        int _totalPages = 0;
-        int _rowsPerPage = 10;
+
 
         private CollectionViewSource StaffViewSource;
 
@@ -50,7 +45,7 @@ namespace CallCenter.Pages
             JArray arr = (JArray)o["data"];
             staffs = arr.ToObject<List<Staff>>();
             MessageBox.Show(arr.ToString());
-            refreshViewSource(staffs);
+            refreshViewSource();
         }
 
         public StaffManagement()
@@ -76,36 +71,28 @@ namespace CallCenter.Pages
             getAndBindingStaffData();    
         }
 
-        private void refreshViewSource(IList<Staff> staffs)
+        private void refreshViewSource()
         {
-            StaffsListToView = (List<Staff>)staffs;
-            SelectedStaffs = StaffsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            StaffViewSource.Source = SelectedStaffs;
-            _currentPage = 1;
-            _totalItems = staffs.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            pagingHelper = new PagingHelper<Staff>(staffs);
+            StaffViewSource.Source = pagingHelper.refreshView();
+            PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
         }
 
         private void PrevStaffPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage > 1)
+            if (pagingHelper._currentPage > 1)
             {
-                _currentPage--;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedStaffs = StaffsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                StaffViewSource.Source = SelectedStaffs;
+                StaffViewSource.Source = pagingHelper.prevPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
         private void NextStaffPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage < _totalPages)
+            if (pagingHelper._currentPage < pagingHelper._totalPages)
             {
-                _currentPage++;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedStaffs = StaffsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                StaffViewSource.Source = SelectedStaffs;
+                StaffViewSource.Source = pagingHelper.nextPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
@@ -140,7 +127,7 @@ namespace CallCenter.Pages
                 MessageBox.Show("Delete discount successfully");
                 int index = staffs.IndexOf(temp);
                 staffs.RemoveAt(index);
-                refreshViewSource(staffs);
+                refreshViewSource();
             }
             else
             {

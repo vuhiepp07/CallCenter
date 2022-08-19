@@ -20,18 +20,23 @@ namespace CallCenter.Pages
     /// <summary>
     /// Interaction logic for RequestManagement.xaml
     /// </summary>
+
     public partial class RequestManagement : Page
     {
         private string cancelBookingUrl = "https://ubercloneserver.herokuapp.com/staff/cancelBooking/";
-        private void refreshViewSource(IList<Request> requests)
+        private const string GetAllRequestUrl = "https://ubercloneserver.herokuapp.com/staff/getAllRequest";
+
+        IList<Request> requests = new List<Request>();
+
+        private CollectionViewSource RequestViewSource;
+
+        private PagingHelper<Request> pagingHelper;
+
+        private void refreshViewSource()
         {
-            RequestsListToView = (List<Request>)requests;
-            SelectedRequests = RequestsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            RequestViewSource.Source = SelectedRequests;
-            _currentPage = 1;
-            _totalItems = requests.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            pagingHelper = new PagingHelper<Request>(requests);
+            RequestViewSource.Source = pagingHelper.refreshView();
+            PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
         }
         public void getAndBindingRequestData()
         {
@@ -42,7 +47,7 @@ namespace CallCenter.Pages
             JArray arr = (JArray)o["data"];
             requests = arr.ToObject<List<Request>>();
             requests = Enumerable.Reverse(requests).ToList();
-            refreshViewSource(requests);
+            refreshViewSource();
         }
         public RequestManagement()
         {
@@ -51,18 +56,6 @@ namespace CallCenter.Pages
             getAndBindingRequestData();
         }
 
-        private const string GetAllRequestUrl = "https://ubercloneserver.herokuapp.com/staff/getAllRequest";
-
-        IList<Request> requests = new List<Request>();
-        List<Request> RequestsListToView = new List<Request> { };
-        List<Request> SelectedRequests = new List<Request> { };
-        int _totalItems = 0;
-        int _currentPage = 0;
-        int _totalPages = 0;
-        int _rowsPerPage = 13;
-
-        private CollectionViewSource RequestViewSource;
-
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             var requestID = SearchField.Text.Trim().ToLower();
@@ -70,7 +63,7 @@ namespace CallCenter.Pages
             //RequestViewSource.Source = from request in requests
             //                           where request.requestedID.ToLower() == requestID.ToLower()
             //                           select request;
-            refreshViewSource((IList<Request>)RequestViewSource.Source);
+            //refreshViewSource((IList<Request>)RequestViewSource.Source);
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
@@ -80,23 +73,19 @@ namespace CallCenter.Pages
 
         private void NextRequestPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage < _totalPages)
+            if (pagingHelper._currentPage < pagingHelper._totalPages)
             {
-                _currentPage++;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedRequests = RequestsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                RequestViewSource.Source = SelectedRequests;
+                RequestViewSource.Source = pagingHelper.nextPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
-        
+
         private void PrevRequestPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage > 1)
+            if (pagingHelper._currentPage > 1)
             {
-                _currentPage--;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedRequests = RequestsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                RequestViewSource.Source = SelectedRequests;
+                RequestViewSource.Source = pagingHelper.prevPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
@@ -116,12 +105,11 @@ namespace CallCenter.Pages
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];
-            if(status.Equals("True") && message.Equals("Cancel booking successfully"))
+            if (status.Equals("True") && message.Equals("Cancel booking successfully"))
             {
                 MessageBox.Show("Cancel request successfully");
                 unEdited.status = "Canceled";
             }
         }
-
     }
 }

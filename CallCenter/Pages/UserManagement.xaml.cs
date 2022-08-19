@@ -24,26 +24,16 @@ namespace CallCenter.Pages
     {
         private string GetAllUserUrl = "https://ubercloneserver.herokuapp.com/staff/getAllUser";
         private string Get5LatestTripUrl = "https://ubercloneserver.herokuapp.com/staff/get5latestTripForUser/";
-
+        private PagingHelper<User> pagingHelper;
         IList<User> users = new List<User>();
-        List<User> UsersListToView = new List<User> { };
-        List<User> SelectedUsers = new List<User> { };
-        int _totalItems = 0;
-        int _currentPage = 0;
-        int _totalPages = 0;
-        int _rowsPerPage = 10;
 
         private CollectionViewSource UserViewSource;
 
-        private void refreshViewSource(IList<User> users)
+        private void refreshViewSource()
         {
-            UsersListToView = (List<User>)users;
-            SelectedUsers = UsersListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            UserViewSource.Source = SelectedUsers;
-            _currentPage = 1;
-            _totalItems = users.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            pagingHelper = new PagingHelper<User>(users);
+            UserViewSource.Source = pagingHelper.refreshView();
+            PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
         }
         public void getAndBindingUserData()
         {
@@ -53,7 +43,7 @@ namespace CallCenter.Pages
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             users = arr.ToObject<List<User>>();
-            refreshViewSource(users);
+            refreshViewSource();
         }
         public UserManagement()
         {
@@ -65,14 +55,14 @@ namespace CallCenter.Pages
         private void btnLatestTrips_Click(object sender, RoutedEventArgs e)
         {
             User temp = (User)userListView.SelectedItem;
-            string tempUrl = Get5LatestTripUrl + temp.id;
+            string tempUrl = Get5LatestTripUrl + temp.userId;
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];
-            if (status.Equals("True") && message.Equals("Delete staff successfully"))
+            if (status.Equals("True") && message.Equals("Get 5 latest trip"))
             {
                 JArray arr = (JArray)objTemp["data"];
                 List<Trip> trips = arr.ToObject<List<Trip>>();
@@ -98,24 +88,20 @@ namespace CallCenter.Pages
 
         private void NextUserPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage < _totalPages)
+            if (pagingHelper._currentPage < pagingHelper._totalPages)
             {
-                _currentPage++;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedUsers = UsersListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                UserViewSource.Source = SelectedUsers;
+                UserViewSource.Source = pagingHelper.nextPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
 
         private void PrevUserPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage > 1)
+            if (pagingHelper._currentPage > 1)
             {
-                _currentPage--;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedUsers = UsersListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                UserViewSource.Source = SelectedUsers;
+                UserViewSource.Source = pagingHelper.prevPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
@@ -126,7 +112,7 @@ namespace CallCenter.Pages
             UserViewSource.Source = from user in users
                                     where user.username.ToLower() == userName.ToLower()
                                     select user;
-            refreshViewSource((IList<User>)UserViewSource.Source);
+            refreshViewSource();
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

@@ -23,26 +23,16 @@ namespace CallCenter.Pages
     public partial class VehicleManagement : Page
     {
         private const string GetAllVehicleUrl = "https://ubercloneserver.herokuapp.com/staff/getAllVehicle";
-
+        private PagingHelper<Vehicle> pagingHelper;
         IList<Vehicle> vehicles = new List<Vehicle>();
-        List<Vehicle> VehiclesListToView = new List<Vehicle> { };
-        List<Vehicle> SelectedVehicles = new List<Vehicle> { };
-        int _totalItems = 0;
-        int _currentPage = 0;
-        int _totalPages = 0;
-        int _rowsPerPage = 10;
 
         private CollectionViewSource VehicleViewSource;
 
-        private void refreshViewSource(IList<Vehicle> vehicles)
+        private void refreshViewSource()
         {
-            VehiclesListToView = (List<Vehicle>)vehicles;
-            SelectedVehicles = VehiclesListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            VehicleViewSource.Source = SelectedVehicles;
-            _currentPage = 1;
-            _totalItems = vehicles.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            pagingHelper = new PagingHelper<Vehicle>(vehicles);
+            VehicleViewSource.Source = pagingHelper.refreshView();
+            PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
         }
         public void getAndBindingVehicleData()
         {
@@ -52,7 +42,7 @@ namespace CallCenter.Pages
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             vehicles = arr.ToObject<List<Vehicle>>();
-            refreshViewSource(vehicles);
+            refreshViewSource();
         }
 
         public VehicleManagement()
@@ -68,7 +58,7 @@ namespace CallCenter.Pages
             VehicleViewSource = (CollectionViewSource)FindResource(nameof(VehicleViewSource));
             vehicles = list;
             ViewAddVehicleRequestListbtn.IsEnabled = false;
-            refreshViewSource(vehicles);
+            refreshViewSource();
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -78,7 +68,7 @@ namespace CallCenter.Pages
             //VehicleViewSource.Source = from vehicle in vehicles
             //                           where vehicle.ownerName.ToLower() == ownerName.ToLower()
             //                           select vehicle;
-            refreshViewSource((IList<Vehicle>)VehicleViewSource.Source);
+            refreshViewSource();
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
@@ -88,23 +78,19 @@ namespace CallCenter.Pages
 
         private void PrevVehiclePageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage > 1)
+            if (pagingHelper._currentPage > 1)
             {
-                _currentPage--;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedVehicles = VehiclesListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                VehicleViewSource.Source = SelectedVehicles;
+                VehicleViewSource.Source = pagingHelper.prevPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
         private void NextVehiclePageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage < _totalPages)
+            if (pagingHelper._currentPage < pagingHelper._totalPages)
             {
-                _currentPage++;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedVehicles = VehiclesListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                VehicleViewSource.Source = SelectedVehicles;
+                VehicleViewSource.Source = pagingHelper.nextPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 

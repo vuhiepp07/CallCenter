@@ -24,26 +24,18 @@ namespace CallCenter.Pages
     {
         private const string GetAllTripUrl = "https://ubercloneserver.herokuapp.com/staff/getAllTrip";
         private const string tripTrackingUrl = "";
+        private PagingHelper<Trip> pagingHelper;
 
         IList<Trip> trips = new List<Trip>();
-        List<Trip> TripsListToView = new List<Trip> { };
-        List<Trip> SelectedTrips = new List<Trip> { };
-        int _totalItems = 0;
-        int _currentPage = 0;
-        int _totalPages = 0;
-        int _rowsPerPage = 10;
+
 
         private CollectionViewSource TripViewSource;
 
-        private void refreshViewSource(IList<Trip> trips)
+        private void refreshViewSource()
         {
-            TripsListToView = (List<Trip>)trips;
-            SelectedTrips = TripsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-            TripViewSource.Source = SelectedTrips;
-            _currentPage = 1;
-            _totalItems = trips.Count;
-            _totalPages = _totalItems / _rowsPerPage + (_totalItems % _rowsPerPage == 0 ? 0 : 1);
-            PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
+            pagingHelper = new PagingHelper<Trip>(trips);
+            TripViewSource.Source = pagingHelper.refreshView();
+            PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
         }
 
         public void getAndBindingTripData()
@@ -54,7 +46,7 @@ namespace CallCenter.Pages
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             trips = arr.ToObject<List<Trip>>();
-            refreshViewSource(trips);
+            refreshViewSource();
         }
         public TripManagement()
         {
@@ -65,9 +57,10 @@ namespace CallCenter.Pages
 
         public TripManagement(List<Trip> tripReceived)
         {
-            this.trips = tripReceived;
+            InitializeComponent();
             TripViewSource = (CollectionViewSource)FindResource(nameof(TripViewSource));
-            refreshViewSource(trips);
+            this.trips = tripReceived;
+            refreshViewSource();
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -77,7 +70,7 @@ namespace CallCenter.Pages
             //TripViewSource.Source = from trip in trips
             //                        where trip.tripID.ToLower() == tripID.ToLower()
             //                        select trip;
-            refreshViewSource((IList<Trip>)TripViewSource.Source);
+            refreshViewSource();
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
@@ -87,23 +80,19 @@ namespace CallCenter.Pages
 
         private void NextTripPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage < _totalPages)
+            if (pagingHelper._currentPage < pagingHelper._totalPages)
             {
-                _currentPage++;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedTrips = TripsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                TripViewSource.Source = SelectedTrips;
+                TripViewSource.Source = pagingHelper.nextPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
         private void PrevTripPageBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentPage > 1)
+            if (pagingHelper._currentPage > 1)
             {
-                _currentPage--;
-                PagesTextBlock.Text = $"{_currentPage}/{_totalPages}";
-                SelectedTrips = TripsListToView.Skip((_currentPage - 1) * _rowsPerPage).Take(_rowsPerPage).ToList();
-                TripViewSource.Source = SelectedTrips;
+                TripViewSource.Source = pagingHelper.prevPage();
+                PagesTextBlock.Text = $"{pagingHelper._currentPage}/{pagingHelper._totalPages}";
             }
         }
 
