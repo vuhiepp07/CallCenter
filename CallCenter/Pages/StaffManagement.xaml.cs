@@ -124,7 +124,7 @@ namespace CallCenter.Pages
             string message = (string)objTemp["message"];
             if (status.Equals("True") && message.Equals("Delete staff successfully"))
             {
-                MessageBox.Show("Delete discount successfully");
+                MessageBox.Show(message);
                 int index = staffs.IndexOf(temp);
                 staffs.RemoveAt(index);
                 refreshViewSource();

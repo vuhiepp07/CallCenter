@@ -66,11 +66,11 @@ namespace CallCenter.Pages
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            var discountID = SearchField.Text;
+            var discountName = SearchField.Text.Trim().ToLower();
             SearchField.Text = "";
             DiscountViewSource.Source = from discount in discounts
-                                        where discount.discountId == discountID
-                                        select discount;
+                                       where discount.discountName.ToLower() == discountName.ToLower()
+                                       select discount;
             refreshViewSource((IList<Discount>)DiscountViewSource.Source);
         }
 

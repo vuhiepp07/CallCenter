@@ -82,6 +82,11 @@ namespace CallCenter.Pages
             DestinationCBox.IsDropDownOpen = true;
         }
 
+        private void okBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void StartAddrbtn_Click(object sender, RoutedEventArgs e)
         {
             string startaddress = StartCBox.Text;
@@ -170,8 +175,8 @@ namespace CallCenter.Pages
                         MessageBox.Show("Some error happened, please try again");
                     }
                 }
-                else
-                {
+                else 
+                { 
                     MessageBox.Show("Request canceled");
                 }
                 this.NavigationService.Navigate(new Uri("/Pages/RequestManagement.xaml", UriKind.Relative));

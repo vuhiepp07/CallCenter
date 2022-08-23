@@ -30,7 +30,7 @@
                 FontSize="10"
                 TextWrapping="Wrap"
                 MaxWidth="400"
-                materialDesign:HintAssist.Hint="Please insert exacly driver name"
+                materialDesign:HintAssist.Hint="Please insert exactly vehicle's license platenum"
                 IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
             <Button
                 Click="BtnSearch_Click"

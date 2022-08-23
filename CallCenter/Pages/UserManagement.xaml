@@ -30,7 +30,7 @@
                 FontSize="10"
                 TextWrapping="Wrap"
                 MaxWidth="400"
-                materialDesign:HintAssist.Hint="Please insert exacly Username"
+                materialDesign:HintAssist.Hint="Please insert exactly Username"
                 IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
             <Button
                 Click="BtnSearch_Click"

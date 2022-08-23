@@ -1,4 +1,5 @@
 ﻿using CallCenter.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace CallCenter.Pages
     public partial class TripManagement : Page
     {
         private const string GetAllTripUrl = "https://ubercloneserver.herokuapp.com/staff/getAllTrip";
+        private const string trackingUrl = "https://ubercloneserver.herokuapp.com/staff/trackingDriverOnTrip/";
         private const string tripTrackingUrl = "";
         private PagingHelper<Trip> pagingHelper;
 
@@ -99,28 +101,30 @@ namespace CallCenter.Pages
         private void btnTracking_Click(object sender, RoutedEventArgs e)
         {
             Trip temp = (Trip)tripListView.SelectedItem;
-            if (temp.status.Equals("Completed"))
+            if (!temp.status.Equals("Completed"))
             {
-
+                string url = trackingUrl + temp.tripId;
+                HttpRequest httpRequest = new HttpRequest();
+                var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(url, AccountnTokenHelper.accessToken);
+                MessageBox.Show(content);
+                JObject objTemp = JObject.Parse(content);
+                string status = (string)objTemp["status"];
+                string message = (string)objTemp["message"];
+                if (status.Equals("True") && message.Equals("Tracking successfully"))
+                {
+                    JObject obj = (JObject)objTemp["data"];
+                    point currentLocation = obj.ToObject<point>();
+                    //point currentLocation = JsonConvert.DeserializeObject<point>((JObject)objTemp["data"]);
+                    this.NavigationService.Navigate(new TripTracking(temp.startAddress.address, temp.destination.address, temp.vehicleAndPrice.vehicleType, temp.paymentType, temp.userId,temp.driverId, currentLocation));
+                }
+                else
+                {
+                    MessageBox.Show("Some error occured");
+                }
             }
             else
             {
                 MessageBox.Show("This trip has reach its destination");
-            }
-            HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllTripUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content);
-            JObject objTemp = JObject.Parse(content);
-            string status = (string)objTemp["status"];
-            string message = (string)objTemp["message"];
-            if (status.Equals("True") && message.Equals("Delete staff successfully"))
-            {
-                //JArray arr = (JArray)o["data"];
-                //List<Trip> trips = arr.ToObject<List<Trip>>();
-            }
-            else
-            {
-                MessageBox.Show("Some error occured");
             }
         }
     }

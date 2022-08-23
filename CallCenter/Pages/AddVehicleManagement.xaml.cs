@@ -69,11 +69,11 @@ namespace CallCenter.Pages
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            //var ownerName = SearchField.Text.Trim().ToLower();
-            //SearchField.Text = "";
-            //VehicleViewSource.Source = from vehicle in vehicles
-            //                           where vehicle.ownerName.ToLower() == ownerName.ToLower()
-            //                           select vehicle;
+            var licensePlateNum = SearchField.Text.Trim().ToLower();
+            SearchField.Text = "";
+            VehicleViewSource.Source = from vehicle in vehicles
+                                       where vehicle.licensePlateNum.ToLower() == licensePlateNum.ToLower()
+                                       select vehicle;
             refreshViewSource();
         }
 

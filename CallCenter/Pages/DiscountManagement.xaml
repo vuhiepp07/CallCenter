@@ -30,7 +30,7 @@
                 FontSize="10"
                 TextWrapping="Wrap"
                 MaxWidth="400"
-                materialDesign:HintAssist.Hint="Please insert exacly discountID"
+                materialDesign:HintAssist.Hint="Please insert exacly discount name"
                 IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
             <Button
                 Click="BtnSearch_Click"
