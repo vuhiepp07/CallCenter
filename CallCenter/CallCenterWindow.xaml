@@ -77,13 +77,6 @@
                     </Grid>
                 </Button>
 
-                <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToDiscount">
-                    <Grid Width="150">
-                        <materialDesign:PackIcon Kind="PercentBoxOutline" VerticalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Text="DISCOUNT" FontFamily="Champagne &amp; Limousines"/>
-                    </Grid>
-                </Button>
-
                 <Button Margin="10" Background="#3F51B5" BorderBrush="#3F51B5" Click="NavigateToConfigurationPage">
                     <Grid Width="150">
                         <materialDesign:PackIcon Kind="Settings" VerticalAlignment="Center"/>

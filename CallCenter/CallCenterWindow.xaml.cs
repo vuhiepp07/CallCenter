@@ -48,11 +48,6 @@ namespace CallCenter
 
         }
 
-        private void NavigateToDiscount(object sender, RoutedEventArgs e)
-        {
-            Main.Content = new DiscountManagement();
-            Main.NavigationService.RemoveBackEntry();
-        }
 
         private void NavigateToConfigurationPage(object sender, RoutedEventArgs e)
         {
