@@ -98,7 +98,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Status" Width="150">
+                        <GridViewColumn Header="Driver license" Width="170">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -108,7 +108,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding status}" TextAlignment="Center" FontSize="14" Width="150" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding driverLicenseId}" TextAlignment="Center" FontSize="14" Width="170" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -128,7 +128,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Header="Email" Width="350">
+                        <GridViewColumn Header="Email" Width="310">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -138,7 +138,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding email}" TextAlignment="Center" FontSize="14" Width="350" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding email}" TextAlignment="Center" FontSize="14" Width="310" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -158,7 +158,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn  Header="Current location" Width="180" >
+                        <GridViewColumn  Header="Citizen ID" Width="200" >
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -168,7 +168,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding currentLocation}" TextAlignment="Center" FontSize="14" Width="180" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding driverCitizenId}" TextAlignment="Center" FontSize="14" Width="200" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

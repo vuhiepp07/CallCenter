@@ -69,10 +69,9 @@ namespace CallCenter.Pages
         {
             var tripID = SearchField.Text.Trim().ToLower();
             SearchField.Text = "";
-            //TripViewSource.Source = from trip in trips
-            //                        where trip.tripID.ToLower() == tripID.ToLower()
-            //                        select trip;
-            refreshViewSource();
+            TripViewSource.Source = from trip in trips
+                                    where trip.tripId.ToLower() == tripID.ToLower()
+                                    select trip;
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

@@ -111,7 +111,6 @@ namespace CallCenter.Pages
             DriverViewSource.Source = from driver in drivers
                                       where driver.fullname.ToLower() == fullname.ToLower()
                                       select driver;
-            refreshViewSource();
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

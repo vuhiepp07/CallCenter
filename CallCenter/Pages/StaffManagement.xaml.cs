@@ -63,7 +63,6 @@ namespace CallCenter.Pages
             StaffViewSource.Source = from staff in staffs
                                      where staff.id == staffId
                                      select staff;
-            refreshViewSource();
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

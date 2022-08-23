@@ -30,7 +30,7 @@
                 FontSize="10"
                 TextWrapping="Wrap"
                 MaxWidth="400"
-                materialDesign:HintAssist.Hint="Please insert exacly driver name"
+                materialDesign:HintAssist.Hint="Please insert exactly license plate name"
                 IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
             <Button
                 Click="BtnSearch_Click"
@@ -68,7 +68,7 @@
                 <ListView.View>
                     <GridView>
 
-                        <GridViewColumn Header="Licenseplate num" Width="280">
+                        <GridViewColumn Header="License plate num" Width="280">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />

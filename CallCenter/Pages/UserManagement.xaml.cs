@@ -141,7 +141,6 @@ namespace CallCenter.Pages
             UserViewSource.Source = from user in users
                                     where user.username.ToLower() == userName.ToLower()
                                     select user;
-            refreshViewSource();
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

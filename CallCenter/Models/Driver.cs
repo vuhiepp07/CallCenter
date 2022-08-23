@@ -15,9 +15,8 @@ namespace CallCenter.Models
         public string email { get; set; }
         public string address { get; set; }
         public string driverCitizenId { get; set; }
-        public string driverLisenseId { get; set; }
+        public string driverLicenseId { get; set; }
         public string gender { get; set; }
         public string status { get; set; }
-        public string currentLocation { get; set; }
     }
 }

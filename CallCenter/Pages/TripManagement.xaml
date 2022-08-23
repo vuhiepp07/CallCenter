@@ -69,7 +69,7 @@
                 <ListView.View>
                     <GridView>
 
-                        <GridViewColumn Header="UserID" Width="70">
+                        <GridViewColumn Header="Trip ID" Width="70">
                             <GridViewColumn.HeaderContainerStyle>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -79,7 +79,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding userId}" TextAlignment="Center" FontSize="14" Width="70" IsEnabled="False" Foreground="Black"></TextBox>
+                                    <TextBox Text="{Binding tripId}" TextAlignment="Center" FontSize="14" Width="70" IsEnabled="False" Foreground="Black"></TextBox>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

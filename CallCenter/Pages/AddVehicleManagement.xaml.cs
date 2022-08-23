@@ -74,7 +74,6 @@ namespace CallCenter.Pages
             VehicleViewSource.Source = from vehicle in vehicles
                                        where vehicle.licensePlateNum.ToLower() == licensePlateNum.ToLower()
                                        select vehicle;
-            refreshViewSource();
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)

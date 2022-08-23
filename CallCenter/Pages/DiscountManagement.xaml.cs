@@ -71,7 +71,6 @@ namespace CallCenter.Pages
             DiscountViewSource.Source = from discount in discounts
                                        where discount.discountName.ToLower() == discountName.ToLower()
                                        select discount;
-            refreshViewSource((IList<Discount>)DiscountViewSource.Source);
         }
 
         private void BtnReload_Click(object sender, RoutedEventArgs e)
