@@ -33,7 +33,7 @@ namespace CallCenter.Pages
         {
             var curItem = ((ListBoxItem)vehicleListView.ContainerFromElement((Button)sender));
             vehicleListView.SelectedItem = (ListBoxItem)curItem;
-            MessageBox.Show($"Selected index = {vehicleListView.SelectedIndex}");
+            //MessageBox.Show($"Selected index = {vehicleListView.SelectedIndex}");
         }
         private void SelectCurrentItem(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -53,7 +53,7 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(requestAddVehicleUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             vehicles = arr.ToObject<List<Vehicle>>();

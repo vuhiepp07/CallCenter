@@ -62,8 +62,8 @@ namespace CallCenter.Pages
             }
             else
             {
-                string temp = Start.Replace(" ", "+");
-                Ggmap.Source = new Uri(mapViewPlaceUrl + temp);
+                //string temp = Start.Replace(" ", "+");
+                //Ggmap.Source = new Uri(mapViewPlaceUrl + temp);
             }
         }
 
@@ -136,10 +136,10 @@ namespace CallCenter.Pages
             string timeSecond = (string)requestObj["result"]["routes"][0]["legs"][0]["duration"]["value"];
             var disTime = new { distance = dis, timeSecond = timeSecond};
             string json = JsonConvert.SerializeObject(disTime);
-            MessageBox.Show(json);
+            //MessageBox.Show(json);
             httpRequest = new HttpRequest();
             string responseContent = httpRequest.PutJsonWithAccessToken(getVehicleAndPriceUrl, json, AccountnTokenHelper.accessToken);
-            MessageBox.Show(responseContent);
+            //MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             double tripprice = double.Parse((string)objTemp["data"]["vehiclesAndPrices"][VehicleCBox.SelectedIndex]["price"]);
 
@@ -162,7 +162,7 @@ namespace CallCenter.Pages
                     string bookingjson = JsonConvert.SerializeObject(request);
                     httpRequest = new HttpRequest();
                     responseContent = httpRequest.PutJsonWithAccessToken(bookingUrl, bookingjson, AccountnTokenHelper.accessToken);
-                    MessageBox.Show(responseContent);
+                    //MessageBox.Show(responseContent);
                     objTemp = JObject.Parse(responseContent);
                     string status = (string)objTemp["status"];
                     string message = (string)objTemp["message"];
@@ -209,8 +209,8 @@ namespace CallCenter.Pages
             }
             else
             {
-                string temp = End.Replace(" ", "+");
-                Ggmap.Source = new Uri(mapViewPlaceUrl + temp);
+                //string temp = End.Replace(" ", "+");
+                //Ggmap.Source = new Uri(mapViewPlaceUrl + temp);
             }
         }
     }

@@ -44,7 +44,7 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllTripUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             trips = arr.ToObject<List<Trip>>();
@@ -105,7 +105,7 @@ namespace CallCenter.Pages
                 string url = trackingUrl + temp.tripId;
                 HttpRequest httpRequest = new HttpRequest();
                 var content = httpRequest.GetDataFromUrlWithAccessToken(url, AccountnTokenHelper.accessToken);
-                MessageBox.Show(content);
+                //MessageBox.Show(content);
                 JObject objTemp = JObject.Parse(content);
                 string status = (string)objTemp["status"];
                 string message = (string)objTemp["message"];

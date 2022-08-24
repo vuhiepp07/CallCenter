@@ -40,11 +40,11 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(getAllStaffUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             staffs = arr.ToObject<List<Staff>>();
-            MessageBox.Show(arr.ToString());
+            //MessageBox.Show(arr.ToString());
             refreshViewSource();
         }
 
@@ -117,7 +117,7 @@ namespace CallCenter.Pages
             var temp2 = new { staffId= temp.id};
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.PostJsonWithAccessToken(deleteStaffUrl, JsonConvert.SerializeObject(temp2).ToString(), AccountnTokenHelper.accessToken);
-            MessageBox.Show(content);
+            //MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];

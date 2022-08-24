@@ -31,6 +31,37 @@ namespace CallCenter.Pages
         public ConfigurationPage()
         {
             InitializeComponent();
+            UsernameTextBox.IsReadOnly = true;
+            StaffIDTextBox.IsReadOnly = true;
+            StaffTypeTextBox.IsReadOnly = true;
+            GenderCBox.ItemsSource = genders;
+            OnOff(true);
+
+
+            var temp = new { username = AccountnTokenHelper.userName };
+
+            string json = JsonConvert.SerializeObject(temp);
+            HttpRequest httpRequest = new HttpRequest();
+            string responecontent = httpRequest.GetDataFromUrlWithAccessTokenAndJson(getStaffInfoUrl, json, AccountnTokenHelper.accessToken);
+            //MessageBox.Show(responecontent);
+            JObject objTemp = JObject.Parse(responecontent);
+            string status = (string)objTemp["status"];
+            string message = (string)objTemp["message"];
+            if (status.Equals("True") && message.Equals("Get staff successfully"))
+            {
+                UsernameTextBox.Text = (string)objTemp["data"]["username"];
+                StaffIDTextBox.Text = (string)objTemp["data"]["id"];
+                FullNameTextBox.Text = (string)objTemp["data"]["fullname"];
+                PhoneTextBox.Text = (string)objTemp["data"]["phone"];
+                AddressTextBox.Text = (string)objTemp["data"]["address"];
+                EmailTextBox.Text = (string)objTemp["data"]["email"];
+                GenderCBox.Text = (string)objTemp["data"]["gender"];
+                StaffTypeTextBox.Text = (string)objTemp["data"]["type"];
+            }
+            else
+            {
+
+            }
         }
 
         private void OnOff(Boolean status)
@@ -61,7 +92,7 @@ namespace CallCenter.Pages
 
             HttpRequest httpRequest = new HttpRequest();
             string responseContent = httpRequest.PostJsonWithAccessToken(editStaffInfoUrl, json, AccountnTokenHelper.accessToken);
-            MessageBox.Show(responseContent);
+            //MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];
@@ -75,42 +106,6 @@ namespace CallCenter.Pages
             {
                 MessageBox.Show("Update staff information failed, please try again");
             }
-        }
-
-        private void Canvas_Loaded(object sender, RoutedEventArgs e)
-        {
-            UsernameTextBox.IsReadOnly = true;
-            StaffIDTextBox.IsReadOnly = true;
-            StaffTypeTextBox.IsReadOnly = true;
-            GenderCBox.ItemsSource = genders;
-            OnOff(true);
-
-
-            var temp = new { username = AccountnTokenHelper.userName };
-
-            string json = JsonConvert.SerializeObject(temp);
-            HttpRequest httpRequest = new HttpRequest();
-            string responecontent = httpRequest.GetDataFromUrlWithAccessTokenAndJson(getStaffInfoUrl, json , AccountnTokenHelper.accessToken);
-            MessageBox.Show(responecontent);
-            JObject objTemp = JObject.Parse(responecontent);
-            string status = (string)objTemp["status"];
-            string message = (string)objTemp["message"];
-            if(status.Equals("True")&& message.Equals("Get staff successfully"))
-            {
-                UsernameTextBox.Text = (string)objTemp["data"]["username"];
-                StaffIDTextBox.Text = (string)objTemp["data"]["id"];
-                FullNameTextBox.Text = (string)objTemp["data"]["fullname"];
-                PhoneTextBox.Text = (string)objTemp["data"]["phone"];
-                AddressTextBox.Text = (string)objTemp["data"]["address"];
-                EmailTextBox.Text = (string)objTemp["data"]["email"];
-                GenderCBox.Text = (string)objTemp["data"]["gender"];
-                StaffTypeTextBox.Text = (string)objTemp["data"]["type"];
-            }
-            else
-            {
-
-            }
-
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)

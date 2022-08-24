@@ -15,38 +15,50 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
       Title="TripTracking">
-    <Canvas Margin="0,10,-547,-348" Background="White" Name="thisCanvas">
-        <Label Content="Trip tracking" FontSize="32" Foreground="Black" Canvas.Left="1022" Canvas.Top="30" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <WebBrowser Name="Ggmap" Canvas.Left="35" Canvas.Top="-29" Height="788" Width="912" HorizontalAlignment="Left" VerticalAlignment="Top"></WebBrowser>
-        <Label Content="User ID:" Canvas.Left="969" Canvas.Top="115" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
-        <TextBox Width="270" IsReadOnly="True"
-        x:Name="userIdTextBox"
-        materialDesign:TransitionAssist.DisableTransitions="True" Canvas.Left="1047" Canvas.Top="103" Height="34" HorizontalAlignment="Left" VerticalAlignment="Center" />
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical">
+            <Label HorizontalAlignment="Center" Content="Trip tracking" FontSize="32" Foreground="Black" Margin="0, 0, 0, 30"></Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <WebBrowser Name="Ggmap" Height="700" Width="850" HorizontalAlignment="Left" Margin="0, 0, 40, 0"></WebBrowser>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label Content="User ID:" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+                        <TextBox Width="270" IsReadOnly="True"
+                        x:Name="userIdTextBox"
+                        materialDesign:TransitionAssist.DisableTransitions="True" Height="34" HorizontalAlignment="Left" />
+                    </StackPanel>
 
-        <Label Content="Booking address:" Canvas.Left="966" Canvas.Top="244" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <Label Content="Arriving address:" Canvas.Left="966" Canvas.Top="383" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <TextBox IsReadOnly="True" Name="StartTxtBox"
-  materialDesign:HintAssist.Hint="Start" Canvas.Left="969" Canvas.Top="271" Height="40" Width="344" HorizontalAlignment="Left"/>
-        <TextBox IsReadOnly="True" Name="EndTxtBox"
-  materialDesign:HintAssist.Hint="Destination" Canvas.Left="969" Canvas.Top="410" Height="40" Width="344" HorizontalAlignment="Left"/>
-        <Label Content="Vehicle type:" Canvas.Left="969" Canvas.Top="534" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <TextBox IsReadOnly="True" Name="VehileTypeTxtBox"
-  materialDesign:HintAssist.Hint="" Canvas.Left="1067" Canvas.Top="525" Height="40" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Label Content="Payment type:" Canvas.Left="959" Canvas.Top="631" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <TextBox Width="250" IsReadOnly="True"
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 60, 0,0">
+                        <Label Content="Driver ID:" HorizontalAlignment="Center"/>
+                        <TextBox Width="270" IsReadOnly="True"
+                        x:Name="driverIdTextBox"
+                        materialDesign:TransitionAssist.DisableTransitions="True" Height="34" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <Label Content="Booking address:" HorizontalAlignment="Left" Margin="0, 60, 0,0"></Label>
+                    <TextBox IsReadOnly="True" Name="StartTxtBox"
+  materialDesign:HintAssist.Hint="Start" Height="40" Width="344"/>
+                    <Label Content="Arriving address:" HorizontalAlignment="Left" Margin="0, 60, 0,0"></Label>
+                    <TextBox IsReadOnly="True" Name="EndTxtBox"
+  materialDesign:HintAssist.Hint="Destination" Height="40" Width="344" HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 60, 0,0">
+                        <Label Content="Vehicle type:" HorizontalAlignment="Left" Margin="0, 0, 10, 0"></Label>
+                        <TextBox IsReadOnly="True" Name="VehileTypeTxtBox"
+  materialDesign:HintAssist.Hint="" Height="40" Width="250" HorizontalAlignment="Left" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 60, 0,0">
+                        <Label Content="Payment type:" HorizontalAlignment="Left" Margin="0, 0, 10, 0"></Label>
+                        <TextBox Width="250" IsReadOnly="True"
           x:Name="paymentTypeTextBox"
-          materialDesign:TransitionAssist.DisableTransitions="True" Canvas.Left="1067" Canvas.Top="630" HorizontalAlignment="Left" VerticalAlignment="Center" />
-
-        <Button Name="okBtn"
+          materialDesign:TransitionAssist.DisableTransitions="True" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <Button Name="okBtn" Margin="0, 60, 0,0"
         Click="okBtn_Click"
         Style="{StaticResource MaterialDesignRaisedButton}"
         ToolTip="Resource name: MaterialDesignRaisedButton"
         Content="Ok"
-        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="1063" Canvas.Top="716" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="119" />
-
-        <Label Content="Driver ID:" Canvas.Left="969" Canvas.Top="181" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBox Width="270" IsReadOnly="True"
-            x:Name="driverIdTextBox"
-            materialDesign:TransitionAssist.DisableTransitions="True" Canvas.Left="1047" Canvas.Top="169" Height="34" HorizontalAlignment="Center" VerticalAlignment="Top" />
-    </Canvas>
+        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" HorizontalAlignment="Center" Height="28" Width="119" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

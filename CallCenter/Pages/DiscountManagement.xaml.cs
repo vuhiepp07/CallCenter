@@ -49,7 +49,7 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllDiscountUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             discounts = arr.ToObject<List<Discount>>();

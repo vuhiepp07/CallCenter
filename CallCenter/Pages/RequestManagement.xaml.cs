@@ -42,7 +42,7 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllRequestUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             requests = arr.ToObject<List<Request>>();
@@ -100,7 +100,7 @@ namespace CallCenter.Pages
             string tempUrl = cancelBookingUrl + selectedRequestId;
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.PutRequestWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];

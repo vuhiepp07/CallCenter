@@ -40,7 +40,7 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllUserUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             users = arr.ToObject<List<User>>();
@@ -59,7 +59,7 @@ namespace CallCenter.Pages
             string tempUrl = Get5LatestTripUrl + temp.userId;
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content);
+            //MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];
@@ -88,7 +88,7 @@ namespace CallCenter.Pages
             string tempUrl = GetMostFrequenceDesUrl + temp.userId;
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content);
+            //MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];

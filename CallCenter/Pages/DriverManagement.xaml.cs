@@ -41,7 +41,7 @@ namespace CallCenter.Pages
         {
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllDriverUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content.ToString());
+            //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
             drivers = arr.ToObject<List<Driver>>();
@@ -61,7 +61,7 @@ namespace CallCenter.Pages
             string tempUrl = getAllTripOfDriverUrl + temp.driverId;
             HttpRequest httpRequest = new HttpRequest();
             var content = httpRequest.GetDataFromUrlWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
-            MessageBox.Show(content);
+            //MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];
