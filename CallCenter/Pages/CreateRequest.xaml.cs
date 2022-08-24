@@ -72,7 +72,7 @@ namespace CallCenter.Pages
             string endaddress = DestinationCBox.Text;
             string temp = Map4DApiUrl + endaddress;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(temp);
+            var content = httpRequest.GetDataFromUrl(temp);
             //MessageBox.Show(content);
             endObj = JObject.Parse(content);
             JArray arr = (JArray)endObj["result"];
@@ -92,7 +92,7 @@ namespace CallCenter.Pages
             string startaddress = StartCBox.Text;
             string temp = Map4DApiUrl + startaddress;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(temp);
+            var content = httpRequest.GetDataFromUrl(temp);
             //MessageBox.Show(content);
             startObj = JObject.Parse(content);
             JArray arr = (JArray)startObj["result"];
@@ -111,7 +111,7 @@ namespace CallCenter.Pages
             //MessageBox.Show(origin + " ----" + destination);
             string map4DRoutingUrl = $"http://api.map4d.vn/sdk/route?key=9535db74e2210bbdf73a8ce3c4fb03be&origin={origin}&destination={destination}&mode=motorcycle";
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsync(map4DRoutingUrl);
+            var content = httpRequest.GetDataFromUrl(map4DRoutingUrl);
             //MessageBox.Show(content);
             requestObj = JObject.Parse(content);
 
@@ -138,7 +138,7 @@ namespace CallCenter.Pages
             string json = JsonConvert.SerializeObject(disTime);
             MessageBox.Show(json);
             httpRequest = new HttpRequest();
-            string responseContent = httpRequest.PutAsyncJsonWithAccessToken(getVehicleAndPriceUrl, json, AccountnTokenHelper.accessToken);
+            string responseContent = httpRequest.PutJsonWithAccessToken(getVehicleAndPriceUrl, json, AccountnTokenHelper.accessToken);
             MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             double tripprice = double.Parse((string)objTemp["data"]["vehiclesAndPrices"][VehicleCBox.SelectedIndex]["price"]);
@@ -161,7 +161,7 @@ namespace CallCenter.Pages
                     };
                     string bookingjson = JsonConvert.SerializeObject(request);
                     httpRequest = new HttpRequest();
-                    responseContent = httpRequest.PutAsyncJsonWithAccessToken(bookingUrl, bookingjson, AccountnTokenHelper.accessToken);
+                    responseContent = httpRequest.PutJsonWithAccessToken(bookingUrl, bookingjson, AccountnTokenHelper.accessToken);
                     MessageBox.Show(responseContent);
                     objTemp = JObject.Parse(responseContent);
                     string status = (string)objTemp["status"];

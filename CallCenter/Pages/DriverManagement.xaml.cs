@@ -40,7 +40,7 @@ namespace CallCenter.Pages
         public void getAndBindingDriverData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllDriverUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllDriverUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
@@ -60,7 +60,7 @@ namespace CallCenter.Pages
             Driver temp = (Driver)driverListView.SelectedItem;
             string tempUrl = getAllTripOfDriverUrl + temp.driverId;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
@@ -123,7 +123,7 @@ namespace CallCenter.Pages
             string driverId = ((Driver)driverListView.SelectedItem).driverId;
             string tempUrl = getVehiclesOfSpecificDriverUrl + driverId;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
             //MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];

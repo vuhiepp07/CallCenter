@@ -18,27 +18,47 @@
     <Page.Resources>
         <CollectionViewSource x:Key="StaffViewSource"/>
     </Page.Resources>
-    <Canvas Margin="0,10,-547,-348" Background="White" Loaded="Canvas_Loaded">
-        <Label Content="Account Config" FontSize="32" Foreground="Black" Canvas.Left="538" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <Label Content="Staff ID:" FontSize="24" Canvas.Left="345" Canvas.Top="188" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121"/>
-        <Label Content="Username:" FontSize="24" Canvas.Left="335" Canvas.Top="256" HorizontalAlignment="Left" VerticalAlignment="Top" Width="158"/>
-        <Label Content="Full name:" FontSize="24" Canvas.Left="335" Canvas.Top="326" HorizontalAlignment="Left" VerticalAlignment="Top" Width="151"/>
-        <Label Content="Phone:" FontSize="24" Canvas.Left="353" Canvas.Top="547" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105"/>
-        <Label Content="Address:" FontSize="24" Canvas.Left="345" Canvas.Top="114" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131"/>
-        <Label Content="Email:" FontSize="24" Canvas.Left="367" Canvas.Top="398" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.522,0.103" Width="94"/>
-        <Label Content="Gender:" FontSize="24" Canvas.Left="353" Canvas.Top="472" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116"/>
-        <Label Content="Staff type:" FontSize="24" Canvas.Left="329" Canvas.Top="618" HorizontalAlignment="Left" VerticalAlignment="Top" Width="151"/>
-        <TextBox Name="AddressTextBox" Canvas.Left="550" TextWrapping="Wrap" Text="TextBox" Canvas.Top="114" Width="614" Height="37" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="FullNameTextBox" Canvas.Left="550" TextWrapping="Wrap" Text="TextBox" Canvas.Top="326" Width="614" Height="37" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="EmailTextBox" Canvas.Left="550" TextWrapping="Wrap" Text="TextBox" Canvas.Top="398" Width="614" Height="37" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="PhoneTextBox" Canvas.Left="550" TextWrapping="Wrap" Text="TextBox" Canvas.Top="547" Width="614" Height="37" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <ComboBox Name="GenderCBox" Canvas.Left="550" Canvas.Top="478" Width="614" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="StaffIDTextBox" Canvas.Left="550" TextWrapping="Wrap" Text="TextBox" Canvas.Top="188" Width="614" Height="37" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Name="UsernameTextBox" Canvas.Left="550" TextWrapping="Wrap" Text="TextBox" Canvas.Top="256" Width="614" Height="37" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Name="btnUpdate" Click="btnUpdate_Click" Content="Update" Canvas.Left="713" Canvas.Top="727" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99"/>
-        <TextBox Name="StaffTypeTextBox" Canvas.Left="550" TextWrapping="Wrap" Text="TextBox" Canvas.Top="636" Width="614" Height="37" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical">
+            <Label Content="Account Config" FontSize="32" Foreground="Black" HorizontalAlignment="Center"></Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 90, 0, 0">
+                <Label Content="Staff ID:" FontSize="24" HorizontalAlignment="Left" Width="121"/>
+                <TextBox Name="StaffIDTextBox"  Width="614" Height="37" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
+                <Label Content="Username:" FontSize="24" HorizontalAlignment="Left" Width="158"/>
+                <TextBox Name="UsernameTextBox" Width="614" Height="37" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
+                <Label Content="Full name:" FontSize="24" HorizontalAlignment="Left" Width="151"/>
+                <TextBox Name="FullNameTextBox" Width="614" Height="37" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
+                <Label Content="Phone:" FontSize="24" HorizontalAlignment="Left" Width="105"/>
+                <TextBox Name="PhoneTextBox" Width="614" Height="37" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
+                <Label Content="Address:" FontSize="24" HorizontalAlignment="Left" Width="131"/>
+                <TextBox Name="AddressTextBox" Width="614" Height="37" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
+                <Label Content="Email:" FontSize="24" HorizontalAlignment="Left" Width="94"/>
+                <TextBox Name="EmailTextBox" Width="614" Height="37" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
+                <Label Content="Gender:" FontSize="24" HorizontalAlignment="Left" Width="116"/>
+                <ComboBox Name="GenderCBox" Height="37" Width="614" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
+                <Label Content="Staff type:" FontSize="24" HorizontalAlignment="Left" Width="151"/>
+                <TextBox Name="StaffTypeTextBox" Width="614" Height="37" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 50, 0, 0">
+                <Button Name="btnUpdate" Click="btnUpdate_Click" Content="Update" HorizontalAlignment="Left" Width="99" Margin="0, 0, 30, 0"/>
+                <Button x:Name="btnEdit" Click="btnEdit_Click" Content="Edit" HorizontalAlignment="Left" Width="72" Margin="0, 0, 30, 0"/>
+                <Button x:Name="btnChangePassword" Click="btnChangePassword_Click" Content="Change password" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 
-        <Button x:Name="btnEdit" Click="btnEdit_Click" Content="Edit" Canvas.Left="579" Canvas.Top="727" HorizontalAlignment="Left" VerticalAlignment="Top" Width="72"/>
-        <Button x:Name="btnChangePassword" Click="btnChangePassword_Click" Content="Change password" Canvas.Left="882" Canvas.Top="727"/>
-    </Canvas>
 </Page>

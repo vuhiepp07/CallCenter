@@ -16,19 +16,26 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
       Title="DriverStatistic">
 
-    <Canvas Margin="0,10,-547,-348" Background="White" Name="thisCanvas">
-        <Label Content="Driver statistic" FontSize="32" Foreground="Black" Canvas.Left="550" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <WpfPlot Name="WpfPlot1" Canvas.Left="68" Canvas.Top="415" Height="315" Width="315" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <WpfPlot Name="WpfPlot2" Canvas.Left="69" Canvas.Top="79" Height="315" Width="314" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <WpfPlot Name="WpfPlot3" Canvas.Left="440" Canvas.Top="117" Height="604" Width="809" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <StackPanel Orientation="Horizontal" Canvas.Left="112" Canvas.Top="730" Height="30" Width="228" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Label Content="Average review: "/>
-            <materialDesign:RatingBar
-            x:Name="RatingBar"
-            Value="4"
-            IsReadOnly="True" />
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical">
+            <Label HorizontalAlignment="Center" Content="Driver statistic" FontSize="32" Foreground="Black"></Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0, 0, 120, 0">
+                    <Label Content="Trip accept rate" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <WpfPlot Name="WpfPlot1" Height="315" Width="315" HorizontalAlignment="Center"/>
+                    <Label Content="Customer review percentage" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0, 30, 0, 0"/>
+                    <WpfPlot Name="WpfPlot2" Height="315" Width="315" HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Height="30" Width="228" HorizontalAlignment="Center">
+                        <Label Content="Average review: "/>
+                        <materialDesign:RatingBar
+                        x:Name="RatingBar"
+                        Value="4"
+                        IsReadOnly="True" />
+                    </StackPanel>
+                </StackPanel>
+                <WpfPlot Name="WpfPlot3" Height="604" Width="809" HorizontalAlignment="Center"/>
+            </StackPanel>
         </StackPanel>
-        <Label Content="Trip accept rate" Canvas.Left="180" FontSize="14" FontWeight="Bold" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Label Content="Customer review percentage" FontSize="14" FontWeight="Bold" Canvas.Left="145" Canvas.Top="411" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-    </Canvas>
+    </ScrollViewer>
 </Page>

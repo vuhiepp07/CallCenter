@@ -46,7 +46,7 @@ namespace CallCenter.Windows
             string json = JsonConvert.SerializeObject(temp);
             MessageBox.Show(json);
             HttpRequest httpRequest = new HttpRequest();
-            string responseContent = httpRequest.PostAsyncJsonWithAccessToken(signUpStaffUrl, json, AccountnTokenHelper.accessToken);
+            string responseContent = httpRequest.PostJsonWithAccessToken(signUpStaffUrl, json, AccountnTokenHelper.accessToken);
             MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];

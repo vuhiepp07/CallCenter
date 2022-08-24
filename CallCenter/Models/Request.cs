@@ -14,13 +14,10 @@ namespace CallCenter.Models
         public string userId { get; set; }
         public point startAddress { get; set; }
         public point destination { get; set; }
-        // public string timeSecond { get; set; }
         public string phoneNumber { get; set; }
         public string createdTime { get; set; }
         public vehiclePrice vehicleAndPrice { get; set; }
         public distanceTime distanceAndTime { get; set; }
-        //public string distance { get; set; }
-        //public string vehicleType { get; set; }
         public string note { get; set; }
         public string status { get; set; }
         public string discountId { get; set; }

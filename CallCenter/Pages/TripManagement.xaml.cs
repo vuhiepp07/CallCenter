@@ -43,7 +43,7 @@ namespace CallCenter.Pages
         public void getAndBindingTripData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllTripUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllTripUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
@@ -104,7 +104,7 @@ namespace CallCenter.Pages
             {
                 string url = trackingUrl + temp.tripId;
                 HttpRequest httpRequest = new HttpRequest();
-                var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(url, AccountnTokenHelper.accessToken);
+                var content = httpRequest.GetDataFromUrlWithAccessToken(url, AccountnTokenHelper.accessToken);
                 MessageBox.Show(content);
                 JObject objTemp = JObject.Parse(content);
                 string status = (string)objTemp["status"];

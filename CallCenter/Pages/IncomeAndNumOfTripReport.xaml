@@ -16,9 +16,13 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
       Title="IncomeAndNumOfTripReport">
 
-    <Canvas Margin="0,10,-547,-348" Background="White" Name="thisCanvas">
-        <Label Content="Income and Trip report" FontSize="32" Foreground="Black" Canvas.Left="508" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-        <WpfPlot Name="WpfPlot1" Canvas.Left="10" Canvas.Top="104" Height="567" Width="633" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <WpfPlot Name="WpfPlot2" Canvas.Left="674" Canvas.Top="110" Height="568" Width="632" HorizontalAlignment="Left" VerticalAlignment="Top" />
-    </Canvas>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical">
+            <Label HorizontalAlignment="Center" Content="Income and Trip report" FontSize="32" Foreground="Black"></Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 100, 0 , 0">
+                <WpfPlot Name="WpfPlot1" Height="568" Width="633" HorizontalAlignment="Center" Margin="0, 0, 60, 0" />
+                <WpfPlot Name="WpfPlot2" Height="568" Width="633" HorizontalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

@@ -48,7 +48,7 @@ namespace CallCenter.Pages
         public void getAndBindingDiscountData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllDiscountUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllDiscountUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
@@ -152,7 +152,7 @@ namespace CallCenter.Pages
                 string json = JsonConvert.SerializeObject(temp);
 
                 HttpRequest httpRequest = new HttpRequest();
-                string responseContent = httpRequest.PostAsyncJsonWithAccessToken(addDiscountURL, json, AccountnTokenHelper.accessToken);
+                string responseContent = httpRequest.PostJsonWithAccessToken(addDiscountURL, json, AccountnTokenHelper.accessToken);
                 //MessageBox.Show(responseContent);
                 JObject objTemp = JObject.Parse(responseContent);
                 string status = (string)objTemp["status"];
@@ -168,7 +168,7 @@ namespace CallCenter.Pages
             {
                 string json = JsonConvert.SerializeObject(temp);
                 HttpRequest httpRequest = new HttpRequest();
-                string responseContent = httpRequest.PostAsyncJsonWithAccessToken(editDiscountUrl, json, AccountnTokenHelper.accessToken);
+                string responseContent = httpRequest.PostJsonWithAccessToken(editDiscountUrl, json, AccountnTokenHelper.accessToken);
                 //MessageBox.Show(responseContent);
 
                 JObject objTemp = JObject.Parse(responseContent);

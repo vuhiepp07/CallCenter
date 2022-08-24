@@ -60,7 +60,7 @@ namespace CallCenter.Pages
             string json = JsonConvert.SerializeObject(temp);
 
             HttpRequest httpRequest = new HttpRequest();
-            string responseContent = httpRequest.PostAsyncJsonWithAccessToken(editStaffInfoUrl, json, AccountnTokenHelper.accessToken);
+            string responseContent = httpRequest.PostJsonWithAccessToken(editStaffInfoUrl, json, AccountnTokenHelper.accessToken);
             MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];
@@ -90,7 +90,7 @@ namespace CallCenter.Pages
 
             string json = JsonConvert.SerializeObject(temp);
             HttpRequest httpRequest = new HttpRequest();
-            string responecontent = httpRequest.GetDataFromUrlAsyncWithAccessTokenAndJson(getStaffInfoUrl, json , AccountnTokenHelper.accessToken);
+            string responecontent = httpRequest.GetDataFromUrlWithAccessTokenAndJson(getStaffInfoUrl, json , AccountnTokenHelper.accessToken);
             MessageBox.Show(responecontent);
             JObject objTemp = JObject.Parse(responecontent);
             string status = (string)objTemp["status"];

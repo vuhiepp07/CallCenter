@@ -18,34 +18,36 @@
     <Page.Resources>
         <!--<CollectionViewSource x:Key="UserViewSource"/>-->
     </Page.Resources>
-    <Canvas Margin="0,10,-547,-348" Background="White" Name="thisCanvas">
-        <Label Content="Request statistic" FontSize="32" Foreground="Black" Canvas.Left="550" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <WpfPlot Name="WpfPlot1" Canvas.Left="144" Canvas.Top="61" Height="648" Width="1058" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="551" Canvas.Top="714">
-            <Button
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical">
+            <Label HorizontalAlignment="Center" Content="Request statistic" FontSize="32" Foreground="Black"></Label>
+            <WpfPlot Name="WpfPlot1" Height="648" Width="1058" HorizontalAlignment="Center" />
+            <DockPanel HorizontalAlignment="Center" >
+                <Button
                     Name="PrevPageBtn" Click="PrevPageBtn_Click"
                     Margin="10,10,10,10"
                     Style="{StaticResource MaterialDesignPaperLightButton}"
                     Width="80"
                     ToolTip="Resource name: MaterialDesignPaperLightButton"
                     Content="Prev"/>
-            <TextBlock x:Name="PagesTextBlock" Margin="10,20,10,10"><Run Text="1 / 2"/></TextBlock>
-            <Button
+                <TextBlock x:Name="PagesTextBlock" Margin="10,20,10,10"><Run Text="1 / 2"/></TextBlock>
+                <Button
                   Name ="NextPageBtn" Click="NextPageBtn_Click"
                   Margin="10,10,10,10"
                   Style="{StaticResource MaterialDesignPaperLightButton}"
                   Width="80"
                   ToolTip="Resource name: MaterialDesignPaperLightButton"
                   Content="Next" RenderTransformOrigin="0.5,0.5">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="0.178"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
-        </DockPanel>
-    </Canvas>
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.178"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
+            </DockPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

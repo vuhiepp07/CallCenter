@@ -39,7 +39,7 @@ namespace CallCenter.Pages
         public void getAndBindingStaffData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(getAllStaffUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(getAllStaffUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
@@ -116,7 +116,7 @@ namespace CallCenter.Pages
             Staff temp = (Staff)staffListView.SelectedItem;
             var temp2 = new { staffId= temp.id};
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.PostAsyncJsonWithAccessToken(deleteStaffUrl, JsonConvert.SerializeObject(temp2).ToString(), AccountnTokenHelper.accessToken);
+            var content = httpRequest.PostJsonWithAccessToken(deleteStaffUrl, JsonConvert.SerializeObject(temp2).ToString(), AccountnTokenHelper.accessToken);
             MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];

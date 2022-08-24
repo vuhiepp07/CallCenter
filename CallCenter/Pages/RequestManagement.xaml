@@ -15,13 +15,14 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
       Title="RequestManagement">
-<Page.Resources>
+    <Page.Resources>
         <CollectionViewSource x:Key="RequestViewSource"/>
     </Page.Resources>
-        <Canvas Margin="0,10,-547,-348" Background="White">
-        <Label Content="Request Management" FontSize="32" Foreground="Black" Canvas.Left="538" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-        <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Canvas.Left="918" Canvas.Top="37" Height="157" Width="419" VerticalAlignment="Top">
-            <TextBox
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical">
+            <Label HorizontalAlignment="Center" Content="Request Management" FontSize="32" Foreground="Black"></Label>
+            <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Right" Height="157" Width="419" Margin="0, 0, 50, 0">
+                <TextBox
                 x:Name="SearchField"
                 Margin="13, 13, 13, 13"
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
@@ -32,216 +33,217 @@
                 MaxWidth="400"
                 materialDesign:HintAssist.Hint="Please insert exactly RequestID"
                 IsEnabled="{Binding Path=True, ElementName=MaterialDesignFilledTextBoxEnabledComboBox}" Height="45" />
-            <Button
+                <Button
                 Click="BtnSearch_Click"
                 Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip="MaterialDesignIconButton"
                 Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Height="40" Width="40">
-                <materialDesign:PackIcon Kind="Search" Foreground="Black" />
-            </Button>
-            <Button
+                    <materialDesign:PackIcon Kind="Search" Foreground="Black" />
+                </Button>
+                <Button
                 DockPanel.Dock="Right"
                 Click="BtnReload_Click"
                 Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip="MaterialDesignIconButton"
                 Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Height="37" Width="40">
-                <materialDesign:PackIcon Kind="Reload" Foreground="Black"/>
+                    <materialDesign:PackIcon Kind="Reload" Foreground="Black"/>
+                </Button>
+            </DockPanel>
+            <Grid Background="White" HorizontalAlignment="Center">
+                <ListView Name="requestListView"
+            ItemsSource="{Binding Source={StaticResource RequestViewSource}}" Margin="0,0,0,0" >
+                    <ListView.Resources >
+                        <ContextMenu x:Key="RequestContextMenu">
+                            <!--<MenuItem Header="View 5 latest trips" Name="btnLatestTrips" Click="btnLatestTrips_Click" FontSize ="13" />-->
+                            <MenuItem Header="Cancel request" Name="btnCancelRequest" Click="btnCancelRequest_Click"></MenuItem>
+                        </ContextMenu>
+                    </ListView.Resources>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}" >
+                            <Setter Property="ContextMenu" Value="{StaticResource RequestContextMenu}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+
+                            <GridViewColumn Header="ID" Width="70">
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding requestId}" TextAlignment="Center" FontSize="14" Width="70" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="UserID" Width="50">
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding userId}" TextAlignment="Center" FontSize="14" Width="50" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Start address" Width="260">
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding startAddress.address}" TextAlignment="Center" FontSize="14" Width="260" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="End address" Width="260">
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding destination.address}" TextAlignment="Center" FontSize="14" Width="260" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="User phone" Width="130">
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding phoneNumber}" TextAlignment="Center" FontSize="14" Width="130" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Distance" Width="100">
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding distanceAndTime.distance}" TextAlignment="Center" IsReadOnly="True" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="Vehicle" Width="100">
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding vehicleAndPrice.vehicleType}" TextAlignment="Center" IsReadOnly="True" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="User note" Width="190">
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding note}" TextAlignment="Center" IsReadOnly="True" Width="190" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn  Header="Status" Width="160" >
+                                <GridViewColumn.HeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="16" />
+                                    </Style>
+                                </GridViewColumn.HeaderContainerStyle>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
+                                        <TextBox Text="{Binding status}" TextAlignment="Center" FontSize="14" Width="160" IsEnabled="False" Foreground="Black"></TextBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Button HorizontalAlignment="Right"  Margin="0, 120, 90, 0"
+                Name="addRequestBtn"
+                Click="addRequestBtn_Click"
+                Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                ToolTip="MaterialDesignFloatingActionLightButton"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="1198" Canvas.Top="682" Height="58" Width="66">
+                <materialDesign:PackIcon
+                Kind="PlusCircleOutline"
+                Height="55"
+                Width="55" />
             </Button>
-        </DockPanel>
-        <Grid Background="White" Canvas.Top="149" Canvas.Left="-1">
-            <ListView Name="requestListView"
-        ItemsSource="{Binding Source={StaticResource RequestViewSource}}" Margin="0,0,0,204" >
-                <ListView.Resources >
-                    <ContextMenu x:Key="RequestContextMenu">
-                        <!--<MenuItem Header="View 5 latest trips" Name="btnLatestTrips" Click="btnLatestTrips_Click" FontSize ="13" />-->
-                        <MenuItem Header="Cancel request" Name="btnCancelRequest" Click="btnCancelRequest_Click"></MenuItem>
-                    </ContextMenu>
-                </ListView.Resources>
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}" >
-                        <Setter Property="ContextMenu" Value="{StaticResource RequestContextMenu}" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.View>
-                    <GridView>
-
-                        <GridViewColumn Header="ID" Width="70">
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding requestId}" TextAlignment="Center" FontSize="14" Width="70" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="UserID" Width="50">
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding userId}" TextAlignment="Center" FontSize="14" Width="50" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="Start address" Width="260">
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding startAddress.address}" TextAlignment="Center" FontSize="14" Width="260" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="End address" Width="260">
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding destination.address}" TextAlignment="Center" FontSize="14" Width="260" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="User phone" Width="130">
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding phoneNumber}" TextAlignment="Center" FontSize="14" Width="130" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="Distance" Width="100">
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding distanceAndTime.distance}" TextAlignment="Center" IsReadOnly="True" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="Vehicle" Width="100">
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding vehicleAndPrice.vehicleType}" TextAlignment="Center" IsReadOnly="True" Width="100" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="User note" Width="190">
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding note}" TextAlignment="Center" IsReadOnly="True" Width="190" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn  Header="Status" Width="160" >
-                            <GridViewColumn.HeaderContainerStyle>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
-                            </GridViewColumn.HeaderContainerStyle>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!--<TextBlock Text="{Binding userID}" TextAlignment="Right" FontSize="14" ></TextBlock>-->
-                                    <TextBox Text="{Binding status}" TextAlignment="Center" FontSize="14" Width="160" IsEnabled="False" Foreground="Black"></TextBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
-        <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="603" Canvas.Top="714">
-            <Button
+            <DockPanel HorizontalAlignment="Center">
+                <Button
                     Name="PrevRequestPageBtn" Click="PrevRequestPageBtn_Click"
                     Margin="10,10,10,10"
                     Style="{StaticResource MaterialDesignPaperLightButton}"
                     Width="80"
                     ToolTip="Resource name: MaterialDesignPaperLightButton"
                     Content="Prev"/>
-            <TextBlock x:Name="PagesTextBlock" Margin="10,20,10,10"><Run Text="1 / 5"/></TextBlock>
-            <Button
+                <TextBlock x:Name="PagesTextBlock" Margin="10,20,10,10"><Run Text="1 / 5"/></TextBlock>
+                <Button
                   Name ="NextRequestPageBtn" Click="NextRequestPageBtn_Click"
                   Margin="10,10,10,10"
                   Style="{StaticResource MaterialDesignPaperLightButton}"
                   Width="80"
                   ToolTip="Resource name: MaterialDesignPaperLightButton"
                   Content="Next" RenderTransformOrigin="0.5,0.5">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="0.178"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
-        </DockPanel>
-        <Button
-            Name="addRequestBtn"
-            Click="addRequestBtn_Click"
-            Style="{StaticResource MaterialDesignFloatingActionLightButton}"
-            ToolTip="MaterialDesignFloatingActionLightButton"
-            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Canvas.Left="1198" Canvas.Top="682" Height="58" Width="66">
-            <materialDesign:PackIcon
-            Kind="PlusCircleOutline"
-            Height="55"
-            Width="55" />
-        </Button>
-    </Canvas>
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.178"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
+            </DockPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

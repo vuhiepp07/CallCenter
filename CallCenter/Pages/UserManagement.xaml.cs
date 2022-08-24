@@ -39,7 +39,7 @@ namespace CallCenter.Pages
         public void getAndBindingUserData()
         {
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(GetAllUserUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(GetAllUserUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content.ToString());
             JObject o = JObject.Parse(content);
             JArray arr = (JArray)o["data"];
@@ -58,7 +58,7 @@ namespace CallCenter.Pages
             User temp = (User)userListView.SelectedItem;
             string tempUrl = Get5LatestTripUrl + temp.userId;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
@@ -87,7 +87,7 @@ namespace CallCenter.Pages
             User temp = (User)userListView.SelectedItem;
             string tempUrl = GetMostFrequenceDesUrl + temp.userId;
             HttpRequest httpRequest = new HttpRequest();
-            var content = httpRequest.GetDataFromUrlAsyncWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
+            var content = httpRequest.GetDataFromUrlWithAccessToken(tempUrl, AccountnTokenHelper.accessToken);
             MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];

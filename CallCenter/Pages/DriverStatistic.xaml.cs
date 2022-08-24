@@ -55,7 +55,7 @@ namespace CallCenter.Pages
             WpfPlot3.Plot.XAxis.SetSizeLimit(min: 50); // extra space for rotated ticks
 
             // apply axis labels, trigging a layout reset
-            WpfPlot3.Plot.Title("Income report");
+            WpfPlot3.Plot.Title("Driver income report");
             WpfPlot3.Plot.YLabel("Millions (VND)");
             WpfPlot3.Plot.XLabel("Month");
         }

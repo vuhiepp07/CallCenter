@@ -34,7 +34,7 @@ namespace CallCenter.Windows
                 HttpRequest httpRequest = new HttpRequest();
                 var temp = new {username = AccountnTokenHelper.userName, password = txtBoxOldPassword.Password.ToString(), newPassword= txtBoxNewPassword.Password.ToString()};
                 string json = JsonConvert.SerializeObject(temp);
-                string responseContent = httpRequest.PostAsyncJsonWithAccessToken(changePasswordUrl, json, AccountnTokenHelper.accessToken);
+                string responseContent = httpRequest.PostJsonWithAccessToken(changePasswordUrl, json, AccountnTokenHelper.accessToken);
                 //MessageBox.Show(responseContent);
                 JObject objTemp = JObject.Parse(responseContent);
                 string status = (string)objTemp["status"];
