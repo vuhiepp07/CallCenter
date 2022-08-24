@@ -138,7 +138,7 @@ namespace CallCenter.Models
                 msg.Headers.Add("token", accessToken);
                 var res = httpClient.Send(msg);
                 var content = res.Content.ReadAsStringAsync();
-                MessageBox.Show(msg.ToString());
+                //MessageBox.Show(msg.ToString());
                 return content.Result;
             }
             catch (Exception ex)

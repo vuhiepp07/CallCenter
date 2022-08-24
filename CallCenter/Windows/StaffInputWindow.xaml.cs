@@ -44,10 +44,10 @@ namespace CallCenter.Windows
         {
             var temp = new {username = staffUserName.Text, password = staffPassword.Password.ToString(), type = roleCombobox.SelectedItem.ToString()};
             string json = JsonConvert.SerializeObject(temp);
-            MessageBox.Show(json);
+            //MessageBox.Show(json);
             HttpRequest httpRequest = new HttpRequest();
             string responseContent = httpRequest.PostJsonWithAccessToken(signUpStaffUrl, json, AccountnTokenHelper.accessToken);
-            MessageBox.Show(responseContent);
+            //MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];

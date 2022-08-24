@@ -78,7 +78,7 @@ namespace CallCenter.Pages
             }
             else
             {
-                MessageBox.Show("Some error occured");
+                MessageBox.Show("This user did not have any trip");
             }
         }
 

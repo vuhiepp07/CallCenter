@@ -45,7 +45,7 @@ namespace CallCenter.Windows
 
             HttpRequest httpRequest = new HttpRequest();
             string responseContent = httpRequest.PostLoginJson(loginURL, json);
-            MessageBox.Show(responseContent);
+            //MessageBox.Show(responseContent);
             JObject objTemp = JObject.Parse(responseContent);
             string status = (string)objTemp["status"];
             string message = (string)objTemp["message"];
