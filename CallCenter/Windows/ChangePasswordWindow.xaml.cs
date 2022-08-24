@@ -44,6 +44,11 @@ namespace CallCenter.Windows
                     MessageBox.Show("Change password successfully");
                     this.Close();
                 }
+                else
+                {
+                    MessageBox.Show("Failed to change password");
+
+                }
             }
             else
             {

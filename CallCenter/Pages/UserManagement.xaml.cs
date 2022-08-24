@@ -62,8 +62,8 @@ namespace CallCenter.Pages
             //MessageBox.Show(content);
             JObject objTemp = JObject.Parse(content);
             string status = (string)objTemp["status"];
-            string message = (string)objTemp["message"];
-            if (status.Equals("True") && message.Equals("Get 5 latest trip"))
+            //string message = (string)objTemp["message"];
+            if (status.Equals("True"))
             {
                 JArray arr = (JArray)objTemp["data"];
                 List<Trip> trips = arr.ToObject<List<Trip>>();
